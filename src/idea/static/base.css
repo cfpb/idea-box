@@ -83,7 +83,8 @@ h1 {
     line-height: 1.2em;
     margin-bottom: 0.4em;
 }
-h2 {margin: 0;
+h2 {
+    margin: 0;
     /* 48px / 48px */
     font-size: 3em;
     line-height: 1em;
