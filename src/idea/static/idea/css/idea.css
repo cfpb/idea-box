@@ -6,21 +6,21 @@
     font-family: "Avenir Next", Arial, sans-serif;
     font-weight: 400;
 }
-a {
+.ic a {
     color: #43b02a;
     text-decoration: underline;
 }
-a:hover,
-a:active,
-a:focus {
+.ic a:hover,
+.ic a:active,
+.ic a:focus {
     text-decoration: none;
 }
-a:focus {
+.ic a:focus {
     outline: thin dotted #111;
 }
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
-a:hover,
-a:active {
+.ic a:hover,
+.ic a:active {
     outline: 0;
 }
 
