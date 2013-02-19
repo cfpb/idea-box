@@ -1,0 +1,568 @@
+/* ==========================================================================
+   Main
+   ========================================================================== */
+/* Base */
+.ic * {
+    font-family: "Avenir Next", Arial, sans-serif;
+    font-weight: 400;
+}
+a {
+    color: #43b02a;
+    text-decoration: underline;
+}
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
+}
+a:focus {
+    outline: thin dotted #111;
+}
+/* Improve readability when focused and hovered in all browsers: h5bp.com/h */
+a:hover,
+a:active {
+    outline: 0;
+}
+
+/* Header */
+.project-header {
+    margin-top: 2.875em;
+}
+.logo {
+    padding: 0 0 0 5em;
+}
+.logo a {
+    text-decoration: none;
+}
+.project-title {
+    color: #43b02a;
+    display: inline;
+    font-size: 312.5%; /* 50px */
+    font-weight: bold;
+    line-height: 0.78;
+    text-transform: uppercase;
+}
+.project-search {
+    padding: 0 1em 0;
+    margin-bottom: 4.375em;
+}
+.project-description {
+    color: #000;
+    font-size: 187.5%; /* 30px */
+    font-weight: 600;
+    line-height: 0.88;
+    margin-bottom: 0.5em;
+}
+.project-prompt {
+    color: #999;
+    font-size: 100%; /* 16px */
+    font-weight: bold;
+    margin-top: 0.5em;
+    text-align: left;
+    text-transform: uppercase;
+}
+.search-form input[type="text"],
+.search-form textarea {
+    height: 2em;
+    width: 80%;
+}
+.start-btn {
+    border: 1px outset #43b02a;
+    background-color: #43b02a;
+    color: #fff;
+    font-size: 150%; /* 24px */
+    font-weight: 600;
+    margin-left: -0.2em;
+    padding: 0.20em 1em;
+}
+.start-btn:hover,
+.start-btn:active,
+.start-btn:focus {
+    background-color: #b3db8a;
+    border: 1px solid #b3db8a;
+    color: #000;
+}
+/* Navigation */
+.main-nav {
+    max-width: 70em;
+    margin: 0 auto;
+    padding: 0;
+}
+.main-nav ul {
+    border-bottom: 3px solid #000;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.main-nav ul li {
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;
+    min-height: 2.1875em;
+    text-align: center;
+}
+.main-nav ul li a {
+    background-color: #addc91;
+    display: block;
+    color: #212121;
+    font-size: 100%; /* 16px */
+    font-weight: bold;
+    margin: 0 1.25em 0 0;
+    padding: 0.5em 0;
+    text-decoration: none;
+    width: 16.375em;
+}
+.main-nav ul li.active a {
+    background: #43b02a;
+    color: #fff;
+}
+.main-nav ul li a.last {
+    margin-right: 0;
+}
+.main-nav ul li a:hover,
+.main-nav ul li a:active,
+.main-nav ul li a:focus,
+.main-nav ul li a.active {
+    background: #43b02a;
+    color: #fff;
+}
+
+/* Content */
+.idea-entry {
+    border-bottom: 1px solid #f2f2f2;
+    padding: 2.5em 0;
+}
+.idea-entry.hover {
+   background-color: #f2f2f2;
+}
+.idea-votes {
+    font-size: 312.5%; /* 50px */
+    font-weight: 600;
+    line-height: 0.3;
+    padding-top: 0.4em;
+    text-align: center;
+}
+.idea-votes .votes {
+    display: block;
+    font-size: 22%; /* 11px */
+    font-weight: 600;
+    padding-top: 2em;
+    text-transform: uppercase;
+}
+.idea-title {
+    padding-right: 1.875em;
+}
+.idea-title h3 {
+    font-size: 150%; /* 24px */
+    line-height: 1.33;
+    margin-bottom: 0.25em;
+}
+.idea-title a {
+    color: #000;
+    text-decoration: none;
+}
+.idea-title a:hover,
+.idea-title a:active,
+.idea-title a:focus {
+    color: #666;
+    text-decoration: underline;
+}
+.idea-info .suggested,
+.idea-info .commented {
+    color: #63666a;
+    font-size: 87.5%; /* 14px */
+}
+.idea-info .commented {
+    background: url(../img/comment-icon.png) 0 50% no-repeat;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    margin-left: 1.875em;
+    padding-left: 2.325em;
+}
+
+/* Comments */
+.comments {
+    position: relative;
+}
+.comment-total {
+    background: url(../img/comment-icon-detail.png) no-repeat;
+    color: #fff;
+    display: block;
+    font-weight: 600;
+    height: 40px;
+    padding: 0.25em 0;
+    position: absolute;
+    top: 1.875em;
+    left: -4em;
+    text-align: center;
+    width: 47px;
+}
+.comments h4 {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.comment-form {
+    background-color: #f2f2f2;
+    padding: 0.625em 0.625em 2.5em;
+    margin: 1.875em 0 0;
+}
+.comment-form textarea {
+    height: 6.25em;
+    margin-bottom: 0.5em;
+    width: 99%;
+}
+.comment-form label {
+    color: #666;
+    display: block;
+    font-weight: 600;
+    padding: 0 0 0.625em;
+    position: relative;
+}
+.comment-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.single-idea-entry .idea-entry-content .comment-author {
+    font-size: 87.5%;
+    line-height: 1.9;
+    font-weight: 600;
+}
+.comment-date {
+    color: #666;
+    font-weight: normal;
+}
+.comment {
+    padding: 2.5em 0 1.5em;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Internal Nav */
+.top-internal-nav {
+    margin: 1em 0 0;
+}
+.bottom-internal-nav {
+    margin-top: 1.5em;
+}
+.top-internal-nav a,
+.bottom-internal-nav a.left{
+    float: left;
+    background: url(../img/back-arrow.png) center left no-repeat;
+    padding-left: .75em;
+}
+.bottom-internal-nav a {
+    float: right;
+    background: url(../img/more-arrow.png) center right no-repeat;
+    padding-right: .75em;
+}
+
+/* Sidebar */
+.sidebar {
+    padding-top: 2.5em;
+}
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+.total-ideas,
+.ic-tags,
+.ic-add-tags,
+.sidebar-nav {
+    margin-bottom: 2.5em;
+}
+.total-ideas h4 {
+    color: #999;
+    font-size: 175%; /* 28px */
+    font-weight: bold;
+    line-height: 0.95;
+}
+.sidebar h4 {
+    color: #999;
+    font-size: 150%; /* 24px */
+    line-height: 0.95;
+}
+.ic-tags li {
+    padding: 0.625em 0;
+}
+.ic-tags a {
+    background-color: #f4dc9a;
+    color: #101820;
+    font-size: 87.5%;
+    padding: 0.625em 0 0.625em 0.625em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.ic-tags a:hover,
+.ic-tags a:active,
+.ic-tags a:focus,
+.ic-tags a.active {
+    background-color: #fdcb40;
+}
+.ic-tags a span.num {
+    background-color: #d0d0ce;
+    margin-left: 0.3125em;
+    padding: 0.625em 0.625em 0.625em 0.3125em;
+}
+.sidebar .tags form input[type="text"] {
+    width: 11em;
+}
+.ic-add-tags .help-text {
+    font-size: 87.5%;
+}
+.sidebar-nav a {
+    font-size: 87.5%; /* 14px */
+}
+
+/* Add View */
+.idea-add .project-search p {
+    color: #999;
+}
+.project-add {
+    background-color: #f2f2f2;
+    padding: 0.625em 0.625em 1.25em;
+    margin: 1.5em 0;
+}
+.project-add form textarea {
+    height: 6.25em;
+    width: 99%;
+}
+.project-add label {
+    color: #666;
+    display: block;
+    font-weight: 600;
+    padding: 0.625em 0 0.625em;
+    position: relative;
+    width: 99%;
+}
+.project-add input#id_title,
+.project-add input#id_text,
+.project-add input#id_tags {
+    width: 99%;
+}
+.project-add input#id_tags {
+    margin-bottom: 0.625em;
+}
+.idea-add .idea-hero {
+    border-bottom: 3px solid #000;
+}
+
+/* Single View */
+.single-idea-entry .idea-title h3 {
+    font-size: 225%; /* 24px */
+    font-weight: 600;
+    line-height: 1.26;
+    margin-bottom: 0;
+}
+.single-idea-entry .idea-entry-content p {
+    font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
+}
+.single-idea-entry {
+    padding: 2.5em 0;
+}
+.idea-title-wrap {
+    padding-bottom: 2.5em;
+}
+.idea-single .author-info,
+.idea-single .idea-entry-content {
+    padding-top: 2.5em;
+}
+.idea-single .author-info p {
+    font-size: 75%;
+    line-height: 1.33;
+    margin: 0.35em 0;
+}
+.idea-single .author {
+    font-weight: 600;
+}
+.idea-single .date {
+    color: #63666a;
+}
+.idea-single .comments {
+    border-top: 3px solid #f2f2f2;
+    margin-top: 2.5em;
+    padding-top: 1.875em;
+}
+.idea-single .vote-cta {
+    padding-bottom: 0.625em;
+}
+.idea-single .vote-count {
+    color: #43b02a;
+    display: block;
+    font-size: 1.125em;
+    font-weight: 600;
+    margin-top: 0.625em;
+    text-align: center;
+}
+.idea-single .voters {
+    color: #666;
+    font-size: 87.5%;
+    line-height: 1.57;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/* Style help */
+.border-bottom {
+    border-bottom: 3px solid #000;
+}
+.btn-vote {
+    background: #43b02a url(../img/vote-thumb.png) 20% 50% no-repeat;
+    border: 1px solid #43b02a;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 0.625em 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+span.btn-voted,
+span.btn-voted:hover {
+    background: #f2f2f2 url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
+    border: 1px solid #f2f2f2;
+    color: #101820;
+    cursor: text;
+    display: inline-block;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 0.625em 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+span.btn-archive,
+span.btn-archive:hover {
+    background: #f2f2f2 url(../img/archive.png) 18% 48% no-repeat;
+    border: 1px solid #f2f2f2;
+    color: #101820;
+    cursor: text;
+    display: inline-block;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 0.625em 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.btn-comment,
+.btn-add {
+    background-color: #43b02a;
+    border: 1px solid #43b02a;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 106.25%;
+    font-weight: bold;
+    padding: 0.25em 0.75em;
+}
+.btn-comment:hover,
+.btn-comment:active,
+.btn-comment:focus,
+.btn-add:hover,
+.btn-add:active,
+.btn-add:focus {
+    background-color: #b3db8a;
+    border: 1px solid #b3db8a;
+    color: #000;
+}
+.btn-vote:hover,
+.btn-vote:active,
+.btn-vote:focus {
+    background: #b3db8a url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
+    border: 1px solid #b3db8a;
+    color: #000;
+}
+.idea-add .alert {
+    color: #d14124;
+    margin-top: 1.6em;
+    text-align: center;
+    text-transform: uppercase;
+}
+.idea-add .alert a {
+    color: #d14124;
+}
+.idea-add .alert .down {
+    background: url(../img/alert-arrow.png) 0 50% no-repeat;
+    height: 22px;
+    padding: 0.6875em;
+    width: 22px;
+}
+.idea-add .alert-none {
+    background-color: #f2f2f2;
+    border: 3px solid #999;
+    box-sizing: border-box;
+    color: #999;
+    margin-bottom: 2em;
+    margin-top: 1.6em;
+    padding: 0.5em 1em ;
+    text-align: center;
+    text-transform: uppercase;
+}
+.idea-add .alert-none .down {
+    background: url(../img/alert-check.png) 0 50% no-repeat;
+    height: 22px;
+    padding: 0.6875em;
+    width: 22px;
+}
+.idea-add .alert p,
+.idea-add .alert-none p {
+     display: block;
+     margin-bottom: 0.25em;
+}
+ /* Image replacement */
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/* Hide from both screenreaders and browsers: h5bp.com/u */
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible {
+    visibility: hidden;
+}

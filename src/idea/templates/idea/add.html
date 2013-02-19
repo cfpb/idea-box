@@ -1,0 +1,80 @@
+{% extends "idea/idea-base.html" %}
+
+{% block "content" %}
+
+		<div id="content" class="idea-add ic" role="main">
+			<div class="row">
+				<section id="idea-hero" class="idea-hero span12">
+					<header class="project-header">
+						<div class="row">
+							<div class="logo span3">
+								<a href="{%url idea_list%}"><h2 class="project-title">Idea<br>Box</h2></a>
+                                {% if not similar %}
+                                <div class="alert-none"> 
+									<p><strong>{{similar|length}}</strong> similar idea{{similar|pluralize}}</p>
+                                {% else %}
+                                <div class="alert"> 
+									<p><a href="#main"><strong>{{similar|length}}</strong> similar idea{{similar|pluralize}}</a></p>
+                                {% endif %}
+									<span class="down"></span>
+								</div>
+							</div><!-- /logo -->
+							<div class="project-search add span8">
+								<h2 class="project-description">{{banner.text}}</h2>
+								<p>We want to hear your ideas about how we can improve. Submit, tag, and discuss your idea. We can improve the way we all work by connecting with like minded co-workers.</p>
+								<div class="project-add">
+                                    <form action="{%url add_idea%}" method="post">
+	    							{% csrf_token %}
+									{{form}}
+										<input type="submit" class="btn-add right" value="Submit">
+									</form>
+								</div><!-- /project-add -->					
+							</div><!-- /project-search -->
+						</div><!-- /row -->
+					</header><!-- /project-header -->
+				</section><!-- /idea-hero -->
+			<div class="row">
+				<section id="main" class="main-content span9">
+                    {% for idea in similar %}
+					<article class="idea-entry">
+						<div class="row">
+							<div class="idea-votes span2">
+                                {{idea.vote_count}} <span class="votes">Votes</span>
+							</div><!-- /idea-votes -->
+							<div class="idea-wrap span10">
+								<header class="idea-title">
+                                    <a href="{% url idea_detail idea.id %}"><h3>{{idea.title}}</h3></a>
+								</header>
+								<footer class="idea-footer">
+									<div class="idea-info">
+                                        {% if idea.get_creator_profile %}
+                                        <span class="suggested">Suggested by <a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name }} {{idea.creator.last_name}}</a> on {{idea.time|date:"M d, Y"}}</span>
+                                        {% else %}
+                                        <span class="suggested">Suggested by {{idea.creator.first_name }} {{idea.creator.last_name}} on {{idea.time|date:"M d, Y"}}</span>
+                                        {% endif %}
+                                        <span class="commented">{{idea.comment_count}} Comment{{idea.comment_count|pluralize}}</span>
+									</div><!-- /idea-info -->
+								</footer>
+							</div><!-- /idea-wrap -->
+						</div><!-- /row -->
+					</article>
+                    {% endfor %}
+					<nav id="bottom-nav" class="bottom-internal-nav span12" role="navigation">
+						<h4 class="visuallyhidden">Idea Post Navigation</h4>
+						<!--<a href="#" class="btn">More Ideas ></a> -->
+					</nav><!-- /bottom-nav /bottom-internal-nav -->
+				</section><!-- /main /main-content -->
+				<section id="sidebar" class="sidebar span3" role="complementary">
+					<aside class="total-ideas">
+                        <h4>{{ similar|length }} Idea{{ similar|pluralize}}</h4>
+					</aside><!-- /total-ideas -->		
+				</section><!-- /secondary /sidebar -->
+			</div><!-- /row -->
+		</div><!-- /main -->
+
+{% endblock %}
+
+{% block "js_scripts" %}
+		<script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+{% block "design_js_scripts" %}{% endblock %}
+{% endblock %}

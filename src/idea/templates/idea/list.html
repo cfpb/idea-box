@@ -1,0 +1,109 @@
+{% extends "idea/idea-base.html" %}
+
+{% block "content" %}
+
+		<div id="content" class="idea-home ic" role="main">
+			<div class="row">
+				<section id="idea-hero" class="idea-hero span12">
+					<header class="project-header">
+						<div class="row">
+							<div class="logo span3">
+								<a href="{%url idea_list%}"><h2 class="project-title">Idea<br>Box</h2></a>
+							</div>
+							<div class="project-search span8">
+								<h2 class="project-description">{{banner.text}}</h2>
+                                 <form role="search" method="get" id="idea-search-form" class="search-form" 
+                                                                    action="{%url add_idea%}" >
+									<label class="visuallyhidden" for="s">Enter your idea</label>
+									<input type="text" value="" name="idea_title" id="s" />
+									<input class="start-btn" type="submit" id="searchsubmit" value="START" />
+								</form><!-- /search-form -->
+								<h2 class="project-prompt">Suggest, comment, and vote on ideas.</h2>
+							</div><!-- /project-search -->
+						</div><!-- /row -->
+					</header><!-- /project-header -->
+				<div class="visuallyhidden">
+					<h2>Main Navigation for Idea Box</h2>
+				</div> <!-- /visuallyhidden -->
+					<nav id="main-nav" class="main-nav" role="navigation">
+                        <ul {% if sort_or_state == 'vote' %}class="active"{% endif %}>
+                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{%url idea_list "vote"%}">Most Voted</a></li>
+                            <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{%url idea_list "comment"%}">Commented</a></li>
+                            <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{%url idea_list "recent"%}">Recent</a></li>
+                            <li {% if sort_or_state == 'archived' %}class="active"{% endif %}><a class="last" href="{%url idea_list "archived"%}">Archive</a></li>
+						</ul><!-- /nav -->
+					</nav><!-- /main-nav -->
+				</section><!-- /idea-hero -->
+			</div><!-- /row -->
+			<div class="row">
+				<section id="main" class="main-content span9">
+                {% if ideas %}
+                {% for idea in ideas %}
+                        <article class="idea-entry">
+						<div class="row">
+							<div class="idea-votes span2">
+								{{idea.vote_count}} <span class="votes">Vote{{idea.vote_count|pluralize:",s"}} </span>
+							</div><!-- /idea-votes -->
+							<div class="idea-wrap span10">
+								<header class="idea-title">
+									<a href="{%url idea_detail idea.id%}"><h3>{{idea.title}}</h3></a>
+								</header>
+								<footer class="idea-footer">
+									<div class="idea-info">
+                                        {% if idea.get_creator_profile %}
+                                        <span class="suggested">Suggested by <a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a> on  {{idea.time|date:"M d, Y"}} </span>
+                                        {% else %}
+                                        <span class="suggested">Suggested by {{idea.creator.first_name}} {{idea.creator.last_name}} on {{idea.time|date:"M d, Y"}} </span>
+                                        {% endif %}
+										<span class="commented"><a href="{%url idea_detail idea.id%}#comments">{{idea.comment_count}} Comment{{idea.comment_count|pluralize:",s"}}</a></span>
+									</div><!-- /idea-info -->
+								</footer>
+							</div><!-- /idea-wrap -->
+						</div><!-- /row -->
+					</article>
+                {% endfor %}
+                {% else %}
+                	<article class="idea-entry">
+                		<div class="row">
+                    		<p class="span12">There are no ideas to display.</p>
+                    	</div><!-- /row -->
+                    </article><!-- /idea-entry -->
+                {% endif %}
+					<nav id="bottom-nav" class="bottom-internal-nav span12" role="navigation">
+					<h4 class="visuallyhidden">Idea Post Navigation</h4>
+                    {% if ideas.has_previous %}
+                        <a href="?page_num={{ideas.previous_page_number}}" class="left">Previous Ideas</a>
+                    {% endif %}
+                    {% if ideas.has_next %}
+						<a href="?page_num={{ideas.next_page_number}}" class="more">More Ideas</a>
+                    {% endif %}
+					</nav><!-- /bottom-nav /bottom-internal-nav -->
+				</section><!-- /main /main-content -->
+				<section id="sidebar" class="sidebar span3" role="complementary">
+					<aside class="total-ideas">
+						<h4>
+                          {{total_num_ideas}} Idea{{total_num_ideas|pluralize:",s"}}
+                        </h4>
+					</aside><!-- /total-ideas -->
+					<aside class="ic-tags">
+						<h4>Popular Tags</h4>
+						<ul>
+                            {% for tag in tags %}
+                            <li><a href="{{tag.tag_url}}" 
+                                {% if tag.active %}
+                                    class="active"
+                                {% endif %}
+                            >{{tag}} <span class="num">{{tag.count}}</span></a></li>
+                            {% endfor %}
+						</ul>   
+					</aside>
+				</section><!-- /secondary /sidebar -->
+			</div><!-- /row -->
+		</div><!-- /main -->
+
+{% endblock %}
+
+{% block "js_scripts" %}
+		<script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+{% block "design_js_scripts" %}{% endblock %}
+{% endblock %}

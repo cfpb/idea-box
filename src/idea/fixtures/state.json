@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "idea.state", "fields": {"name": "Active", "previous": null}}, {"pk": 2, "model": "idea.state", "fields": {"name": "Archive", "previous": 1}}]
