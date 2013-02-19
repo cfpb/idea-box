@@ -87,9 +87,15 @@ def list(request, sort_or_state=None):
             tag_slugs = ",".join([s for s in tag_strs if s != tag.slug])
         else:
             tag_slugs = ",".join(tag_strs + [tag.slug])
-        tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list',
-            args=(sort_or_state,)), tag_slugs)
-        tag.active = tag.slug in tag_strs
+        #   Minor tweak: Links just turn on/off a single tag
+        if tag.slug in tag_strs:
+            tag.tag_url = "%s"  %  (reverse('idea_list',
+                args=(sort_or_state,)))
+            tag.active = True
+        else:
+            tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list',
+                args=(sort_or_state,)), tag.slug)
+            tag.active = False
 
     total_num_ideas = Idea.objects.all().count()
 
