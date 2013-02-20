@@ -44,10 +44,9 @@
 						<div class="idea-entry-content span8">
 							<p>{{idea.text}}</p>
                                                         {% get_comment_list for idea.idea idea.id as comment_list %}
-							<div id="comments" class="comments">
-								<h4>Comments</h4>							
+							<div id="comments" class="comments">							
 							<div class="comment-total">
-								<span class="comment-number">{{comment_list|length}}</span>
+								<h4>{{comment_list|length}} Comments</h4>
 							</div><!-- /comment-total -->
 							<div class="comments-wrap">
 								<div class="comment-form">
