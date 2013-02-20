@@ -6,3 +6,11 @@ Images
 Images originate from:
 Font Awesome by Dave Gandy - http://fortawesome.github.com/Font-Awesome
 and are licensed under CC BY 3.0
+
+Base Styles
+
+Much of base.css originates from:
+Fluid Baseline Grid v1.0.0
+https://github.com/thedayhascome/Fluid-Baseline-Grid
+Designed & Built by Josh Hopkins and 40 Horse, http://40horse.com   
+Licensed under Unlicense, http://unlicense.org/
