@@ -80,56 +80,56 @@ h1 {
     margin: 0;
     /* 60px / 72px */
     font-size: 3.75em;
-    line-height: 1.2em;
+    line-height: 1.2;
     margin-bottom: 0.4em;
 }
 h2 {
     margin: 0;
     /* 48px / 48px */
     font-size: 3em;
-    line-height: 1em;
+    line-height: 1;
     margin-bottom: 0.5em;
 }
 h3 {
     margin: 0;
     /* 36px / 48px */ 
     font-size: 2.25em;
-    line-height: 1.3333333333333333333333333333333em;
+    line-height: 1.3333333333333333333333333333333;
     margin-bottom: 0.6667em;
 }
 h4 {
     margin: 0;
     /* 24px / 24px */
     font-size: 1.5em;
-    line-height: 1em;
+    line-height: 1;
     margin-bottom: 1em;
 }
 h5 {
     margin: 0;
     /* 21px / 24px */
     font-size: 1.3125em;
-    line-height: 1.1428571428571428571428571428571em;
+    line-height: 1.1428571428571428571428571428571;
     margin-bottom: 1.1428571428571428571428571428571em;
 }
 h6 {
     margin: 0;
     /* 18px / 24px */
     font-size: 1.125em;
-    line-height: 1.3333333333333333333333333333333em;
+    line-height: 1.3333333333333333333333333333333;
     margin-bottom: 1.3333333333333333333333333333333em;
 }
-p, ul, blockquote, pre, td, th, label {
+p, ul, blockquote, pre, td, th {
     margin: 0;
     /* 16px / 24px */
     font-size: 1em;
-    line-height: 1.5em;
+    line-height: 1.5;
     margin-bottom: 1.5em;
 }
 small, p.small {
     margin: 0;
     /* 14px / 24px */
     font-size: 0.875em;
-    line-height: 1.7142857142857142857142857142857em;
+    line-height: 1.7142857142857142857142857142857;
     margin-bottom: 1.7142857142857142857142857142857em;
 }
 
@@ -142,7 +142,7 @@ pre {
 }
 pre, code, kbd, samp {
     font-size: 1em;
-    line-height: 1.5em;
+    line-height: 1.5;
     margin-bottom: 1.5em;
     font-family: Menlo, Consolas, 'DejaVu Sans Mono', Monaco, monospace;
 }
@@ -368,6 +368,12 @@ body {
 .search-form textarea {
     border: 1px solid #aaa;
     height: 2.5em !important;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
 }
 
 /* Grid */
