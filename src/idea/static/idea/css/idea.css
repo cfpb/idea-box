@@ -186,27 +186,19 @@
 .comments {
     position: relative;
 }
-.comment-total {
-    background: url(../img/comment-icon-detail.png) no-repeat;
-    color: #fff;
-    display: block;
-    font-weight: 600;
-    height: 40px;
-    padding: 0.25em 0;
-    position: absolute;
-    top: 1.875em;
-    left: -4em;
-    text-align: center;
-    width: 47px;
-}
 .comments h4 {
+    background: url(../img/comment-icon-detail.png) 0 0 no-repeat;
+    font-size: 100%;
     font-weight: bold;
+    line-height: 1.66;
+    min-height: 1.75em;
+    padding-left: 3.3125em;
     text-transform: uppercase;
 }
 .comment-form {
     background-color: #f2f2f2;
     padding: 0.625em 0.625em 2.8em;
-    margin: 1.875em 0 0;
+    margin: 1.5625em 0 0;
 }
 .comment-form textarea {
     height: 6.25em;
@@ -382,7 +374,7 @@
 .idea-single .comments {
     border-top: 3px solid #f2f2f2;
     margin-top: 2.5em;
-    padding-top: 1.875em;
+    padding-top: 1.5625em;
 }
 .idea-single .vote-cta {
     padding-bottom: 0.625em;
