@@ -8,6 +8,8 @@ Collecting and surfacing ideas from everyone.
 backends.
 * pysolr (3.0.3) - Library for communicating with solr.
 * django-taggit - A library for Tags within django
+* mock - A library for creating mock objects for testing. 
+* south - A library for schema and data migrations. 
 
 * solr (and java) - A Search backend. Unfortunately, we currently require
 Solr (rather than another backend) because we need specific functionality
