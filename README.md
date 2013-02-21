@@ -104,3 +104,11 @@ If users in the system have a profile module specified our templates will use
 this to link users to a profile page.  This is specified through the
 AUTH_PROFILE_MODULE setting. Your profile module will also have to specify a
 get_absolute_url() method.
+
+### Buildout
+To use buildout, run the following:
+```bash
+$ pip install zc.buildout distribute
+$ buildout
+```
+Then, run the django binary in the ```bin``` directory.
