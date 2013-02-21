@@ -4,16 +4,16 @@
 /* Base */
 .ic * {
     font-family: "Avenir Next", Arial, sans-serif;
-    font-weight: 400;
 }
 .ic a {
     color: #43b02a;
-    text-decoration: underline;
+    font-weight: bold;
+    text-decoration: none;
 }
 .ic a:hover,
 .ic a:active,
 .ic a:focus {
-    text-decoration: none;
+    text-decoration: underline;
 }
 .ic a:focus {
     outline: thin dotted #111;
@@ -155,6 +155,7 @@
 }
 .idea-title h3 {
     font-size: 150%; /* 24px */
+    font-weight: 600;
     line-height: 1.33;
     margin-bottom: 0.25em;
 }
@@ -282,6 +283,7 @@
     background-color: #f4dc9a;
     color: #101820;
     font-size: 87.5%;
+    font-weight: normal;
     padding: 0.625em 0 0.625em 0.625em;
     text-decoration: none;
     text-transform: uppercase;
@@ -506,6 +508,9 @@ span.btn-archive:hover {
 .idea-add .alert-none p {
      display: block;
      margin-bottom: 0.25em;
+}
+.result-number {
+    font-weight: bold;
 }
  /* Image replacement */
 .ir {
