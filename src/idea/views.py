@@ -11,7 +11,7 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-from haystack import backend
+from haystack import backend, site
 
 from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner
@@ -162,6 +162,8 @@ def detail(request, idea_id):
             tags = [tag.strip() for tag in data.split(',') 
                     if tag.strip() != '']
             idea.tags.add(*tags)
+            #   Make sure the search index included the tags
+            site.get_index(Idea).update_object(idea)
             return HttpResponseRedirect(
                     reverse('idea_detail', args=(idea.id,)))
     else:
@@ -206,6 +208,8 @@ def add_idea(request):
             if form.is_valid():
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
+                #   Make sure the search index included the tags
+                site.get_index(Idea).update_object(new_idea)
                 return HttpResponseRedirect(reverse('idea_detail', args=(idea.id,)))
         else:
             return HttpResponse('Idea is archived', status=403)
