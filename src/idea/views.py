@@ -11,7 +11,7 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-from haystack import backend
+from haystack import backend, site
 
 from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner
@@ -87,9 +87,15 @@ def list(request, sort_or_state=None):
             tag_slugs = ",".join([s for s in tag_strs if s != tag.slug])
         else:
             tag_slugs = ",".join(tag_strs + [tag.slug])
-        tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list',
-            args=(sort_or_state,)), tag_slugs)
-        tag.active = tag.slug in tag_strs
+        #   Minor tweak: Links just turn on/off a single tag
+        if tag.slug in tag_strs:
+            tag.tag_url = "%s"  %  (reverse('idea_list',
+                args=(sort_or_state,)))
+            tag.active = True
+        else:
+            tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list',
+                args=(sort_or_state,)), tag.slug)
+            tag.active = False
 
     total_num_ideas = Idea.objects.all().count()
 
@@ -156,6 +162,8 @@ def detail(request, idea_id):
             tags = [tag.strip() for tag in data.split(',') 
                     if tag.strip() != '']
             idea.tags.add(*tags)
+            #   Make sure the search index included the tags
+            site.get_index(Idea).update_object(idea)
             return HttpResponseRedirect(
                     reverse('idea_detail', args=(idea.id,)))
     else:
@@ -200,6 +208,8 @@ def add_idea(request):
             if form.is_valid():
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
+                #   Make sure the search index included the tags
+                site.get_index(Idea).update_object(new_idea)
                 return HttpResponseRedirect(reverse('idea_detail', args=(idea.id,)))
         else:
             return HttpResponse('Idea is archived', status=403)

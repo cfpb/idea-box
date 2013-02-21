@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = "idea-collection", 
-	version = "0.1", 
+	version = "0.1.0", 
         #url = "TBD",
 	license = "public domain", 
 	description = "An idea collection tool for django", 
