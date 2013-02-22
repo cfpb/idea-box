@@ -28,8 +28,8 @@
 					<nav id="main-nav" class="main-nav" role="navigation">
                         <ul {% if sort_or_state == 'vote' %}class="active"{% endif %}>
                             <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{%url idea_list "vote"%}">Most Voted</a></li>
-                            <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{%url idea_list "comment"%}">Commented</a></li>
-                            <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{%url idea_list "recent"%}">Recent</a></li>
+                            <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{%url idea_list "comment"%}">Most Commented</a></li>
+                            <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{%url idea_list "recent"%}">Most Recent</a></li>
                             <li {% if sort_or_state == 'archived' %}class="active"{% endif %}><a class="last" href="{%url idea_list "archived"%}">Archive</a></li>
 						</ul><!-- /nav -->
 					</nav><!-- /main-nav -->

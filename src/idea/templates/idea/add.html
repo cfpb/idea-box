@@ -11,10 +11,10 @@
 								<a href="{%url idea_list%}"><h2 class="project-title">Idea<br>Box</h2></a>
                                 {% if not similar %}
                                 <div class="alert-none"> 
-									<p><strong>{{similar|length}}</strong> similar idea{{similar|pluralize}}</p>
+									<p><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</p>
                                 {% else %}
                                 <div class="alert"> 
-									<p><a href="#main"><strong>{{similar|length}}</strong> similar idea{{similar|pluralize}}</a></p>
+									<p><a href="#main"><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</a></p>
                                 {% endif %}
 									<span class="down"></span>
 								</div>
