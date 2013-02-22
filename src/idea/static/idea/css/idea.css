@@ -126,6 +126,7 @@
 .main-nav ul li a.active {
     background: #43b02a;
     color: #fff;
+    text-decoration: none;
 }
 
 /* Content */
