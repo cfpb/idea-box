@@ -136,6 +136,9 @@
     border-bottom: 1px solid #f2f2f2;
     padding: 2.5em 0;
 }
+.no-results {
+    padding: 2.5em 0;
+}
 .idea-entry.hover {
    background-color: #f2f2f2;
 }
@@ -477,12 +480,18 @@ span.btn-archive:hover {
 }
 .idea-add .alert {
     color: #d14124;
+    display: block;
     margin-top: 1.6em;
     text-align: center;
     text-transform: uppercase;
 }
-.idea-add .alert a {
+.idea-add a .alert {
     color: #d14124;
+    text-decoration: none;
+}
+.idea-add a:hover .alert,
+.idea-add a:focus .alert {
+    border-color: #d14124 !important;
 }
 .idea-add .alert .down {
     background: url(../img/alert-arrow.png) 0 50% no-repeat;
@@ -495,8 +504,8 @@ span.btn-archive:hover {
     border: 3px solid #999;
     box-sizing: border-box;
     color: #999;
-    margin-bottom: 2em;
-    margin-top: 1.6em;
+    display: block;
+    margin: 1.25em 0;
     padding: 0.5em 1em ;
     text-align: center;
     text-transform: uppercase;
@@ -507,7 +516,7 @@ span.btn-archive:hover {
     padding: 0.6875em;
     width: 22px;
 }
-.idea-add .alert p,
+.idea-add .alert .alert-content,
 .idea-add .alert-none p {
      display: block;
      margin-bottom: 0.25em;
