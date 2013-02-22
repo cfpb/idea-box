@@ -31,7 +31,8 @@
 .logo {
     padding: 0 0 0 5em;
 }
-.logo a {
+.logo a,
+.logo a:hover {
     text-decoration: none;
 }
 .project-title {
@@ -39,7 +40,7 @@
     display: inline;
     font-size: 312.5%; /* 50px */
     font-weight: bold;
-    line-height: 0.78;
+    line-height: 0.80;
     text-transform: uppercase;
 }
 .project-search {
@@ -72,8 +73,9 @@
     color: #fff;
     font-size: 150%; /* 24px */
     font-weight: 600;
+    height: 1.635em;
     margin-left: -0.2em;
-    padding: 0.20em 1em;
+    padding: 0.15em 1em;
 }
 .start-btn:hover,
 .start-btn:active,
@@ -132,6 +134,9 @@
 /* Content */
 .idea-entry {
     border-bottom: 1px solid #f2f2f2;
+    padding: 2.5em 0;
+}
+.no-results {
     padding: 2.5em 0;
 }
 .idea-entry.hover {
@@ -294,6 +299,7 @@
 .ic-tags a:focus,
 .ic-tags a.active {
     background-color: #fdcb40;
+    text-decoration: none;
 }
 .ic-tags a span.num {
     background-color: #d0d0ce;
@@ -475,12 +481,18 @@ span.btn-archive:hover {
 }
 .idea-add .alert {
     color: #d14124;
+    display: block;
     margin-top: 1.6em;
     text-align: center;
     text-transform: uppercase;
 }
-.idea-add .alert a {
+.idea-add a .alert {
     color: #d14124;
+    text-decoration: none;
+}
+.idea-add a:hover .alert,
+.idea-add a:focus .alert {
+    border-color: #d14124 !important;
 }
 .idea-add .alert .down {
     background: url(../img/alert-arrow.png) 0 50% no-repeat;
@@ -493,8 +505,8 @@ span.btn-archive:hover {
     border: 3px solid #999;
     box-sizing: border-box;
     color: #999;
-    margin-bottom: 2em;
-    margin-top: 1.6em;
+    display: block;
+    margin: 1.25em 0;
     padding: 0.5em 1em ;
     text-align: center;
     text-transform: uppercase;
@@ -505,7 +517,7 @@ span.btn-archive:hover {
     padding: 0.6875em;
     width: 22px;
 }
-.idea-add .alert p,
+.idea-add .alert .alert-content,
 .idea-add .alert-none p {
      display: block;
      margin-bottom: 0.25em;

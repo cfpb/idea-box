@@ -12,12 +12,16 @@
                                 {% if not similar %}
                                 <div class="alert-none"> 
 									<p><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</p>
-                                {% else %}
-                                <div class="alert"> 
-									<p><a href="#main"><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</a></p>
-                                {% endif %}
 									<span class="down"></span>
-								</div>
+								</div><!-- /alert-none -->
+                                {% else %}
+                                <a href="#main">
+	                                <span class="alert"> 
+										<span class="alert-content"><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</span>
+										<span class="down"></span>
+									</span><!-- /alert -->
+								</a>
+	                            {% endif %}
 							</div><!-- /logo -->
 							<div class="project-search add span8">
 								<h2 class="project-description">{{banner.text}}</h2>
@@ -33,6 +37,7 @@
 						</div><!-- /row -->
 					</header><!-- /project-header -->
 				</section><!-- /idea-hero -->
+			</div><!-- /row -->
 			<div class="row">
 				<section id="main" class="main-content span9">
                     {% for idea in similar %}
