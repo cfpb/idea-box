@@ -17,7 +17,7 @@
 									<p><a href="#main"><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</a></p>
                                 {% endif %}
 									<span class="down"></span>
-								</div>
+								</div><!-- /alert-none or /alert -->
 							</div><!-- /logo -->
 							<div class="project-search add span8">
 								<h2 class="project-description">{{banner.text}}</h2>
@@ -33,6 +33,7 @@
 						</div><!-- /row -->
 					</header><!-- /project-header -->
 				</section><!-- /idea-hero -->
+			</div><!-- /row -->
 			<div class="row">
 				<section id="main" class="main-content span9">
                     {% for idea in similar %}
