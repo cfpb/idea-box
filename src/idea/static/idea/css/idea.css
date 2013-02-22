@@ -40,7 +40,7 @@
     display: inline;
     font-size: 312.5%; /* 50px */
     font-weight: bold;
-    line-height: 0.95;
+    line-height: 0.80;
     text-transform: uppercase;
 }
 .project-search {
@@ -64,7 +64,7 @@
 }
 .search-form input[type="text"],
 .search-form textarea {
-    height: 2.5em;
+    height: 2em;
     width: 80%;
 }
 .start-btn {
@@ -73,9 +73,9 @@
     color: #fff;
     font-size: 150%; /* 24px */
     font-weight: 600;
-    height: 2em;
+    height: 1.635em;
     margin-left: -0.2em;
-    padding: 0.25em 1em;
+    padding: 0.15em 1em;
 }
 .start-btn:hover,
 .start-btn:active,
@@ -299,6 +299,7 @@
 .ic-tags a:focus,
 .ic-tags a.active {
     background-color: #fdcb40;
+    text-decoration: none;
 }
 .ic-tags a span.num {
     background-color: #d0d0ce;
