@@ -31,7 +31,8 @@
 .logo {
     padding: 0 0 0 5em;
 }
-.logo a {
+.logo a,
+.logo a:hover {
     text-decoration: none;
 }
 .project-title {
