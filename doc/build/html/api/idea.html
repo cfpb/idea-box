@@ -1,0 +1,549 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>idea Package &mdash; Idea Box 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Idea Box 0.1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Idea Box 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="idea-package">
+<h1>idea Package<a class="headerlink" href="#idea-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-idea.admin">
+<span id="admin-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">admin</span></tt> Module<a class="headerlink" href="#module-idea.admin" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-idea.forms">
+<span id="forms-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">forms</span></tt> Module<a class="headerlink" href="#module-idea.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.forms.IdeaForm">
+<em class="property">class </em><tt class="descclassname">idea.forms.</tt><tt class="descname">IdeaForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#idea.forms.IdeaForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.forms.models.ModelForm</span></tt></p>
+<dl class="class">
+<dt id="idea.forms.IdeaForm.Meta">
+<em class="property">class </em><tt class="descname">Meta</tt><a class="headerlink" href="#idea.forms.IdeaForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="idea.forms.IdeaForm.Meta.exclude">
+<tt class="descname">exclude</tt><em class="property"> = ('creator', 'time', 'state')</em><a class="headerlink" href="#idea.forms.IdeaForm.Meta.exclude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.forms.IdeaForm.Meta.model">
+<tt class="descname">model</tt><a class="headerlink" href="#idea.forms.IdeaForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">Idea</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.forms.IdeaForm.base_fields">
+<tt class="descclassname">IdeaForm.</tt><tt class="descname">base_fields</tt><em class="property"> = {'title': &lt;django.forms.fields.CharField object at 0x3b0ebd0&gt;, 'text': &lt;django.forms.fields.CharField object at 0x3b0e7d0&gt;, 'tags': &lt;taggit.forms.TagField object at 0x3b0ea10&gt;}</em><a class="headerlink" href="#idea.forms.IdeaForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.forms.IdeaForm.clean_tags">
+<tt class="descclassname">IdeaForm.</tt><tt class="descname">clean_tags</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.forms.IdeaForm.clean_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force tags to lowercase, since tags are case-sensitive otherwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.forms.IdeaForm.declared_fields">
+<tt class="descclassname">IdeaForm.</tt><tt class="descname">declared_fields</tt><em class="property"> = {}</em><a class="headerlink" href="#idea.forms.IdeaForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.forms.IdeaForm.media">
+<tt class="descclassname">IdeaForm.</tt><tt class="descname">media</tt><a class="headerlink" href="#idea.forms.IdeaForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.forms.IdeaTagForm">
+<em class="property">class </em><tt class="descclassname">idea.forms.</tt><tt class="descname">IdeaTagForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=':'</em>, <em>empty_permitted=False</em><big>)</big><a class="headerlink" href="#idea.forms.IdeaTagForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.forms.forms.Form</span></tt></p>
+<dl class="attribute">
+<dt id="idea.forms.IdeaTagForm.base_fields">
+<tt class="descname">base_fields</tt><em class="property"> = {'tags': &lt;django.forms.fields.CharField object at 0x3b0e450&gt;}</em><a class="headerlink" href="#idea.forms.IdeaTagForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.forms.IdeaTagForm.clean_tags">
+<tt class="descname">clean_tags</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.forms.IdeaTagForm.clean_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force tags to lowercase, since tags are case-sensitive otherwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.forms.IdeaTagForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#idea.forms.IdeaTagForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.forms.UpVoteForm">
+<em class="property">class </em><tt class="descclassname">idea.forms.</tt><tt class="descname">UpVoteForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=':'</em>, <em>empty_permitted=False</em><big>)</big><a class="headerlink" href="#idea.forms.UpVoteForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.forms.forms.Form</span></tt></p>
+<dl class="attribute">
+<dt id="idea.forms.UpVoteForm.base_fields">
+<tt class="descname">base_fields</tt><em class="property"> = {'idea_id': &lt;django.forms.fields.IntegerField object at 0x3b0e810&gt;, 'next': &lt;django.forms.fields.CharField object at 0x3b0e390&gt;}</em><a class="headerlink" href="#idea.forms.UpVoteForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.forms.UpVoteForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#idea.forms.UpVoteForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.models">
+<span id="models-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">models</span></tt> Module<a class="headerlink" href="#module-idea.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.models.Banner">
+<em class="property">class </em><tt class="descclassname">idea.models.</tt><tt class="descname">Banner</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.models.Banner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></tt></p>
+<p>The banner text at the beginning of IdeaBox pages, asking the question. 
+This can be used to run informal campaigns soliciting ideas around specific 
+topics.</p>
+<dl class="exception">
+<dt id="idea.models.Banner.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#idea.models.Banner.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="idea.models.Banner.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">Banner.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#idea.models.Banner.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Banner.get_next_by_start_date">
+<tt class="descclassname">Banner.</tt><tt class="descname">get_next_by_start_date</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Banner.get_next_by_start_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Banner.get_previous_by_start_date">
+<tt class="descclassname">Banner.</tt><tt class="descname">get_previous_by_start_date</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Banner.get_previous_by_start_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Banner.objects">
+<tt class="descclassname">Banner.</tt><tt class="descname">objects</tt><em class="property"> = &lt;django.db.models.manager.Manager object at 0x2b186d0&gt;</em><a class="headerlink" href="#idea.models.Banner.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.models.Idea">
+<em class="property">class </em><tt class="descclassname">idea.models.</tt><tt class="descname">Idea</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.models.Idea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#idea.models.UserTrackable" title="idea.models.UserTrackable"><tt class="xref py py-class docutils literal"><span class="pre">idea.models.UserTrackable</span></tt></a></p>
+<p>Idea(id, creator_id, time, title, text, state_id)</p>
+<dl class="exception">
+<dt id="idea.models.Idea.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#idea.models.Idea.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="idea.models.Idea.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">Idea.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#idea.models.Idea.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Idea.creator">
+<tt class="descclassname">Idea.</tt><tt class="descname">creator</tt><a class="headerlink" href="#idea.models.Idea.creator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Idea.get_creator_profile">
+<tt class="descclassname">Idea.</tt><tt class="descname">get_creator_profile</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.models.Idea.get_creator_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Idea.get_next_by_time">
+<tt class="descclassname">Idea.</tt><tt class="descname">get_next_by_time</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Idea.get_next_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Idea.get_previous_by_time">
+<tt class="descclassname">Idea.</tt><tt class="descname">get_previous_by_time</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Idea.get_previous_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Idea.objects">
+<tt class="descclassname">Idea.</tt><tt class="descname">objects</tt><em class="property"> = &lt;idea.models.IdeaManager object at 0x2b18bd0&gt;</em><a class="headerlink" href="#idea.models.Idea.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Idea.state">
+<tt class="descclassname">Idea.</tt><tt class="descname">state</tt><a class="headerlink" href="#idea.models.Idea.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Idea.tagged_items">
+<tt class="descclassname">Idea.</tt><tt class="descname">tagged_items</tt><a class="headerlink" href="#idea.models.Idea.tagged_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the functionality that makes the related-object
+managers available as attributes on a model class, for fields that have
+multiple &#8220;remote&#8221; values and have a GenericRelation defined in their model
+(rather than having another model pointed <em>at</em> them). In the example
+&#8220;article.publications&#8221;, the publications attribute is a
+ReverseGenericRelatedObjectsDescriptor instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Idea.tags">
+<tt class="descclassname">Idea.</tt><tt class="descname">tags</tt><em class="property"> = &lt;taggit.managers._TaggableManager object at 0x3d1f950&gt;</em><a class="headerlink" href="#idea.models.Idea.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Idea.url">
+<tt class="descclassname">Idea.</tt><tt class="descname">url</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.models.Idea.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup the view url for this idea.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Idea.vote_set">
+<tt class="descclassname">Idea.</tt><tt class="descname">vote_set</tt><a class="headerlink" href="#idea.models.Idea.vote_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.models.IdeaManager">
+<em class="property">class </em><tt class="descclassname">idea.models.</tt><tt class="descname">IdeaManager</tt><a class="headerlink" href="#idea.models.IdeaManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.db.models.manager.Manager</span></tt></p>
+<dl class="method">
+<dt id="idea.models.IdeaManager.related_with_counts">
+<tt class="descname">related_with_counts</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.models.IdeaManager.related_with_counts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.models.State">
+<em class="property">class </em><tt class="descclassname">idea.models.</tt><tt class="descname">State</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.models.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></tt></p>
+<p>The state an idea goes through.</p>
+<dl class="exception">
+<dt id="idea.models.State.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#idea.models.State.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="idea.models.State.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">State.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#idea.models.State.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.State.idea_set">
+<tt class="descclassname">State.</tt><tt class="descname">idea_set</tt><a class="headerlink" href="#idea.models.State.idea_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.State.objects">
+<tt class="descclassname">State.</tt><tt class="descname">objects</tt><em class="property"> = &lt;django.db.models.manager.Manager object at 0x2b18950&gt;</em><a class="headerlink" href="#idea.models.State.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.State.previous">
+<tt class="descclassname">State.</tt><tt class="descname">previous</tt><a class="headerlink" href="#idea.models.State.previous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.State.state">
+<tt class="descclassname">State.</tt><tt class="descname">state</tt><a class="headerlink" href="#idea.models.State.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.models.UserTrackable">
+<em class="property">class </em><tt class="descclassname">idea.models.</tt><tt class="descname">UserTrackable</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.models.UserTrackable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></tt></p>
+<dl class="class">
+<dt id="idea.models.UserTrackable.Meta">
+<em class="property">class </em><tt class="descname">Meta</tt><a class="headerlink" href="#idea.models.UserTrackable.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="idea.models.UserTrackable.Meta.abstract">
+<tt class="descname">abstract</tt><em class="property"> = False</em><a class="headerlink" href="#idea.models.UserTrackable.Meta.abstract" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.UserTrackable.creator">
+<tt class="descclassname">UserTrackable.</tt><tt class="descname">creator</tt><a class="headerlink" href="#idea.models.UserTrackable.creator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.UserTrackable.get_next_by_time">
+<tt class="descclassname">UserTrackable.</tt><tt class="descname">get_next_by_time</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.UserTrackable.get_next_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.UserTrackable.get_previous_by_time">
+<tt class="descclassname">UserTrackable.</tt><tt class="descname">get_previous_by_time</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.UserTrackable.get_previous_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="idea.models.Vote">
+<em class="property">class </em><tt class="descclassname">idea.models.</tt><tt class="descname">Vote</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.models.Vote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#idea.models.UserTrackable" title="idea.models.UserTrackable"><tt class="xref py py-class docutils literal"><span class="pre">idea.models.UserTrackable</span></tt></a></p>
+<p>Vote(id, creator_id, time, vote, idea_id)</p>
+<dl class="exception">
+<dt id="idea.models.Vote.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#idea.models.Vote.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="idea.models.Vote.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">Vote.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#idea.models.Vote.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Vote.creator">
+<tt class="descclassname">Vote.</tt><tt class="descname">creator</tt><a class="headerlink" href="#idea.models.Vote.creator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Vote.get_next_by_time">
+<tt class="descclassname">Vote.</tt><tt class="descname">get_next_by_time</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Vote.get_next_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Vote.get_previous_by_time">
+<tt class="descclassname">Vote.</tt><tt class="descname">get_previous_by_time</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Vote.get_previous_by_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.models.Vote.get_vote_display">
+<tt class="descclassname">Vote.</tt><tt class="descname">get_vote_display</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#idea.models.Vote.get_vote_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Vote.idea">
+<tt class="descclassname">Vote.</tt><tt class="descname">idea</tt><a class="headerlink" href="#idea.models.Vote.idea" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="idea.models.Vote.objects">
+<tt class="descclassname">Vote.</tt><tt class="descname">objects</tt><em class="property"> = &lt;django.db.models.manager.Manager object at 0x2b1c690&gt;</em><a class="headerlink" href="#idea.models.Vote.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.search_indexes">
+<span id="search-indexes-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">search_indexes</span></tt> Module<a class="headerlink" href="#module-idea.search_indexes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.search_indexes.IdeaIndex">
+<em class="property">class </em><tt class="descclassname">idea.search_indexes.</tt><tt class="descname">IdeaIndex</tt><big>(</big><em>model</em>, <em>backend=None</em><big>)</big><a class="headerlink" href="#idea.search_indexes.IdeaIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">haystack.indexes.RealTimeSearchIndex</span></tt></p>
+<dl class="attribute">
+<dt id="idea.search_indexes.IdeaIndex.fields">
+<tt class="descname">fields</tt><em class="property"> = {'text': &lt;haystack.fields.CharField object at 0x3af9890&gt;}</em><a class="headerlink" href="#idea.search_indexes.IdeaIndex.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.search_indexes.IdeaIndex.index_queryset">
+<tt class="descname">index_queryset</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.search_indexes.IdeaIndex.index_queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.urls">
+<span id="urls-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">urls</span></tt> Module<a class="headerlink" href="#module-idea.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-idea.views">
+<span id="views-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">views</span></tt> Module<a class="headerlink" href="#module-idea.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="idea.views.add_idea">
+<tt class="descclassname">idea.views.</tt><tt class="descname">add_idea</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.views.add_idea" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="idea.views.detail">
+<tt class="descclassname">idea.views.</tt><tt class="descname">detail</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.views.detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detail view; idea_id must be a string containing an int.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="idea.views.get_banner">
+<tt class="descclassname">idea.views.</tt><tt class="descname">get_banner</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.views.get_banner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="idea.views.list">
+<tt class="descclassname">idea.views.</tt><tt class="descname">list</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.views.list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="idea.views.more_like_text">
+<tt class="descclassname">idea.views.</tt><tt class="descname">more_like_text</tt><big>(</big><em>text</em>, <em>klass</em><big>)</big><a class="headerlink" href="#idea.views.more_like_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return more entries like the provided chunk of text. We have to jump
+through some hoops to get this working as the haystack API does not
+account for this case. In particular, this is a solr-specific hack.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="idea.views.up_vote">
+<tt class="descclassname">idea.views.</tt><tt class="descname">up_vote</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.views.up_vote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="idea.views.vote_up">
+<tt class="descclassname">idea.views.</tt><tt class="descname">vote_up</tt><big>(</big><em>idea</em>, <em>user</em><big>)</big><a class="headerlink" href="#idea.views.vote_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="idea.buildout.html">buildout Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="idea.buildout.html#module-idea.buildout.search_sites"><tt class="docutils literal"><span class="pre">search_sites</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.buildout.html#module-idea.buildout.testsettings"><tt class="docutils literal"><span class="pre">testsettings</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.buildout.html#module-idea.buildout.urls"><tt class="docutils literal"><span class="pre">urls</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="idea.migrations.html">migrations Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0001_initial"><tt class="docutils literal"><span class="pre">0001_initial</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0002_auto__del_field_comment_issue__add_field_comment_idea"><tt class="docutils literal"><span class="pre">0002_auto__del_field_comment_issue__add_field_comment_idea</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0003_auto__add_field_state_previous__chg_field_idea_text__chg_field_idea_ti"><tt class="docutils literal"><span class="pre">0003_auto__add_field_state_previous__chg_field_idea_text__chg_field_idea_ti</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0004_statuses"><tt class="docutils literal"><span class="pre">0004_statuses</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0005_auto__chg_field_vote_time__chg_field_comment_time"><tt class="docutils literal"><span class="pre">0005_auto__chg_field_vote_time__chg_field_comment_time</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0006_auto__chg_field_vote_time__chg_field_comment_time__chg_field_idea_time"><tt class="docutils literal"><span class="pre">0006_auto__chg_field_vote_time__chg_field_comment_time__chg_field_idea_time</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0007_auto__del_comment__add_field_vote_vote"><tt class="docutils literal"><span class="pre">0007_auto__del_comment__add_field_vote_vote</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.migrations.html#module-idea.migrations.0008_auto__add_banner"><tt class="docutils literal"><span class="pre">0008_auto__add_banner</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="idea.tests.html">tests Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.addidea"><tt class="docutils literal"><span class="pre">addidea</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.banner_tests"><tt class="docutils literal"><span class="pre">banner_tests</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.detailview"><tt class="docutils literal"><span class="pre">detailview</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.ideaform"><tt class="docutils literal"><span class="pre">ideaform</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.listview"><tt class="docutils literal"><span class="pre">listview</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.search"><tt class="docutils literal"><span class="pre">search</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idea.tests.html#module-idea.tests.voting"><tt class="docutils literal"><span class="pre">voting</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="idea.utility.html">utility Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="idea.utility.html#module-idea.utility.state_helper"><tt class="docutils literal"><span class="pre">state_helper</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">idea Package</a><ul>
+<li><a class="reference internal" href="#module-idea.admin"><tt class="docutils literal"><span class="pre">admin</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.forms"><tt class="docutils literal"><span class="pre">forms</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.models"><tt class="docutils literal"><span class="pre">models</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.search_indexes"><tt class="docutils literal"><span class="pre">search_indexes</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.urls"><tt class="docutils literal"><span class="pre">urls</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.views"><tt class="docutils literal"><span class="pre">views</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/idea.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Idea Box 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

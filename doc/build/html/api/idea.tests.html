@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests Package &mdash; Idea Box 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Idea Box 0.1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Idea Box 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tests-package">
+<h1>tests Package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">tests</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-idea.tests"></span></div>
+<div class="section" id="module-idea.tests.addidea">
+<span id="addidea-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">addidea</span></tt> Module<a class="headerlink" href="#module-idea.tests.addidea" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.addidea.AddIdeaTest">
+<em class="property">class </em><tt class="descclassname">idea.tests.addidea.</tt><tt class="descname">AddIdeaTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.addidea.AddIdeaTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<dl class="attribute">
+<dt id="idea.tests.addidea.AddIdeaTest.fixtures">
+<tt class="descname">fixtures</tt><em class="property"> = ['state']</em><a class="headerlink" href="#idea.tests.addidea.AddIdeaTest.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.addidea.AddIdeaTest.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.addidea.AddIdeaTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.addidea.AddIdeaTest.test_good_idea">
+<tt class="descname">test_good_idea</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.addidea.AddIdeaTest.test_good_idea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test an normal POST submission to add an idea.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.addidea.AddIdeaTest.test_must_be_logged_in">
+<tt class="descname">test_must_be_logged_in</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.addidea.AddIdeaTest.test_must_be_logged_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>A user must be logged in to create an idea.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.addidea.AddIdeaTest.test_similar">
+<tt class="descname">test_similar</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.addidea.AddIdeaTest.test_similar" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of similar ideas should make sense.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.banner_tests">
+<span id="banner-tests-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">banner_tests</span></tt> Module<a class="headerlink" href="#module-idea.tests.banner_tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.banner_tests.BannerTest">
+<em class="property">class </em><tt class="descclassname">idea.tests.banner_tests.</tt><tt class="descname">BannerTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.BannerTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<dl class="method">
+<dt id="idea.tests.banner_tests.BannerTest.test_indefinite_banner">
+<tt class="descname">test_indefinite_banner</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.BannerTest.test_indefinite_banner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.banner_tests.BannerTest.test_no_banner">
+<tt class="descname">test_no_banner</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.BannerTest.test_no_banner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.banner_tests.BannerTest.test_outside_timed">
+<tt class="descname">test_outside_timed</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.BannerTest.test_outside_timed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.banner_tests.BannerTest.test_timebound_banner">
+<tt class="descname">test_timebound_banner</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.BannerTest.test_timebound_banner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.banner_tests.BannerTest.test_timed_before_indefinite">
+<tt class="descname">test_timed_before_indefinite</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.BannerTest.test_timed_before_indefinite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="idea.tests.banner_tests.get_relative_date">
+<tt class="descclassname">idea.tests.banner_tests.</tt><tt class="descname">get_relative_date</tt><big>(</big><em>delta_days=0</em><big>)</big><a class="headerlink" href="#idea.tests.banner_tests.get_relative_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.detailview">
+<span id="detailview-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">detailview</span></tt> Module<a class="headerlink" href="#module-idea.tests.detailview" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.detailview.DetailViewTest">
+<em class="property">class </em><tt class="descclassname">idea.tests.detailview.</tt><tt class="descname">DetailViewTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<p>Tests for idea.views.detail.</p>
+<dl class="attribute">
+<dt id="idea.tests.detailview.DetailViewTest.fixtures">
+<tt class="descname">fixtures</tt><em class="property"> = ['state']</em><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_404s">
+<tt class="descname">test_404s</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_404s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should get a 404 when using a bad idea_id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_idea_correct">
+<tt class="descname">test_idea_correct</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_idea_correct" title="Permalink to this definition">¶</a></dt>
+<dd><p>The idea passed to the ui should be that identified by the id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_idea_no_support">
+<tt class="descname">test_idea_no_support</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_idea_no_support" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check support = False if no votes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_idea_support">
+<tt class="descname">test_idea_support</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_idea_support" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check support = True if voted votes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_idea_voters">
+<tt class="descname">test_idea_voters</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_idea_voters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The idea passed to the ui should have the correct voters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_tag_form_exists">
+<tt class="descname">test_tag_form_exists</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_tag_form_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detail page should have a form for adding tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_tag_form_submission">
+<tt class="descname">test_tag_form_submission</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_tag_form_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detail page tag form submission should add tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.detailview.DetailViewTest.test_tags">
+<tt class="descname">test_tags</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.detailview.DetailViewTest.test_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include a sorted list of tags for this idea.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.ideaform">
+<span id="ideaform-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ideaform</span></tt> Module<a class="headerlink" href="#module-idea.tests.ideaform" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.ideaform.IdeaTests">
+<em class="property">class </em><tt class="descclassname">idea.tests.ideaform.</tt><tt class="descname">IdeaTests</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.ideaform.IdeaTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<dl class="method">
+<dt id="idea.tests.ideaform.IdeaTests.test_idea_text_optional">
+<tt class="descname">test_idea_text_optional</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.ideaform.IdeaTests.test_idea_text_optional" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field &#8216;text&#8217; is option when adding an idea.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.ideaform.IdeaTests.test_idea_title_required">
+<tt class="descname">test_idea_title_required</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.ideaform.IdeaTests.test_idea_title_required" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field &#8216;title&#8217; is required when adding an idea.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.listview">
+<span id="listview-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">listview</span></tt> Module<a class="headerlink" href="#module-idea.tests.listview" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.listview.ListViewTest">
+<em class="property">class </em><tt class="descclassname">idea.tests.listview.</tt><tt class="descname">ListViewTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<p>Tests for idea.views.list</p>
+<dl class="attribute">
+<dt id="idea.tests.listview.ListViewTest.fixtures">
+<tt class="descname">fixtures</tt><em class="property"> = ['state']</em><a class="headerlink" href="#idea.tests.listview.ListViewTest.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_idea_fields">
+<tt class="descname">test_idea_fields</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_idea_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify that the fields needed by the ui are available on all ideas.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_idea_state_filter">
+<tt class="descname">test_idea_state_filter</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_idea_state_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify that state filters work as we expect.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_paging">
+<tt class="descname">test_paging</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_paging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify that paging works as we would expect.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_sort_comment">
+<tt class="descname">test_sort_comment</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_sort_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify that the comments sort works.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_sort_recent">
+<tt class="descname">test_sort_recent</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_sort_recent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify that the recent sort params works.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_sort_vote">
+<tt class="descname">test_sort_vote</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_sort_vote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify that the votes sort works.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_tag_filter">
+<tt class="descname">test_tag_filter</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_tag_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of ideas should be filterable by tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_tags_active">
+<tt class="descname">test_tags_active</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_tags_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tag list should include if tag was active in this search.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_tags_count">
+<tt class="descname">test_tags_count</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_tags_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tag list should include tag count.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_tags_exist">
+<tt class="descname">test_tags_exist</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_tags_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the tag list is populated and only shows the top ten
+tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.listview.ListViewTest.test_tags_top_ten">
+<tt class="descname">test_tags_top_ten</tt><big>(</big><em>*args</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#idea.tests.listview.ListViewTest.test_tags_top_ten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tag list should be in proper order.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.search">
+<span id="search-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">search</span></tt> Module<a class="headerlink" href="#module-idea.tests.search" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.search.SearchTest">
+<em class="property">class </em><tt class="descclassname">idea.tests.search.</tt><tt class="descname">SearchTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.search.SearchTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<dl class="attribute">
+<dt id="idea.tests.search.SearchTest.fixtures">
+<tt class="descname">fixtures</tt><em class="property"> = ['state']</em><a class="headerlink" href="#idea.tests.search.SearchTest.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.search.SearchTest.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.search.SearchTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.search.SearchTest.test_add_idea_tag">
+<tt class="descname">test_add_idea_tag</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.tests.search.SearchTest.test_add_idea_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that adding a new idea allows the associated tag to be
+immediately searchable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.search.SearchTest.test_add_idea_title">
+<tt class="descname">test_add_idea_title</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.search.SearchTest.test_add_idea_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that adding a new idea allows title to be immediately
+searchable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.search.SearchTest.test_edit_idea_tag">
+<tt class="descname">test_edit_idea_tag</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#idea.tests.search.SearchTest.test_edit_idea_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that adding a new idea allows the associated tag to be
+immediately searchable.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.utils">
+<span id="utils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt> Module<a class="headerlink" href="#module-idea.tests.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="idea.tests.utils.mock_req">
+<tt class="descclassname">idea.tests.utils.</tt><tt class="descname">mock_req</tt><big>(</big><em>path='/'</em>, <em>user=None</em><big>)</big><a class="headerlink" href="#idea.tests.utils.mock_req" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mock request &#8211; with user!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="idea.tests.utils.random_user">
+<tt class="descclassname">idea.tests.utils.</tt><tt class="descname">random_user</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.utils.random_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-idea.tests.voting">
+<span id="voting-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">voting</span></tt> Module<a class="headerlink" href="#module-idea.tests.voting" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="idea.tests.voting.VotingTests">
+<em class="property">class </em><tt class="descclassname">idea.tests.voting.</tt><tt class="descname">VotingTests</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#idea.tests.voting.VotingTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<dl class="attribute">
+<dt id="idea.tests.voting.VotingTests.fixtures">
+<tt class="descname">fixtures</tt><em class="property"> = ['state']</em><a class="headerlink" href="#idea.tests.voting.VotingTests.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.voting.VotingTests.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.voting.VotingTests.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.voting.VotingTests.test_good_vote">
+<tt class="descname">test_good_vote</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.voting.VotingTests.test_good_vote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.voting.VotingTests.test_must_logged_in">
+<tt class="descname">test_must_logged_in</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.voting.VotingTests.test_must_logged_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>A user must be logged in to vote.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="idea.tests.voting.VotingTests.test_vote_twice">
+<tt class="descname">test_vote_twice</tt><big>(</big><big>)</big><a class="headerlink" href="#idea.tests.voting.VotingTests.test_vote_twice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Voting twice shouldn&#8217;t do anything to the vote count (it&#8217;s
+idempotent).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tests Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-idea.tests.addidea"><tt class="docutils literal"><span class="pre">addidea</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.banner_tests"><tt class="docutils literal"><span class="pre">banner_tests</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.detailview"><tt class="docutils literal"><span class="pre">detailview</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.ideaform"><tt class="docutils literal"><span class="pre">ideaform</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.listview"><tt class="docutils literal"><span class="pre">listview</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.search"><tt class="docutils literal"><span class="pre">search</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-idea.tests.voting"><tt class="docutils literal"><span class="pre">voting</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/idea.tests.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Idea Box 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
