@@ -2,6 +2,8 @@
 
 Collecting and surfacing ideas from everyone.
 
+![Idea Profile](https://raw.github.com/cfpb/idea-box/master/doc/images/profile.png)
+
 ## Requirements
 * django (1.4.3) - This is a django app, so you need django.
 * django-haystack (1.2.7) - A mapper between django models and search
