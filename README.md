@@ -1,4 +1,4 @@
-# Idea Collection
+# Idea-Box
 
 Collecting and surfacing ideas from everyone.
 
