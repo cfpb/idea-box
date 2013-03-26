@@ -1,6 +1,21 @@
 # Idea-Box
 
-Collecting and surfacing ideas from everyone.
+Idea-Box is a django app for collecting and surfacing ideas from users, in the vein of
+IdeaScale, IdeaX, and Django Voice. Idea-Box differs from these projects in its minimal,
+easily integrate-able interface. Idea-Box also takes a strong stance on transparency,
+such that ideas, votes, etc. are tied to specific users.
+
+## Features
+* Searching (via Solr's "more-like-this")
+* Idea Submission
+* Tagging (via taggit)
+* Voting
+* Comments
+* Listing by recent, comment count, vote count
+* Separate state for archived ideas
+* Customizable banner for specific campaigns
+
+## Screen shot
 
 ![Idea Profile](https://raw.github.com/cfpb/idea-box/master/doc/images/profile.png)
 
@@ -114,3 +129,10 @@ $ pip install zc.buildout distribute
 $ buildout
 ```
 Then, run the django binary in the ```bin``` directory.
+
+### Campaign Banner
+
+To create a campaign banner, use django's administrative page to add a Banner model. The
+text field will be displayed at the top of the Idea-Box idea listing page. The banner
+will only be displayed between Start Date and End Date (or indefinitely after the Start
+Date if the End Date is empty.)
