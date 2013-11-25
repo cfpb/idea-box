@@ -11,17 +11,17 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-from haystack import backend, site
+
 
 from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner
 from idea.utility import state_helper
 from idea.models import UP_VOTE
-from taggit.models import Tag
+from core.taggit.models import Tag
 
 def _render(req, template_name, context={}):
     context['active_app'] = 'Idea'
-    context['app_link'] = reverse('idea_list')
+    context['app_link'] = reverse('idea:idea_list')
     return render(req, template_name, context)
 
 def get_banner():
@@ -89,11 +89,11 @@ def list(request, sort_or_state=None):
             tag_slugs = ",".join(tag_strs + [tag.slug])
         #   Minor tweak: Links just turn on/off a single tag
         if tag.slug in tag_strs:
-            tag.tag_url = "%s"  %  (reverse('idea_list',
+            tag.tag_url = "%s"  %  (reverse('idea:idea_list',
                 args=(sort_or_state,)))
             tag.active = True
         else:
-            tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list',
+            tag.tag_url = "%s?tags=%s"  %  (reverse('idea:idea_list',
                 args=(sort_or_state,)), tag.slug)
             tag.active = False
 
@@ -165,7 +165,7 @@ def detail(request, idea_id):
             #   Make sure the search index included the tags
             site.get_index(Idea).update_object(idea)
             return HttpResponseRedirect(
-                    reverse('idea_detail', args=(idea.id,)))
+                    reverse('idea:idea_detail', args=(idea.id,)))
     else:
         tag_form = IdeaTagForm()
 
@@ -188,7 +188,7 @@ def detail(request, idea_id):
     }, select_params=[idea_type.id]).order_by('name')
 
     for tag in tags:
-        tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list'), tag.slug)
+        tag.tag_url = "%s?tags=%s"  %  (reverse('idea:idea_list'), tag.slug)
 
     return _render(request, 'idea/detail.html', {
         'idea': idea,   #   title, body, user name, user photo, time
@@ -210,7 +210,7 @@ def add_idea(request):
                 vote_up(new_idea, request.user)
                 #   Make sure the search index included the tags
                 site.get_index(Idea).update_object(new_idea)
-                return HttpResponseRedirect(reverse('idea_detail', args=(idea.id,)))
+                return HttpResponseRedirect(reverse('idea:idea_detail', args=(idea.id,)))
         else:
             return HttpResponse('Idea is archived', status=403)
     else:

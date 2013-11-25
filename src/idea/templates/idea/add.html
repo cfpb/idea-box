@@ -8,7 +8,7 @@
 					<header class="project-header">
 						<div class="row">
 							<div class="logo span3">
-								<a href="{%url idea_list%}"><h2 class="project-title">Idea<br>Box</h2></a>
+								<a href="{% url 'idea:idea_list' %}"><h2 class="project-title">Idea<br>Box</h2></a>
                                 {% if not similar %}
                                 <div class="alert-none"> 
 									<p><span class="result-number">{{similar|length}}</span> similar idea{{similar|pluralize}}</p>
@@ -27,7 +27,7 @@
 								<h2 class="project-description">{{banner.text}}</h2>
 								<p>We want to hear your ideas about how we can improve. Submit, tag, and discuss your idea. We can improve the way we all work by connecting with like minded co-workers.</p>
 								<div class="project-add">
-                                    <form action="{%url add_idea%}" method="post">
+                                    <form action="{% url 'idea:add_idea' %}" method="post">
 	    							{% csrf_token %}
 									{{form}}
 										<input type="submit" class="btn-add right" value="Submit">
@@ -48,7 +48,7 @@
 							</div><!-- /idea-votes -->
 							<div class="idea-wrap span10">
 								<header class="idea-title">
-                                    <a href="{% url idea_detail idea.id %}"><h3>{{idea.title}}</h3></a>
+                                    <a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
 								</header>
 								<footer class="idea-footer">
 									<div class="idea-info">
