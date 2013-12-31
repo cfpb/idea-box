@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.timezone import get_default_timezone
-from taggit.managers import TaggableManager
+from core.taggit.managers import TaggableManager
 
 class UserTrackable(models.Model):
     creator = models.ForeignKey(User)
