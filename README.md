@@ -3,18 +3,18 @@
 Collecting and surfacing ideas from everyone.
 
 ## Requirements
-* django (1.4.3) - This is a django app, so you need django.
-* django-haystack (1.2.7) - A mapper between django models and search
+* django (1.5.4) - This is a django app, so you need django.
+* django-haystack (2.0.0) - A mapper between django models and search
 backends.
-* pysolr (3.0.3) - Library for communicating with solr.
+* pyelasticsearch - Library for communicating with elasticsearch.
 * django-taggit - A library for Tags within django
 * mock - A library for creating mock objects for testing. 
 * south - A library for schema and data migrations. 
 
-* solr (and java) - A Search backend. Unfortunately, we currently require
-Solr (rather than another backend) because we need specific functionality
+* elasticsearch - A Search backend. Unfortunately, we currently require
+elasticsearch (rather than another backend) because we need specific functionality
 that haystack doesn't give us direct access to. Eventually, we'll get a
-pull request to haystack which will reduce our solr requirement.
+pull request to haystack which will reduce our elasticsearch requirement.
 
 ## Installation
 
@@ -30,9 +30,13 @@ You will also need to configure haystack. See the haystack
 If you'd prefer to take the quick route, add the following to your
 settings.py:
 ```python
-HAYSTACK_SITECONF = 'search_sites'
-HAYSTACK_SEARCH_ENGINE = 'solr'
-HAYSTACK_SOLR_URL = 'http://localhost:8983/solr'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
 ```
 
 If you are going that route, make sure that you have a search_sites.py
@@ -72,20 +76,11 @@ if 'idea' in settings.INSTALLED_APPS and \
     urlpatterns.append(url(r'^idea/', include('idea.urls')))
 ```
 
-### Solr
+### Elasticsearch
 
-You will also need to modify your solr configs. Take a look at the
-configuration files included in the root's ```solr``` directory. For a
-complete (but poor) implementation,
+You will need to have elasticsearch installed and running. You can use
+[this guide](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup.html#setup-installation) to install it.
 
-```bash
-$ wget http://mirror.reverse.net/pub/apache/lucene/solr/4.1.0/solr-4.1.0.tgz
-$ tar -xvzf solr-4.1.0.tgz
-$ cd solr-4.1.0/example/solr/collection1/conf/
-$ cp ~/idea/solr/* .
-$ cd ../../../
-$ java -jar start.jar &
-```
 
 ### Migrations
 
