@@ -6,7 +6,7 @@
 			<section id="main" class="main-content">
 				<nav id="top-nav" class="top-internal-nav span12" role="navigation">
 					<h4 class="visuallyhidden">Idea Post Navigation</h4>
-						<a href="{%url idea_list%}">Back to Idea Box</a>
+						<a href="{% url 'idea:idea_list' %}">Back to Idea Box</a>
             	</nav><!-- /top-nav /top-internal-nav -->
 				<article class="single-idea-entry">
 					<div class="row border-bottom">
@@ -22,10 +22,10 @@
                             {% elif support %}
                                 <span class="btn-voted">Voted</span>
 							{% else %}
-							<form action="{%url upvote_idea%}" method=POST>
+							<form action="{% url 'idea:upvote_idea' %}" method=POST>
 								{% csrf_token %}
 								<input type="hidden" name="idea_id" value="{{idea.id}}"/>
-								<input type="hidden" name="next" value="{%url idea_detail idea.id %}"/>
+								<input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
 								<input type="submit" class="btn-vote" value="Vote" id="vote_up"/>
 							</form>
 							{% endif %}
@@ -59,7 +59,7 @@
 									{{comment_form.object_pk}}
 									{{comment_form.timestamp}}
 									{{comment_form.security_hash}}
-										<input type="hidden" name = "next" value="{%url idea_detail idea.id %}" />
+										<input type="hidden" name = "next" value="{% url 'idea:idea_detail' idea.id %}" />
 										<input type="submit" class="btn-comment right" value="Submit" id="id_submit" />
 									</form>
 								</div><!-- /comment-form -->

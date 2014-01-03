@@ -11,17 +11,23 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-from haystack import backend, site
 
 from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner
 from idea.utility import state_helper
 from idea.models import UP_VOTE
-from taggit.models import Tag
+
+try:
+    from core.taggit.models import Tag
+except ImportError:
+    from taggit.models import Tag
+
+from haystack import connections
+
 
 def _render(req, template_name, context={}):
     context['active_app'] = 'Idea'
-    context['app_link'] = reverse('idea_list')
+    context['app_link'] = reverse('idea:idea_list')
     return render(req, template_name, context)
 
 def get_banner():
@@ -89,11 +95,11 @@ def list(request, sort_or_state=None):
             tag_slugs = ",".join(tag_strs + [tag.slug])
         #   Minor tweak: Links just turn on/off a single tag
         if tag.slug in tag_strs:
-            tag.tag_url = "%s"  %  (reverse('idea_list',
+            tag.tag_url = "%s"  %  (reverse('idea:idea_list',
                 args=(sort_or_state,)))
             tag.active = True
         else:
-            tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list',
+            tag.tag_url = "%s?tags=%s"  %  (reverse('idea:idea_list',
                 args=(sort_or_state,)), tag.slug)
             tag.active = False
 
@@ -140,12 +146,29 @@ def more_like_text(text, klass):
     through some hoops to get this working as the haystack API does not
     account for this case. In particular, this is a solr-specific hack.
     """
-    back = backend.SearchBackend()
+    back = connections['default'].get_backend()
+
     if hasattr(back, 'conn'):
-        params = {'fl': '*,score', 'stream.body': text}
-        solr_results = back.conn.more_like_this('',
-                back.site.get_index(klass).get_content_field(), **params)
-        return back._process_results(solr_results)['results']
+        query = {'query': {
+                    'filtered': {
+                        'query' : {
+                            'fuzzy_like_this' : {
+                                'like_text' : text
+                            }
+                        }, 
+                        'filter': {
+                            'bool': {
+                                'must': {
+                                    'term': { 'django_ct': 'idea.idea' }
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+        results = back.conn.search(query)
+        return back._process_results(results)['results']
     else:
         return []
 
@@ -162,10 +185,8 @@ def detail(request, idea_id):
             tags = [tag.strip() for tag in data.split(',') 
                     if tag.strip() != '']
             idea.tags.add(*tags)
-            #   Make sure the search index included the tags
-            site.get_index(Idea).update_object(idea)
             return HttpResponseRedirect(
-                    reverse('idea_detail', args=(idea.id,)))
+                    reverse('idea:idea_detail', args=(idea.id,)))
     else:
         tag_form = IdeaTagForm()
 
@@ -188,7 +209,7 @@ def detail(request, idea_id):
     }, select_params=[idea_type.id]).order_by('name')
 
     for tag in tags:
-        tag.tag_url = "%s?tags=%s"  %  (reverse('idea_list'), tag.slug)
+        tag.tag_url = "%s?tags=%s"  %  (reverse('idea:idea_list'), tag.slug)
 
     return _render(request, 'idea/detail.html', {
         'idea': idea,   #   title, body, user name, user photo, time
@@ -208,9 +229,7 @@ def add_idea(request):
             if form.is_valid():
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
-                #   Make sure the search index included the tags
-                site.get_index(Idea).update_object(new_idea)
-                return HttpResponseRedirect(reverse('idea_detail', args=(idea.id,)))
+                return HttpResponseRedirect(reverse('idea:idea_detail', args=(idea.id,)))
         else:
             return HttpResponse('Idea is archived', status=403)
     else:
