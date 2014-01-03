@@ -16,7 +16,11 @@ from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner
 from idea.utility import state_helper
 from idea.models import UP_VOTE
-from core.taggit.models import Tag
+
+try:
+    from core.taggit.models import Tag
+except ImportError:
+    from taggit.models import Tag
 
 from haystack import connections
 
