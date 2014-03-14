@@ -5,18 +5,30 @@
 .ic * {
     font-family: "Avenir Next", Arial, sans-serif;
 }
-.ic a {
-    color: #43b02a;
-    font-weight: bold;
-    text-decoration: none;
-}
-.ic a:hover,
-.ic a:active,
-.ic a:focus {
-    text-decoration: underline;
-}
-.ic a:focus {
-    outline: thin dotted #111;
+.span1 { width: 5.714285714286%; }
+.span2 { width: 14.28571%; }
+.span3 { width: 22.85714%; }
+.span4, .span_side { width: 31.42857%; }
+.span5 { width: 40%; }
+.span6 { width: 48.57142%; }
+.span7 { width: 57.14285%; }
+.span8, .span_main { width: 65.71428%; }
+.span9 { width: 74.28571%; }
+.span10 { width: 82.85714%; }
+.span11 { width: 91.42857%; }
+.span12 { margin-left: 0; width: 100%; }
+@media screen {
+    [class*="span"] {
+        border: 0px solid rgba(0,0,0,0);
+        margin-left: 2.85715%;
+        margin-right: -3px; // Necessary to get rid of inline whitespace
+        padding: 0;
+        display: inline-block;
+        vertical-align: top;
+    }
+    [class*="span"]:first-child {
+        margin-left: 0;
+    }
 }
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 .ic a:hover,
@@ -134,7 +146,7 @@
 /* Content */
 .idea-entry {
     border-bottom: 1px solid #f2f2f2;
-    padding: 2.5em 0;
+    padding: 2.5em 2.5em 2.5em 0;
 }
 .no-results {
     padding: 2.5em 0;
@@ -160,33 +172,23 @@
     padding-right: 1.875em;
 }
 .idea-title h3 {
-    font-size: 150%; /* 24px */
-    font-weight: 600;
-    line-height: 1.33;
-    margin-bottom: 0.25em;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
 }
-.idea-title a {
-    color: #000;
-    text-decoration: none;
+.idea-description {
+    margin: 1em 0;
 }
-.idea-title a:hover,
-.idea-title a:active,
-.idea-title a:focus {
-    color: #666;
-    text-decoration: underline;
+.idea-more {
+    margin: 0 0 1em 0;
 }
-.idea-info .suggested,
+.idea-info .suggested {
+    color: #63666a;
+    font-size: 87.5%; /* 14px */
+    margin-left: .5em;
+}
 .idea-info .commented {
     color: #63666a;
     font-size: 87.5%; /* 14px */
-}
-.idea-info .commented {
-    background: url(../img/comment-icon.png) 0 50% no-repeat;
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
-    margin-left: 1.875em;
-    padding-left: 2.325em;
+    margin-right: .5em;
 }
 
 /* Comments */
@@ -347,6 +349,12 @@
 }
 .idea-add .idea-hero {
     border-bottom: 3px solid #000;
+}
+.idea-hero a {
+    border-bottom-width: 0;
+}
+.main-content a {
+    border-bottom-width: 1px;
 }
 
 /* Single View */
