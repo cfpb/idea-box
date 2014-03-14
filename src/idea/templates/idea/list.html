@@ -48,14 +48,15 @@
 								<header class="idea-title">
 									<a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
 								</header>
+								<div class="idea-description">
+									{{ idea.text|truncatechars:250 }}
+								</div>
+								<div class="idea-more">
+									<a href="{% url 'idea:idea_detail' idea.id %}">Read More</a>
+								</div>
 								<footer class="idea-footer">
 									<div class="idea-info">
-                                        {% if idea.get_creator_profile %}
-                                        <span class="suggested">Suggested by <a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a> on  {{idea.time|date:"M d, Y"}} </span>
-                                        {% else %}
-                                        <span class="suggested">Suggested by {{idea.creator.first_name}} {{idea.creator.last_name}} on {{idea.time|date:"M d, Y"}} </span>
-                                        {% endif %}
-										<span class="commented"><a href="{% url 'idea:idea_detail' idea.id %}#comments">{{idea.comment_count}} Comment{{idea.comment_count|pluralize:",s"}}</a></span>
+										<span class="commented"><a href="{% url 'idea:idea_detail' idea.id %}#comments">{{idea.comment_count}} Comment{{idea.comment_count|pluralize:",s"}}</a></span> | <span class="suggested">Suggested on {{idea.time|date:"M d, Y"}}</span>
 									</div><!-- /idea-info -->
 								</footer>
 							</div><!-- /idea-wrap -->
