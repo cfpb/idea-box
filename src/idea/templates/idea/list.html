@@ -8,17 +8,10 @@
 					<header class="project-header">
 						<div class="row">
 							<div class="logo span3">
-								<a href="{% url 'idea:idea_list' %}"><h2 class="project-title">Idea<br>Box</h2></a>
+								<a href="{% url 'idea:idea_list' %}"><h2 class="project-title">IdeaBox</h2></a>
 							</div>
 							<div class="project-search span8">
-								<h2 class="project-description">{{banner.text}}</h2>
-                                 <form role="search" method="get" id="idea-search-form" class="search-form" 
-                                                                    action="{% url 'idea:add_idea' %}" >
-									<label class="visuallyhidden" for="s">Enter your idea</label>
-									<input type="text" value="" name="idea_title" id="s" />
-									<input class="start-btn" type="submit" id="searchsubmit" value="START" />
-								</form><!-- /search-form -->
-								<h2 class="project-prompt">Suggest, comment, and vote on ideas.</h2>
+								<a href="{% url 'idea:add_idea' %}" class="btn">Submit a new idea</a>
 							</div><!-- /project-search -->
 						</div><!-- /row -->
 					</header><!-- /project-header -->
