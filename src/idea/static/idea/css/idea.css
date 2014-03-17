@@ -29,6 +29,9 @@
     [class*="span"]:first-child {
         margin-left: 0;
     }
+    .section-nav {
+        margin-left: 0;
+    }
 }
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 .ic a:hover,
@@ -268,53 +271,32 @@
     padding-left: 0;
 }
 .total-ideas,
-.ic-tags,
 .ic-add-tags,
 .sidebar-nav {
     margin-bottom: 2.5em;
 }
-.total-ideas h4 {
-    color: #999;
-    font-size: 175%; /* 28px */
-    font-weight: bold;
-    line-height: 0.95;
-}
 .sidebar h4 {
     color: #999;
-    font-size: 150%; /* 24px */
+    font-size: 120%; /* 24px */
     line-height: 0.95;
 }
-.ic-tags li {
-    padding: 0.625em 0;
+.total-ideas h4 {
+    font-size: 175%; /* 28px */
+    font-weight: bold;
 }
-.ic-tags a {
-    background-color: #f4dc9a;
-    color: #101820;
-    font-size: 87.5%;
-    font-weight: normal;
-    padding: 0.625em 0 0.625em 0.625em;
-    text-decoration: none;
-    text-transform: uppercase;
+.tags .tag {
+    display: block;
+    margin: 0 0 .5em 1em;
 }
-.ic-tags a:hover,
-.ic-tags a:active,
-.ic-tags a:focus,
-.ic-tags a.active {
-    background-color: #fdcb40;
-    text-decoration: none;
-}
-.ic-tags a span.num {
-    background-color: #d0d0ce;
-    margin-left: 0.3125em;
-    padding: 0.625em 0.625em 0.625em 0.3125em;
+.tags .tag a {
+    font-family: "Avenir Next Demi", Arial, sans-serif;
 }
 .sidebar .tags form input[type="text"] {
     width: 11em;
 }
 .ic-add-tags .help-text {
     font-size: 87.5%;
-}
-.sidebar-nav a {
+} .sidebar-nav a {
     font-size: 87.5%; /* 14px */
 }
 

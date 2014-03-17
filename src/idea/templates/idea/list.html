@@ -25,14 +25,12 @@
 				<div class="visuallyhidden">
 					<h2>Main Navigation for Idea Box</h2>
 				</div> <!-- /visuallyhidden -->
-					<nav id="main-nav" class="main-nav" role="navigation">
-                        <ul {% if sort_or_state == 'vote' %}class="active"{% endif %}>
+					<ul class="section-nav span12">
                             <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Most Voted</a></li>
                             <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "comment" %}">Most Commented</a></li>
                             <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Most Recent</a></li>
                             <li {% if sort_or_state == 'archived' %}class="active"{% endif %}><a class="last" href="{% url 'idea:idea_list' "archived" %}">Archive</a></li>
-						</ul><!-- /nav -->
-					</nav><!-- /main-nav -->
+					</ul><!-- /nav -->
 				</section><!-- /idea-hero -->
 			</div><!-- /row -->
 			<div class="row">
@@ -86,15 +84,15 @@
                           {{total_num_ideas}} Idea{{total_num_ideas|pluralize:",s"}}
                         </h4>
 					</aside><!-- /total-ideas -->
-					<aside class="ic-tags">
+					<aside class="tags">
 						<h4>Popular Tags</h4>
 						<ul>
                             {% for tag in tags %}
-                            <li><a href="{{tag.tag_url}}" 
+                            <li class="tag"><a class="tag_name" href="{{tag.tag_url}}" 
                                 {% if tag.active %}
                                     class="active"
                                 {% endif %}
-                            >{{tag}} <span class="num">{{tag.count}}</span></a></li>
+                            >{{tag}} </a><span class="tag_remove">{{tag.count}}</span></li>
                             {% endfor %}
 						</ul>   
 					</aside>
