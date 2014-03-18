@@ -48,7 +48,7 @@
     text-decoration: none;
 }
 .project-title {
-    color: #43b02a;
+    color: #2cb34a;
     display: inline;
     font-size: 312.5%; /* 50px */
     font-weight: bold;
@@ -344,7 +344,7 @@ ul.section-nav li.active a {
     padding-bottom: 0.625em;
 }
 .idea-single .vote-count {
-    color: #43b02a;
+    color: #2cb34a;
     display: block;
     font-size: 1.125em;
     font-weight: 600;
