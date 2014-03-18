@@ -176,7 +176,6 @@ ul.section-nav li.active a {
     text-transform: uppercase;
 }
 .comment-form {
-    background-color: #f2f2f2;
     padding: 0.625em 0.625em 2.8em;
     margin: 1.5625em 0 0;
 }
@@ -185,12 +184,13 @@ ul.section-nav li.active a {
     margin-bottom: 0.5em;
     width: 99%;
 }
+.comment-form form {
+    position: relative;
+}
 .comment-form label {
     color: #666;
-    display: block;
-    font-weight: 600;
-    padding: 0 0 0.625em;
-    position: relative;
+    position: absolute;
+    left: .25em;
 }
 .comment-list {
     list-style-type: none;
