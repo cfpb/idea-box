@@ -20,13 +20,13 @@
                             {% if idea.state.name == 'Archive' %}
                                 <span class="btn-archive">Archived</span>
                             {% elif support %}
-                                <span class="btn-voted">Voted</span>
+                                <span class="btn btn-voted">Voted</span>
 							{% else %}
 							<form action="{% url 'idea:upvote_idea' %}" method=POST>
 								{% csrf_token %}
 								<input type="hidden" name="idea_id" value="{{idea.id}}"/>
 								<input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
-								<input type="submit" class="btn-vote" value="Vote" id="vote_up"/>
+								<input type="submit" class="btn btn-vote" value="Vote" id="vote_up"/>
 							</form>
 							{% endif %}
 							<span class="vote-count">{{voters|length}} {{voters|pluralize:"Person,People"}} Voted</span>
@@ -60,7 +60,7 @@
 									{{comment_form.timestamp}}
 									{{comment_form.security_hash}}
 										<input type="hidden" name = "next" value="{% url 'idea:idea_detail' idea.id %}" />
-										<input type="submit" class="btn-comment right" value="Submit" id="id_submit" />
+										<input type="submit" class="btn right" value="Submit" id="id_submit" />
 									</form>
 								</div><!-- /comment-form -->
 								<ol class="comment-list">
@@ -85,11 +85,11 @@
 						</div><!-- /comments -->
 						</div><!-- /idea-entry-content -->
 						<div id="sidebar" class="sidebar span3" role="complementary">
-							<aside class="ic-tags">
+							<aside class="tags">
 								<h4>Idea Tags</h4>
 								<ul>
                                     {% for tag in tags %}
-									<li><a href="{{tag.tag_url}}">{{tag}} <span class="num">{{tag.tag_count}}</span></a></li>
+									<li class="tag"><a class="tag_name" href="{{tag.tag_url}}">{{tag}} </a><span class="tag_remove">{{tag.tag_count}}</span></li>
                                     {% endfor %}
 								</ul>
 								<div class="ic-add-tags tags">
