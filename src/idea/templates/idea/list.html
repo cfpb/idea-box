@@ -8,31 +8,22 @@
 					<header class="project-header">
 						<div class="row">
 							<div class="logo span3">
-								<a href="{% url 'idea:idea_list' %}"><h2 class="project-title">Idea<br>Box</h2></a>
+								<a href="{% url 'idea:idea_list' %}"><h2 class="project-title">IdeaBox</h2></a>
 							</div>
 							<div class="project-search span8">
-								<h2 class="project-description">{{banner.text}}</h2>
-                                 <form role="search" method="get" id="idea-search-form" class="search-form" 
-                                                                    action="{% url 'idea:add_idea' %}" >
-									<label class="visuallyhidden" for="s">Enter your idea</label>
-									<input type="text" value="" name="idea_title" id="s" />
-									<input class="start-btn" type="submit" id="searchsubmit" value="START" />
-								</form><!-- /search-form -->
-								<h2 class="project-prompt">Suggest, comment, and vote on ideas.</h2>
+								<a href="{% url 'idea:add_idea' %}" class="btn">Submit a new idea</a>
 							</div><!-- /project-search -->
 						</div><!-- /row -->
 					</header><!-- /project-header -->
 				<div class="visuallyhidden">
 					<h2>Main Navigation for Idea Box</h2>
 				</div> <!-- /visuallyhidden -->
-					<nav id="main-nav" class="main-nav" role="navigation">
-                        <ul {% if sort_or_state == 'vote' %}class="active"{% endif %}>
-                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Most Voted</a></li>
+					<ul class="section-nav span12">
+                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Most Liked</a></li>
                             <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "comment" %}">Most Commented</a></li>
                             <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Most Recent</a></li>
                             <li {% if sort_or_state == 'archived' %}class="active"{% endif %}><a class="last" href="{% url 'idea:idea_list' "archived" %}">Archive</a></li>
-						</ul><!-- /nav -->
-					</nav><!-- /main-nav -->
+					</ul><!-- /nav -->
 				</section><!-- /idea-hero -->
 			</div><!-- /row -->
 			<div class="row">
@@ -42,7 +33,7 @@
                         <article class="idea-entry">
 						<div class="row">
 							<div class="idea-votes span2">
-								{{idea.vote_count}} <span class="votes">Vote{{idea.vote_count|pluralize:",s"}} </span>
+								{{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
 							</div><!-- /idea-votes -->
 							<div class="idea-wrap span10">
 								<header class="idea-title">
@@ -86,15 +77,15 @@
                           {{total_num_ideas}} Idea{{total_num_ideas|pluralize:",s"}}
                         </h4>
 					</aside><!-- /total-ideas -->
-					<aside class="ic-tags">
+					<aside class="tags">
 						<h4>Popular Tags</h4>
 						<ul>
                             {% for tag in tags %}
-                            <li><a href="{{tag.tag_url}}" 
+                            <li class="tag"><a class="tag_name" href="{{tag.tag_url}}" 
                                 {% if tag.active %}
                                     class="active"
                                 {% endif %}
-                            >{{tag}} <span class="num">{{tag.count}}</span></a></li>
+                            >{{tag}} </a><span class="tag_remove">{{tag.count}}</span></li>
                             {% endfor %}
 						</ul>   
 					</aside>

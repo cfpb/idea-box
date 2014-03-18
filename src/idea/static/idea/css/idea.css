@@ -29,6 +29,9 @@
     [class*="span"]:first-child {
         margin-left: 0;
     }
+    .section-nav {
+        margin-left: 0;
+    }
 }
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 .ic a:hover,
@@ -37,18 +40,15 @@
 }
 
 /* Header */
-.project-header {
-    margin-top: 2.875em;
-}
-.logo {
-    padding: 0 0 0 5em;
+.project-header .row {
+    padding: 1.5em 0;
 }
 .logo a,
 .logo a:hover {
     text-decoration: none;
 }
 .project-title {
-    color: #43b02a;
+    color: #2cb34a;
     display: inline;
     font-size: 312.5%; /* 50px */
     font-weight: bold;
@@ -56,8 +56,8 @@
     text-transform: uppercase;
 }
 .project-search {
-    padding: 0 1em 0;
-    margin-bottom: 4.375em;
+    padding-left: 2em;
+    height: 100%;
 }
 .project-description {
     color: #000;
@@ -79,68 +79,39 @@
     height: 2em;
     width: 80%;
 }
-.start-btn {
-    border: 1px outset #43b02a;
-    background-color: #43b02a;
-    color: #fff;
-    font-size: 150%; /* 24px */
-    font-weight: 600;
-    height: 1.635em;
-    margin-left: -0.2em;
-    padding: 0.15em 1em;
-}
-.start-btn:hover,
-.start-btn:active,
-.start-btn:focus {
-    background-color: #b3db8a;
-    border: 1px solid #b3db8a;
-    color: #000;
-}
 /* Navigation */
-.main-nav {
-    max-width: 70em;
-    margin: 0 auto;
-    padding: 0;
+ul.section-nav {
+    border-bottom: 5px solid #000;
+    padding-bottom: 1px;
+    margin-top: 0;
+    margin-bottom: 2.25em;
+    list-style: none;
 }
-.main-nav ul {
-    border-bottom: 3px solid #000;
-    margin: 0;
-    padding: 0;
-    position: relative;
-}
-.main-nav ul li {
+ul.section-nav li {
     display: inline-block;
-    vertical-align: top;
-    zoom: 1;
-    *display: inline;
-    min-height: 2.1875em;
-    text-align: center;
+    margin-right: 0.5em;
+    border-bottom-width: 0;
 }
-.main-nav ul li a {
-    background-color: #addc91;
-    display: block;
-    color: #212121;
-    font-size: 100%; /* 16px */
-    font-weight: bold;
-    margin: 0 1.25em 0 0;
-    padding: 0.5em 0;
+ul.section-nav li a {
+    display: inline-block;
+    padding: 0.625em 1em 0.5em;
+    background: #e4e2e0;
+    color: #000;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    font-size: 0.875em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     text-decoration: none;
-    width: 16.375em;
+    border-bottom-width: 0;
 }
-.main-nav ul li.active a {
-    background: #43b02a;
-    color: #fff;
+
+ul.section-nav li a:hover,
+ul.section-nav li a:focus {
+    background: #bcb6b2;
 }
-.main-nav ul li a.last {
-    margin-right: 0;
-}
-.main-nav ul li a:hover,
-.main-nav ul li a:active,
-.main-nav ul li a:focus,
-.main-nav ul li a.active {
-    background: #43b02a;
-    color: #fff;
-    text-decoration: none;
+ul.section-nav li.active a {
+    background: #2cb34a;
+    color: #FFF;
 }
 
 /* Content */
@@ -150,9 +121,6 @@
 }
 .no-results {
     padding: 2.5em 0;
-}
-.idea-entry.hover {
-   background-color: #f2f2f2;
 }
 .idea-votes {
     font-size: 312.5%; /* 50px */
@@ -205,7 +173,6 @@
     text-transform: uppercase;
 }
 .comment-form {
-    background-color: #f2f2f2;
     padding: 0.625em 0.625em 2.8em;
     margin: 1.5625em 0 0;
 }
@@ -214,12 +181,13 @@
     margin-bottom: 0.5em;
     width: 99%;
 }
+.comment-form form {
+    position: relative;
+}
 .comment-form label {
     color: #666;
-    display: block;
-    font-weight: 600;
-    padding: 0 0 0.625em;
-    position: relative;
+    position: absolute;
+    left: .25em;
 }
 .comment-list {
     list-style-type: none;
@@ -268,60 +236,36 @@
     padding-left: 0;
 }
 .total-ideas,
-.ic-tags,
 .ic-add-tags,
 .sidebar-nav {
     margin-bottom: 2.5em;
 }
-.total-ideas h4 {
-    color: #999;
-    font-size: 175%; /* 28px */
-    font-weight: bold;
-    line-height: 0.95;
-}
 .sidebar h4 {
     color: #999;
-    font-size: 150%; /* 24px */
+    font-size: 120%; /* 24px */
     line-height: 0.95;
 }
-.ic-tags li {
-    padding: 0.625em 0;
+.total-ideas h4 {
+    font-size: 175%; /* 28px */
+    font-weight: bold;
 }
-.ic-tags a {
-    background-color: #f4dc9a;
-    color: #101820;
-    font-size: 87.5%;
-    font-weight: normal;
-    padding: 0.625em 0 0.625em 0.625em;
-    text-decoration: none;
-    text-transform: uppercase;
+.tags .tag {
+    display: block;
+    margin: 0 0 .5em 1em;
 }
-.ic-tags a:hover,
-.ic-tags a:active,
-.ic-tags a:focus,
-.ic-tags a.active {
-    background-color: #fdcb40;
-    text-decoration: none;
-}
-.ic-tags a span.num {
-    background-color: #d0d0ce;
-    margin-left: 0.3125em;
-    padding: 0.625em 0.625em 0.625em 0.3125em;
+.tags .tag a {
+    font-family: "Avenir Next Demi", Arial, sans-serif;
 }
 .sidebar .tags form input[type="text"] {
     width: 11em;
 }
 .ic-add-tags .help-text {
     font-size: 87.5%;
-}
-.sidebar-nav a {
+} .sidebar-nav a {
     font-size: 87.5%; /* 14px */
 }
 
 /* Add View */
-.idea-add .project-search p {
-    color: #999;
-}
 .project-add {
     background-color: #f2f2f2;
     padding: 0.625em 0.625em 1.25em;
@@ -347,8 +291,11 @@
 .project-add input#id_tags {
     margin-bottom: 0.625em;
 }
-.idea-add .idea-hero {
+.idea-add {
     border-bottom: 3px solid #000;
+}
+.idea-hero {
+    margin: 0 0 0 0;
 }
 .idea-hero a {
     border-bottom-width: 0;
@@ -397,7 +344,7 @@
     padding-bottom: 0.625em;
 }
 .idea-single .vote-count {
-    color: #43b02a;
+    color: #2cb34a;
     display: block;
     font-size: 1.125em;
     font-weight: 600;
@@ -418,23 +365,20 @@
 .border-bottom {
     border-bottom: 3px solid #000;
 }
+#work_tag_submit_btn {
+    margin-top: .5em;
+}
 .btn-vote {
-    background: #43b02a url(../img/vote-thumb.png) 20% 50% no-repeat;
-    border: 1px solid #43b02a;
-    color: #fff;
-    cursor: pointer;
     display: inline-block;
     font-size: 150%;
     font-weight: bold;
     padding: 0.625em 0;
-    text-align: center;
     text-transform: uppercase;
     width: 100%;
 }
 span.btn-voted,
 span.btn-voted:hover {
-    background: #f2f2f2 url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
-    border: 1px solid #f2f2f2;
+    background: #E4E2E0 url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
     color: #101820;
     cursor: text;
     display: inline-block;
@@ -458,34 +402,6 @@ span.btn-archive:hover {
     text-align: center;
     text-transform: uppercase;
     width: 100%;
-}
-.btn-comment,
-.btn-add {
-    background-color: #43b02a;
-    border: 1px solid #43b02a;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 106.25%;
-    font-weight: bold;
-    padding: 0.25em 0.75em;
-}
-.btn-comment:hover,
-.btn-comment:active,
-.btn-comment:focus,
-.btn-add:hover,
-.btn-add:active,
-.btn-add:focus {
-    background-color: #b3db8a;
-    border: 1px solid #b3db8a;
-    color: #000;
-}
-.btn-vote:hover,
-.btn-vote:active,
-.btn-vote:focus {
-    background: #b3db8a url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
-    border: 1px solid #b3db8a;
-    color: #000;
 }
 .idea-add .alert {
     color: #d14124;
