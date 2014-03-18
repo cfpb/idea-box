@@ -368,23 +368,20 @@ ul.section-nav li.active a {
 .border-bottom {
     border-bottom: 3px solid #000;
 }
+#work_tag_submit_btn {
+    margin-top: .5em;
+}
 .btn-vote {
-    background: #43b02a url(../img/vote-thumb.png) 20% 50% no-repeat;
-    border: 1px solid #43b02a;
-    color: #fff;
-    cursor: pointer;
     display: inline-block;
     font-size: 150%;
     font-weight: bold;
     padding: 0.625em 0;
-    text-align: center;
     text-transform: uppercase;
     width: 100%;
 }
 span.btn-voted,
 span.btn-voted:hover {
-    background: #f2f2f2 url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
-    border: 1px solid #f2f2f2;
+    background: #E4E2E0 url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
     color: #101820;
     cursor: text;
     display: inline-block;
@@ -408,34 +405,6 @@ span.btn-archive:hover {
     text-align: center;
     text-transform: uppercase;
     width: 100%;
-}
-.btn-comment,
-.btn-add {
-    background-color: #43b02a;
-    border: 1px solid #43b02a;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 106.25%;
-    font-weight: bold;
-    padding: 0.25em 0.75em;
-}
-.btn-comment:hover,
-.btn-comment:active,
-.btn-comment:focus,
-.btn-add:hover,
-.btn-add:active,
-.btn-add:focus {
-    background-color: #b3db8a;
-    border: 1px solid #b3db8a;
-    color: #000;
-}
-.btn-vote:hover,
-.btn-vote:active,
-.btn-vote:focus {
-    background: #b3db8a url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
-    border: 1px solid #b3db8a;
-    color: #000;
 }
 .idea-add .alert {
     color: #d14124;
