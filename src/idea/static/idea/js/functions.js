@@ -1,9 +1,4 @@
 $(document).ready(function() {
-	$('.idea-entry').hover(function(){
-		$(this).addClass('hover'); 
-	}, function() {
-		$(this).removeClass('hover');
-	});
 
 	// Hide the comment label when the input box is focused
 	$(".comment-form form textarea")
