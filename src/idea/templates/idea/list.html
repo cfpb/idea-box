@@ -19,7 +19,7 @@
 					<h2>Main Navigation for Idea Box</h2>
 				</div> <!-- /visuallyhidden -->
 					<ul class="section-nav span12">
-                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Most Voted</a></li>
+                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Most Liked</a></li>
                             <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "comment" %}">Most Commented</a></li>
                             <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Most Recent</a></li>
                             <li {% if sort_or_state == 'archived' %}class="active"{% endif %}><a class="last" href="{% url 'idea:idea_list' "archived" %}">Archive</a></li>
@@ -33,7 +33,7 @@
                         <article class="idea-entry">
 						<div class="row">
 							<div class="idea-votes span2">
-								{{idea.vote_count}} <span class="votes">Vote{{idea.vote_count|pluralize:",s"}} </span>
+								{{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
 							</div><!-- /idea-votes -->
 							<div class="idea-wrap span10">
 								<header class="idea-title">

@@ -20,16 +20,16 @@
                             {% if idea.state.name == 'Archive' %}
                                 <span class="btn-archive">Archived</span>
                             {% elif support %}
-                                <span class="btn btn-voted">Voted</span>
+                                <span class="btn btn-voted">Liked</span>
 							{% else %}
 							<form action="{% url 'idea:upvote_idea' %}" method=POST>
 								{% csrf_token %}
 								<input type="hidden" name="idea_id" value="{{idea.id}}"/>
 								<input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
-								<input type="submit" class="btn btn-vote" value="Vote" id="vote_up"/>
+								<input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
 							</form>
 							{% endif %}
-							<span class="vote-count">{{voters|length}} {{voters|pluralize:"Person,People"}} Voted</span>
+							<span class="vote-count">Liked by {{voters|length}} {{voters|pluralize:"person,people"}}</span>
 						</div><!-- /vote-cta -->
 					</div><!-- /row -->
 					<div class="row">
@@ -105,7 +105,7 @@
                                 </div><!-- /ic-add-tags tags -->   
 							</aside>
 							<aside class="voters">
-								<h4>Voters</h4>
+								<h4>Liked by</h4>
 								<ul>
                                 {% for voter in voters %}
                                     {% if voter.profile %}
