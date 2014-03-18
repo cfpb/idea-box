@@ -122,9 +122,6 @@ ul.section-nav li.active a {
 .no-results {
     padding: 2.5em 0;
 }
-.idea-entry.hover {
-   background-color: #f2f2f2;
-}
 .idea-votes {
     font-size: 312.5%; /* 50px */
     font-weight: 600;
