@@ -51,13 +51,13 @@
     color: #2cb34a;
     display: inline;
     font-size: 312.5%; /* 50px */
+    font-family: "Avenir Next Bold", Arial, sans-serif;
     font-weight: bold;
     line-height: 0.80;
     text-transform: uppercase;
 }
 .project-search {
-    padding-left: 2em;
-    height: 100%;
+    margin-top: 0.24em;
 }
 .project-description {
     color: #000;
