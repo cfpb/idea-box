@@ -16,7 +16,8 @@ class ListViewTest(TestCase):
     """
     fixtures = ['state']
     def _generate_data(self, paramfn=lambda x,y:None, postfn=lambda x,y:None,
-            entry_data=[(5, 'AAAA'), (9, 'BBBB'), (3, 'CCCC'), (7, 'DDDD')]):
+            entry_data=[(5, 'AAAA'), (9, 'BBBB'), (3, 'CCCC'), (7, 'DDDD'),
+                        (1, 'EEEE'), (11, 'FFFF')]):
         """
         Helper function to handle the idea (and related models) creation.
         """
@@ -41,11 +42,13 @@ class ListViewTest(TestCase):
         """
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
-        self.assertEqual(4, len(context['ideas']))
-        self.assertEqual('BBBB', context['ideas'][0].title)
-        self.assertEqual('DDDD', context['ideas'][1].title)
-        self.assertEqual('AAAA', context['ideas'][2].title)
-        self.assertEqual('CCCC', context['ideas'][3].title)
+        self.assertEqual(6, len(context['ideas']))
+        self.assertEqual('FFFF', context['ideas'][0].title)
+        self.assertEqual('BBBB', context['ideas'][1].title)
+        self.assertEqual('DDDD', context['ideas'][2].title)
+        self.assertEqual('AAAA', context['ideas'][3].title)
+        self.assertEqual('CCCC', context['ideas'][4].title)
+        self.assertEqual('EEEE', context['ideas'][5].title)
 
     @patch('idea.views.render')
     def test_sort_recent(self, render):
@@ -59,20 +62,32 @@ class ListViewTest(TestCase):
         self._verify_order(render)
 
     @patch('idea.views.render')
-    def test_sort_comment(self, render):
+    def test_sort_trending(self, render):
         """
         Verify that the comments sort works.
         """
         idea_type = ContentType.objects.get(app_label="idea", model="idea")
         site = Site.objects.get_current()
-        def create_comments(idea, nonce):
-            for _ in range(nonce):
+        def add_time(kwargs, nonce):
+            # add future timestamp for item 3
+            if nonce == 3:
+                kwargs['time'] = datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+        def create_timestamp_event(idea, nonce):
+            # add future timestamp for vote for items 0, 2, 4
+            if nonce % 2 == 0:
+                models.Vote(creator=idea.creator,
+                            idea=idea,
+                            time=datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                           ).save()
+            # add future timestamp for comment for items 1, 5
+            elif nonce != 3:
                 Comment(content_type=idea_type, site=site,
                         object_pk=idea.pk, user=idea.creator,
-                        comment='Blah').save()
-
-        self._generate_data(postfn=create_comments)
-        views.list(mock_req(), sort_or_state='comment')
+                        comment='Blah',
+                        submit_date=datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                       ).save()
+        self._generate_data(postfn=create_timestamp_event, paramfn=add_time)
+        views.list(mock_req(), sort_or_state='trending')
         self._verify_order(render)
 
     @patch('idea.views.render')
@@ -84,7 +99,7 @@ class ListViewTest(TestCase):
             for _ in range(nonce):
                 models.Vote(creator=idea.creator, idea=idea).save()
         self._generate_data(postfn=create_votes)
-        views.list(mock_req(), sort_or_state='votes')
+        views.list(mock_req(), sort_or_state='vote')
         self._verify_order(render)
 
     @patch('idea.views.render')
@@ -94,8 +109,10 @@ class ListViewTest(TestCase):
         """
         letters = string.uppercase
         entry_data = []
-        for i in range(13):
-            entry_data.append((1, letters[i]*4))
+        ## current default ordering is based on most recently modified
+        ## Count down from 12 to 1, so A has the most recent timestamp
+        for i in range(12, -1, -1):
+            entry_data.append((i+1, letters[i]*4))
         self._generate_data(entry_data=entry_data)
 
         views.list(mock_req())
@@ -143,7 +160,7 @@ class ListViewTest(TestCase):
         views.list(mock_req())
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
-        self.assertEqual(4, len(context['ideas']))
+        self.assertEqual(6, len(context['ideas']))
         for idea in context['ideas']:
             self.assertTrue(hasattr(idea, 'title'))
             self.assertTrue(hasattr(idea, 'url'))
@@ -298,7 +315,7 @@ class ListViewTest(TestCase):
         views.list(mock_req())
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
-        self.assertEqual(4, len(context['ideas']))
+        self.assertEqual(6, len(context['ideas']))
 
         views.list(mock_req('/?tags=0'))
         context = render.call_args[0][2]
@@ -308,12 +325,13 @@ class ListViewTest(TestCase):
 
         views.list(mock_req('/?tags=1'))
         context = render.call_args[0][2]
-        self.assertEqual(1, len(context['ideas']))
-        self.assertEqual('DDDD', context['ideas'][0].title)
+        self.assertEqual(2, len(context['ideas']))
+        self.assertEqual(set(['DDDD', 'EEEE']), 
+                set([i.title for i in context['ideas']]))
 
         views.list(mock_req('/?tags=1,2'))
         context = render.call_args[0][2]
-        self.assertEqual(2, len(context['ideas']))
-        self.assertEqual(set(['DDDD', 'AAAA']), 
+        self.assertEqual(4, len(context['ideas']))
+        self.assertEqual(set(['DDDD', 'AAAA', 'EEEE', 'FFFF']), 
                 set([i.title for i in context['ideas']]))
 

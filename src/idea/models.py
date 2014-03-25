@@ -56,6 +56,16 @@ class IdeaManager(models.Manager):
                 WHERE django_comments.content_type_id = %s
                 AND django_comments.object_pk = idea_idea.id
             """,
+            'recent_activity': """
+                SELECT MAX(CASE WHEN COALESCE(c.time, date('2001-01-01')) >= COALESCE(b.submit_date, date('2001-01-01')) AND COALESCE(c.time, date('2001-01-01')) >= a.time THEN c.time
+                                WHEN COALESCE(b.submit_date, date('2001-01-01')) >= a.time THEN b.submit_date
+                                ELSE a.time
+                           END)
+                FROM idea_idea a
+                LEFT OUTER JOIN django_comments b ON a.id = b.object_pk
+                LEFT OUTER JOIN idea_vote c ON a.id = c.idea_id 
+                WHERE a.id = idea_idea.id
+            """,
             #   Don't use annotate() as it conflicts with extra()
             'vote_count': """
                 SELECT count(*) FROM idea_vote WHERE idea_id = idea_idea.id
