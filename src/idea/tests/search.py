@@ -1,15 +1,17 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils import unittest
-from haystack import backend
+from haystack import connections
 from idea import models, views
 from idea.tests.utils import random_user
 
 class SearchTest(TestCase):
     fixtures = ['state']
+    backend = connections['default'].get_backend()
+    backend_type = connections['default'].backend.__name__
 
     def setUp(self):
-        backend.SearchBackend().clear()
+        self.backend.clear()
 
     def test_add_idea_title(self):
         """
@@ -19,10 +21,10 @@ class SearchTest(TestCase):
         req = RequestFactory().post('/', {'title': 'example_title'})
         req.user = random_user()
         views.add_idea(req)
-        results = backend.SearchBackend().search('example_title')
+        results = self.backend.search('example_title')
         self.assertEqual(1, results['hits'])
 
-    @unittest.skipIf(backend.BACKEND_NAME == 'simple', 
+    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
             "Simple backend doesn't handle tags")
     def test_add_idea_tag(self):
         """
@@ -33,10 +35,10 @@ class SearchTest(TestCase):
             {'title': 'title', 'tags': 'example_tag'})
         req.user = random_user()
         views.add_idea(req)
-        results = backend.SearchBackend().search('example_tag')
+        results = self.backend.search('example_tag')
         self.assertEqual(1, results['hits'])
 
-    @unittest.skipIf(backend.BACKEND_NAME == 'simple', 
+    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
         "Simple backend doesn't handle tags")
     def test_edit_idea_tag(self):
         """
@@ -46,11 +48,11 @@ class SearchTest(TestCase):
         idea = models.Idea(creator=random_user(), title='title',
                 state = models.State.objects.get(name='Active'))
         idea.save()
-        results = backend.SearchBackend().search('example_tag')
+        results = self.backend.search('example_tag')
         self.assertEqual(0, results['hits'])
 
         req = RequestFactory().post('/', {'tags': 'example_tag'})
         req.user = random_user()
         views.detail(req, str(idea.id))
-        results = backend.SearchBackend().search('example_tag')
+        results = self.backend.search('example_tag')
         self.assertEqual(1, results['hits'])

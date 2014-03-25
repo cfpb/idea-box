@@ -5,10 +5,9 @@ from idea import models
 from idea.tests.utils import random_user
 
 class VotingTests(TestCase):
-    fixtures = ['state']
+    fixtures = ['state', 'core-test-fixtures']
 
     def setUp(self):
-        self.user = User.objects.create_user('testuser', 'test@agency.gov', 'password')
         self.state = models.State.objects.get(name='Active') 
 
     def test_good_vote(self):
@@ -17,9 +16,9 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
 
-        self.client.login(username='testuser', password='password')
+        self.client.login(username='test1@example.com', password='1')
 
-        resp = self.client.post(reverse('upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea_detail', args=(idea.id,))})
+        resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(idea.vote_set.all()), 1)
 
@@ -32,12 +31,12 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
 
-        self.client.login(username='testuser', password='password')
-        resp = self.client.post(reverse('upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea_detail', args=(idea.id,))})
+        self.client.login(username='test1@example.com', password='1')
+        resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(idea.vote_set.all()), 1)
 
-        resp = self.client.post(reverse('upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea_detail', args=(idea.id,))})
+        resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(idea.vote_set.all()), 1)
 
@@ -48,6 +47,6 @@ class VotingTests(TestCase):
         idea = models.Idea(creator=random_user(), title='Transit subsidy to Mars', 
                     text='Aliens need assistance.', state=self.state)
         idea.save()
-        resp = self.client.post(reverse('upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea_detail', args=(idea.id,))})
+        resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertIn('up', resp['Location'])
 
