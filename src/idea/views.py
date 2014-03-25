@@ -64,13 +64,13 @@ def list(request, sort_or_state=None):
                 ).order_by('-vote_count')
     else:
         ideas = ideas.filter(state=State.objects.get(name='Active'))
-        if sort_or_state == 'comment':
-            ideas = ideas.order_by('-comment_count')
+        if sort_or_state == 'vote':
+            ideas = ideas.order_by('-vote_count')
         elif sort_or_state == 'recent':
             ideas = ideas.order_by('-time')
         else:
-            sort_or_state = 'vote'
-            ideas = ideas.order_by('-vote_count')
+            sort_or_state = 'trending'
+            ideas = ideas.order_by('-recent_activity')
 
     IDEAS_PER_PAGE = getattr(settings, 'IDEAS_PER_PAGE', 10)
     pager = Paginator(ideas, IDEAS_PER_PAGE) 

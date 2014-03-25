@@ -19,10 +19,9 @@
 					<h2>Main Navigation for Idea Box</h2>
 				</div> <!-- /visuallyhidden -->
 					<ul class="section-nav span12">
-                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Most Liked</a></li>
-                            <li {% if sort_or_state == 'comment' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "comment" %}">Most Commented</a></li>
-                            <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Most Recent</a></li>
-                            <li {% if sort_or_state == 'archived' %}class="active"{% endif %}><a class="last" href="{% url 'idea:idea_list' "archived" %}">Archive</a></li>
+                            <li {% if sort_or_state == 'trending' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "trending" %}">Trending</a></li>
+                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Likes</a></li>
+                            <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Recent</a></li>
 					</ul><!-- /nav -->
 				</section><!-- /idea-hero -->
 			</div><!-- /row -->
