@@ -73,8 +73,8 @@ class IdeaManager(models.Manager):
             }, select_params=[idea_type.id])
 
 class Idea(UserTrackable):
-    title = models.CharField(max_length=140, blank=False, null=False)
-    text = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=50, blank=False, null=False)
+    text = models.TextField(max_length=2000, blank=True, null=True, verbose_name="description")
     state = models.ForeignKey(State)
 
     tags = TaggableManager(blank=True)
