@@ -5,6 +5,9 @@
 .ic * {
     font-family: "Avenir Next", Arial, sans-serif;
 }
+[class^="icon-"] {
+    font-family: FontAwesome;
+}
 .span1 { width: 5.714285714286%; }
 .span2 { width: 14.28571%; }
 .span3 { width: 22.85714%; }
@@ -267,32 +270,55 @@ ul.section-nav li.active a {
 
 /* Add View */
 .project-add {
-    background-color: #f2f2f2;
-    padding: 0.625em 0.625em 1.25em;
-    margin: 1.5em 0;
+    margin: 1.5em 0 0;
+}
+.project-add h1 {
+    display: inline-block;
+    margin-right: 0.25em;
+}
+.helptext,
+.instructions {
+    color: #75787B;
+    font-family: "Avenir Next Italic", Arial, sans-serif;
+    font-style: italic;
+}
+.project-add p {
+    display: inline-block;
 }
 .project-add form textarea {
     height: 6.25em;
-    width: 99%;
+    width: 48.57142%;
+    display: inline-block;
+    margin: 0.625em 0;
 }
 .project-add label {
-    color: #666;
-    display: block;
-    font-weight: 600;
+    display: inline-block;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
     padding: 0.625em 0 0.625em;
     position: relative;
-    width: 99%;
+    width: 22.85714%;
+    margin-right: 2.5%;
+    text-align: right;
 }
 .project-add input#id_title,
 .project-add input#id_text,
 .project-add input#id_tags {
-    width: 99%;
+    width: 48.57142%;
+    display: inline-block;
+    margin: 0.625em 0;
 }
-.project-add input#id_tags {
-    margin-bottom: 0.625em;
+.project-add .helptext {
+    margin-left: 25.75%;
 }
-.idea-add {
-    border-bottom: 3px solid #000;
+.project-add span#submit-buttons {
+    display: block;
+    margin-top: 1.375em;
+    margin-left: 25.75%;
+}
+.project-add #add-idea-btn,
+.project-add .secondary-action {
+    margin-top: 1.625em;
+    margin-bottom: 2em;
 }
 .idea-hero {
     margin: 0 0 0 0;
