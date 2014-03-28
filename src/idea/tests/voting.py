@@ -5,7 +5,7 @@ from idea import models
 from idea.tests.utils import random_user
 
 class VotingTests(TestCase):
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state', 'idea-users']
 
     def setUp(self):
         self.state = models.State.objects.get(name='Active') 
