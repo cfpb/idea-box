@@ -221,7 +221,6 @@ def detail(request, idea_id):
 
 @login_required
 def add_idea(request):
-    banner = get_banner()
     if request.method == 'POST':
         idea = Idea(creator=request.user, state=state_helper.get_first_state())
         if idea.state.name == 'Active':
@@ -237,7 +236,13 @@ def add_idea(request):
         form = IdeaForm(initial={'title':idea_title})
         return _render(request, 'idea/add.html', {
             'form':form,
-            'banner':banner,
             'similar': [r.object for r in more_like_text(idea_title,
                 Idea)]
             })
+
+@login_required
+def banner_detail(request, banner_id):
+    """
+    Banner detail view; banner_id must be a string containing an int.
+    """
+    return None

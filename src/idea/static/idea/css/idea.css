@@ -54,13 +54,11 @@
     color: #2cb34a;
     display: inline;
     font-size: 312.5%; /* 50px */
-    font-family: "Avenir Next Bold", Arial, sans-serif;
-    font-weight: bold;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
     line-height: 0.80;
-    text-transform: uppercase;
 }
 .project-search {
-    margin-top: 0.24em;
+    margin-bottom: 2.5em;
 }
 .project-description {
     color: #000;
@@ -84,11 +82,12 @@
 }
 /* Navigation */
 ul.section-nav {
-    border-bottom: 5px solid #000;
-    padding-bottom: 1px;
+    border-bottom: 1px solid #000;
+    padding-left: 0;
     margin-top: 0;
     margin-bottom: 2.25em;
     list-style: none;
+    overflow: auto;
 }
 ul.section-nav li {
     display: inline-block;
@@ -244,11 +243,27 @@ ul.section-nav li.active a {
     margin-bottom: 2.5em;
 }
 .sidebar h4 {
-    color: #999;
     font-size: 120%; /* 24px */
     line-height: 0.95;
 }
+.sidebar .challenge-banner {
+    margin-bottom: 2.5em;
+    background-color: #DBEDD4;
+    padding: 2em;
+}
+.sidebar .challenge-banner a {
+    border-bottom-width: 1px;
+}
+.sidebar .challenge-banner #challenge-link {
+    margin-top: 1.5em;
+}
+.sidebar .challenge-banner #challenge-link a:after {
+    content: "\f054";
+    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+    margin-left: .25em;
+}
 .total-ideas h4 {
+    color: #999;
     font-size: 175%; /* 28px */
     font-weight: bold;
 }
