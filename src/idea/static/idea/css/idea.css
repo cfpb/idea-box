@@ -237,7 +237,6 @@ ul.section-nav li.active a {
     list-style: none;
     padding-left: 0;
 }
-.total-ideas,
 .ic-add-tags,
 .sidebar-nav {
     margin-bottom: 2.5em;
@@ -261,11 +260,6 @@ ul.section-nav li.active a {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
-}
-.total-ideas h4 {
-    color: #999;
-    font-size: 175%; /* 28px */
-    font-weight: bold;
 }
 .tags .tag {
     display: block;
