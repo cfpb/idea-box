@@ -5,12 +5,11 @@
 		<div id="content" class="idea-home ic" role="main">
 			<div class="row">
 			<div class="left span9">
-			<div class="row">
-				<nav id="top-nav" class="top-internal-nav span12" role="navigation">
-					<h4 class="visuallyhidden">Idea Post Navigation</h4>
-						<a href="{% url 'idea:idea_list' %}">Back to Idea Box</a>
-            	</nav><!-- /top-nav /top-internal-nav -->
-			</div><!-- /row -->
+			<div class="row compact-header">
+				<h2 class="logo span7 project-title section">
+					<a href="{% url 'idea:idea_list' %}">Idea Box</a>
+				</h2><!-- /logo -->
+			</div>
 			<div class="row challenge-info">
 				<h3>Challenge: {{banner.title}}</h3>
 				<p class="challenge-entry-content">{{banner.text}}</p>
