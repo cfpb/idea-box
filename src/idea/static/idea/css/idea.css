@@ -341,20 +341,24 @@ ul.section-nav li.active a {
 .idea-hero a {
     border-bottom-width: 0;
 }
+.top-internal-nav a,
 .main-content a {
     border-bottom-width: 1px;
 }
 
 /* Single View */
+.challenge-info h3,
 .single-idea-entry .idea-title h3 {
     font-size: 225%; /* 24px */
     font-weight: 600;
     line-height: 1.26;
     margin-bottom: 0;
 }
+.challenge-info .challenge-entry-content p,
 .single-idea-entry .idea-entry-content p {
     font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
 }
+.challenge-info,
 .single-idea-entry {
     padding: 2.5em 0;
 }
