@@ -28,13 +28,14 @@ class Banner(models.Model):
     This can be used to run informal campaigns soliciting ideas around specific 
     topics. """
 
-    text = models.CharField(max_length=512)
+    title = models.CharField(max_length=50)
+    text = models.CharField(max_length=2000, verbose_name="description")
     start_date = models.DateField(help_text="The date from which this banner will be displayed.")
     end_date =  models.DateField(null=True, blank=True,  
                help_text="Empty indicates that the banner should be continued indefinitely. ")
 
     def __unicode__(self):
-        return u'%s (%s to %s)' % (self.text, self.start_date, self.end_date)
+        return u'%s (%s to %s)' % (self.title, self.start_date, self.end_date)
 
 class State(models.Model):
     """ The state an idea goes through. """
@@ -75,6 +76,7 @@ class IdeaManager(models.Manager):
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False)
     text = models.TextField(max_length=2000, blank=True, null=True, verbose_name="description")
+    banner = models.ForeignKey(Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
 
     tags = TaggableManager(blank=True)

@@ -103,14 +103,11 @@ def list(request, sort_or_state=None):
                 args=(sort_or_state,)), tag.slug)
             tag.active = False
 
-    total_num_ideas = Idea.objects.all().count()
-
     banner = get_banner()
 
     return _render(request, 'idea/list.html', {
         'sort_or_state': sort_or_state,
         'ideas':    page,   
-        'total_num_ideas': total_num_ideas,  
         'tags':     tags,   #   list of popular tags
         'banner': banner,
     })
@@ -221,7 +218,6 @@ def detail(request, idea_id):
 
 @login_required
 def add_idea(request):
-    banner = get_banner()
     if request.method == 'POST':
         idea = Idea(creator=request.user, state=state_helper.get_first_state())
         if idea.state.name == 'Active':
@@ -237,7 +233,65 @@ def add_idea(request):
         form = IdeaForm(initial={'title':idea_title})
         return _render(request, 'idea/add.html', {
             'form':form,
-            'banner':banner,
             'similar': [r.object for r in more_like_text(idea_title,
                 Idea)]
             })
+
+@login_required
+def banner_detail(request, banner_id):
+    """
+    Banner detail view; banner_id must be a string containing an int.
+    """
+    banner = Banner.objects.get(id=banner_id)
+
+    tag_strs= request.GET.get('tags', '').split(',')
+    tag_strs = [t for t in tag_strs if t != u'']
+    tag_ids = [tag.id for tag in Tag.objects.filter(slug__in=tag_strs)]
+    page_num = request.GET.get('page_num')
+
+    ideas = Idea.objects.related_with_counts().filter(banner=banner)
+
+    #   Tag Filter
+    if tag_ids:
+        ideas = ideas.filter(tags__pk__in=tag_ids).distinct()
+
+    IDEAS_PER_PAGE = getattr(settings, 'IDEAS_PER_PAGE', 10)
+    pager = Paginator(ideas, IDEAS_PER_PAGE) 
+    #   Boiler plate paging -- @todo abstract this
+    try:
+        page = pager.page(page_num)
+    except PageNotAnInteger:
+        page = pager.page(1)
+    except EmptyPage:
+        page = pager.page(pager.num_pages)
+
+    #   List of tags that are associated with an idea in the banner list
+    banner_ideas = Idea.objects.filter(banner=banner)
+    banner_tags = Tag.objects.filter(
+            taggit_taggeditem_items__content_type__name='idea',
+            taggit_taggeditem_items__object_id__in=banner_ideas)
+    tags = banner_tags.filter(
+            taggit_taggeditem_items__content_type__name='idea'
+    ).annotate(count=Count('taggit_taggeditem_items')
+    ).order_by('-count', 'name')[:10]
+
+    for tag in tags:
+        if tag.slug in tag_strs:
+            tag_slugs = ",".join([s for s in tag_strs if s != tag.slug])
+        else:
+            tag_slugs = ",".join(tag_strs + [tag.slug])
+        #   Minor tweak: Links just turn on/off a single tag
+        if tag.slug in tag_strs:
+            tag.tag_url = "%s"  %  (reverse('idea:banner_detail',
+                args=(banner_id,)))
+            tag.active = True
+        else:
+            tag.tag_url = "%s?tags=%s"  %  (reverse('idea:banner_detail',
+                args=(banner_id,)), tag.slug)
+            tag.active = False
+
+    return _render(request, 'idea/banner_detail.html', {
+        'ideas':    page,   
+        'tags':     tags,   #   list of tags associated with banner ideas 
+        'banner': banner,
+    })
