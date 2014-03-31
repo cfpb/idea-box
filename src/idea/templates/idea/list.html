@@ -72,14 +72,14 @@
 			</div><!-- /row -->
 			</div><!-- /span_main -->
                 <div class="sidebar left span3">
+					<div class="project-add-idea">
+						<a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
+					</div><!-- /project-add-idea -->
 					<div class="challenge-banner">
 						<h5>Current Challenge:</h5>
 						<h3 class="challenge-description">{{banner.title}}</h3>
 						<div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}">View Challenge ideas</a></div>
-					</div><!-- /project-search -->
-					<div class="project-search">
-						<a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
-					</div><!-- /project-search -->
+					</div><!-- /challenge-banner -->
 					<aside class="total-ideas">
 						<h4>
    	                      {{total_num_ideas}} Idea{{total_num_ideas|pluralize:",s"}}
