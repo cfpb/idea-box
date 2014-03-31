@@ -3,11 +3,12 @@
 {% block "content" %}
 
 		<div id="content" class="idea-single ic" role="main">
+			<div class="row compact-header">
+				<h2 class="logo span7 project-title section">
+					<a href="{% url 'idea:idea_list' %}">Idea Box</a>
+				</h2><!-- /logo -->
+			</div>
 			<section id="main" class="main-content">
-				<nav id="top-nav" class="top-internal-nav span12" role="navigation">
-					<h4 class="visuallyhidden">Idea Post Navigation</h4>
-						<a href="{% url 'idea:idea_list' %}">Back to Idea Box</a>
-            	</nav><!-- /top-nav /top-internal-nav -->
 				<article class="single-idea-entry">
 					<div class="row border-bottom">
 						<div class="idea-title-wrap span9">
