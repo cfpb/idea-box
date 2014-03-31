@@ -103,14 +103,11 @@ def list(request, sort_or_state=None):
                 args=(sort_or_state,)), tag.slug)
             tag.active = False
 
-    total_num_ideas = Idea.objects.all().count()
-
     banner = get_banner()
 
     return _render(request, 'idea/list.html', {
         'sort_or_state': sort_or_state,
         'ideas':    page,   
-        'total_num_ideas': total_num_ideas,  
         'tags':     tags,   #   list of popular tags
         'banner': banner,
     })
