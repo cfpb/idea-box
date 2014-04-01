@@ -6,6 +6,7 @@ from idea import models, views
 from idea.tests.utils import mock_req, random_user
 from mock import patch
 
+
 class AddIdeaTest(TestCase):
     fixtures = ['state', 'core-test-fixtures']
 

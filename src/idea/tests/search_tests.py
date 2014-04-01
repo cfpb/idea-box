@@ -10,9 +10,13 @@ class SearchTest(TestCase):
     backend = connections['default'].get_backend()
     backend_type = connections['default'].backend.__name__
 
+    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
+            "Simple backend doesn't allow itself to be cleared")
     def setUp(self):
         self.backend.clear()
 
+    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
+            "See https://github.com/toastdriven/django-haystack/issues/908")
     def test_add_idea_title(self):
         """
         Check that adding a new idea allows title to be immediately
