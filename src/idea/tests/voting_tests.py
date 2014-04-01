@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from idea import models
 from idea.tests.utils import random_user
 
+
 class VotingTests(TestCase):
-    fixtures = ['state', 'idea-users']
+    fixtures = ['state', 'core-test-fixtures']
 
     def setUp(self):
         self.state = models.State.objects.get(name='Active') 
@@ -49,4 +49,3 @@ class VotingTests(TestCase):
         idea.save()
         resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertIn('up', resp['Location'])
-
