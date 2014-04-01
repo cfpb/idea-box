@@ -5,27 +5,22 @@
 		<div id="content" class="idea-home ic" role="main">
 			<div class="row">
 			<div class="left span9">
-			<div class="row">
-				<section id="idea-hero" class="idea-hero">
-					<header class="project-header">
-						<div class="row">
-							<div class="logo span5">
-								<a href="{% url 'idea:idea_list' %}"><h2 class="project-title">Idea Box</h2></a>
-							</div>
-						</div><!-- /row -->
-					</header><!-- /project-header -->
-				<div class="visuallyhidden">
-					<h2>Main Navigation for Idea Box</h2>
-				</div> <!-- /visuallyhidden -->
-					<ul class="section-nav">
-                            <li {% if sort_or_state == 'trending' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "trending" %}">Trending</a></li>
-                            <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Likes</a></li>
-                            <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Recent</a></li>
-					</ul><!-- /nav -->
-				</section><!-- /idea-hero -->
+			<div class="row compact-header">
+				<h2 class="logo span7 project-title section">
+					<a href="{% url 'idea:idea_list' %}">Idea Box</a>
+				</h2><!-- /logo -->
+			</div>
+			<div class="row challenge-info">
+				<h3>Challenge: {{banner.title}}</h3>
+				<p class="challenge-entry-content">{{banner.text}}</p>
+				<div>
+					<div id="start">Start Date: {{banner.start_date}}</div>
+					<div id="end">End Date: {{banner.end_date}}</div>
+				</div>
 			</div><!-- /row -->
 			<div class="row">
 				<section id="main" class="main-content">
+				<hr>
                 {% if ideas %}
                 {% for idea in ideas %}
                         <article class="idea-entry">
@@ -75,11 +70,6 @@
 					<div class="project-add-idea">
 						<a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
 					</div><!-- /project-add-idea -->
-					<div class="challenge-banner">
-						<h5>Current Challenge:</h5>
-						<h3 class="challenge-description">{{banner.title}}</h3>
-						<div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}">View Challenge ideas</a></div>
-					</div><!-- /challenge-banner -->
 					<aside class="tags">
 						<h4>Browse by Tag:</h4>
 						<ul>

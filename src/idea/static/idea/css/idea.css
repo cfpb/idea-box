@@ -54,13 +54,11 @@
     color: #2cb34a;
     display: inline;
     font-size: 312.5%; /* 50px */
-    font-family: "Avenir Next Bold", Arial, sans-serif;
-    font-weight: bold;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
     line-height: 0.80;
-    text-transform: uppercase;
 }
-.project-search {
-    margin-top: 0.24em;
+.project-add-idea {
+    margin-bottom: 2.5em;
 }
 .project-description {
     color: #000;
@@ -84,11 +82,12 @@
 }
 /* Navigation */
 ul.section-nav {
-    border-bottom: 5px solid #000;
-    padding-bottom: 1px;
+    border-bottom: 1px solid #000;
+    padding-left: 0;
     margin-top: 0;
     margin-bottom: 2.25em;
     list-style: none;
+    overflow: auto;
 }
 ul.section-nav li {
     display: inline-block;
@@ -238,19 +237,29 @@ ul.section-nav li.active a {
     list-style: none;
     padding-left: 0;
 }
-.total-ideas,
 .ic-add-tags,
 .sidebar-nav {
     margin-bottom: 2.5em;
 }
 .sidebar h4 {
-    color: #999;
     font-size: 120%; /* 24px */
     line-height: 0.95;
 }
-.total-ideas h4 {
-    font-size: 175%; /* 28px */
-    font-weight: bold;
+.sidebar .challenge-banner {
+    margin-bottom: 2.5em;
+    background-color: #DBEDD4;
+    padding: 2em;
+}
+.sidebar .challenge-banner a {
+    border-bottom-width: 1px;
+}
+.sidebar .challenge-banner #challenge-link {
+    margin-top: 1.5em;
+}
+.sidebar .challenge-banner #challenge-link a:after {
+    content: "\f054";
+    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+    margin-left: .25em;
 }
 .tags .tag {
     display: block;
@@ -326,20 +335,24 @@ ul.section-nav li.active a {
 .idea-hero a {
     border-bottom-width: 0;
 }
+.top-internal-nav a,
 .main-content a {
     border-bottom-width: 1px;
 }
 
 /* Single View */
+.challenge-info h3,
 .single-idea-entry .idea-title h3 {
     font-size: 225%; /* 24px */
     font-weight: 600;
     line-height: 1.26;
     margin-bottom: 0;
 }
+.challenge-info .challenge-entry-content p,
 .single-idea-entry .idea-entry-content p {
     font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
 }
+.challenge-info,
 .single-idea-entry {
     padding: 2.5em 0;
 }
