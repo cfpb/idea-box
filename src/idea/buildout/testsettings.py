@@ -1,3 +1,8 @@
+import logging
+import south.logger
+# Stop South from spitting out debug messages during tests
+logging.getLogger('south').setLevel(logging.CRITICAL)
+
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -18,7 +23,8 @@ TEMPLATE_DIRS = (
     './templates',
 )
 
-INSTALLED_APPS = ['idea', 
+INSTALLED_APPS = [
+    'idea', 
     'south',
     'django.contrib.auth',
     'django.contrib.admin',
@@ -27,14 +33,23 @@ INSTALLED_APPS = ['idea',
     'django.contrib.sites',
     'taggit',
     'haystack',
+    'django_nose',
     'django.contrib.comments',
     'django.contrib.staticfiles',
 ]
 
 ROOT_URLCONF = 'idea.buildout.urls'
 
-HAYSTACK_SITECONF = 'idea.buildout.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'simple'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
 
 DEBUG = True
 STATIC_URL = '/static/'
+
+# Only used in tests
+SECRET_KEY = '-9khc0wuc!ie88^tsqx9fiq!utst+d!!o@n+jqxz97s)ek74_@'
+
+TEST_RUNNER = 'django_nose.runner.NoseTestSuiteRunner'

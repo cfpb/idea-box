@@ -8,4 +8,4 @@ urlpatterns = patterns('',
    url(r'^comments/', include('django.contrib.comments.urls'))
 )
 
-urlpatterns.append(url(r'', include('idea.urls')))
+urlpatterns.append(url(r'', include('idea.urls', namespace="idea")))
