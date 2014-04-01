@@ -6,8 +6,9 @@ from idea import models, views
 from idea.tests.utils import mock_req, random_user
 from mock import patch
 
+
 class AddIdeaTest(TestCase):
-    fixtures = ['state', 'idea-users']
+    fixtures = ['state', 'core-test-fixtures']
 
     def test_good_idea(self):
         """ Test an normal POST submission to add an idea. """
