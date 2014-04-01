@@ -1,5 +1,7 @@
 # Idea-Box
 
+[![Build Status](https://travis-ci.org/cfpb/idea-box.svg?branch=master)](https://travis-ci.org/cfpb/idea-box)
+
 Idea-Box is a django app for collecting and surfacing ideas from users, in the vein of
 IdeaScale, IdeaX, and Django Voice. Idea-Box differs from these projects in its minimal,
 easily integrate-able interface. Idea-Box also takes a strong stance on transparency,
