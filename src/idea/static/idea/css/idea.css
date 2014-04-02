@@ -81,6 +81,9 @@
     width: 80%;
 }
 /* Navigation */
+h2.section a {
+    font-family: "Avenir Next Bold", Arial, sans-serif;
+}
 ul.section-nav {
     border-bottom: 1px solid #000;
     padding-left: 0;
