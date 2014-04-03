@@ -38,7 +38,7 @@
 									<a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
 								</header>
 								<div class="idea-description">
-									{{ idea.text|truncatechars:250 }}
+									{{ idea.summary|truncatechars:250 }}
 								</div>
 								<div class="idea-more">
 									<a href="{% url 'idea:idea_detail' idea.id %}">Read More</a>

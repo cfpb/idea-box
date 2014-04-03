@@ -22,7 +22,12 @@ class SearchTest(TestCase):
         Check that adding a new idea allows title to be immediately
         searchable.
         """
-        req = RequestFactory().post('/', {'title': 'example_title'})
+        req = RequestFactory().post('/', {
+            'title':'example_title',
+            'summary': 'test summary',
+            'text': 'test text',
+            'tags': 'test, tags'
+        })
         req.user = random_user()
         views.add_idea(req)
         results = self.backend.search('example_title')
@@ -35,8 +40,12 @@ class SearchTest(TestCase):
         Check that adding a new idea allows the associated tag to be
         immediately searchable.
         """
-        req = RequestFactory().post('/', 
-            {'title': 'title', 'tags': 'example_tag'})
+        req = RequestFactory().post('/', {
+            'title':'title',
+            'summary': 'test summary',
+            'text': 'test text',
+            'tags': 'example_tag'
+        })
         req.user = random_user()
         views.add_idea(req)
         results = self.backend.search('example_tag')
@@ -55,7 +64,12 @@ class SearchTest(TestCase):
         results = self.backend.search('example_tag')
         self.assertEqual(0, results['hits'])
 
-        req = RequestFactory().post('/', {'tags': 'example_tag'})
+        req = RequestFactory().post('/', {
+            'title':'title',
+            'summary': 'test summary',
+            'text': 'test text',
+            'tags': 'example_tag'
+        })
         req.user = random_user()
         views.detail(req, str(idea.id))
         results = self.backend.search('example_tag')

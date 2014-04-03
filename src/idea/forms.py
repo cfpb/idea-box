@@ -6,6 +6,10 @@ class IdeaForm(forms.ModelForm):
         model = Idea
         exclude = ('creator', 'time', 'state',)
 
+    def __init__(self, *args, **kwargs):
+        super(IdeaForm, self).__init__(*args, **kwargs)
+        self.fields['banner'].empty_label = "No challenge"
+
     def clean_tags(self):
         """ Force tags to lowercase, since tags are case-sensitive otherwise. """
 
