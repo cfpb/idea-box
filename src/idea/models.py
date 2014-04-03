@@ -75,11 +75,12 @@ class IdeaManager(models.Manager):
 
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False)
-    text = models.TextField(max_length=2000, blank=True, null=True, verbose_name="description")
+    summary = models.CharField(max_length=250)
+    text = models.TextField(max_length=2000, null=False, verbose_name="detail")
     banner = models.ForeignKey(Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
 
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=False)
 
     def __unicode__(self):
         return u'%s' % self.title
