@@ -17,38 +17,46 @@ class UserTrackable(models.Model):
     creator = models.ForeignKey(User)
     #   use a lambda so that this is evaluated upon creation (rather than
     #   once upon class import)
-    time = models.DateTimeField(default =
-            lambda:datetime.utcnow().replace(tzinfo=get_default_timezone()))
+    time = models.DateTimeField(
+        default=lambda: datetime.utcnow().replace(tzinfo=get_default_timezone()))
 
     class Meta:
         abstract = True
-  
+
+
 class Banner(models.Model):
+
     """ The banner text at the beginning of IdeaBox pages, asking the question. 
     This can be used to run informal campaigns soliciting ideas around specific 
     topics. """
 
     title = models.CharField(max_length=50)
     text = models.CharField(max_length=2000, verbose_name="description")
-    start_date = models.DateField(help_text="The date from which this banner will be displayed.")
-    end_date =  models.DateField(null=True, blank=True,  
-               help_text="Empty indicates that the banner should be continued indefinitely. ")
+    start_date = models.DateField(
+        help_text="The date from which this banner will be displayed.")
+    end_date = models.DateField(null=True, blank=True,
+                                help_text="Empty indicates that the banner " +
+                                "should be continued indefinitely. ")
 
     def __unicode__(self):
         return u'%s (%s to %s)' % (self.title, self.start_date, self.end_date)
 
+
 class State(models.Model):
+
     """ The state an idea goes through. """
     name = models.CharField(max_length=50)
 
-    #States are ordered with respect to each other. 
-    #The first State has no previous. 
+    # States are ordered with respect to each other.
+    # The first State has no previous.
     previous = models.OneToOneField('self', null=True, blank=True)
 
     def __unicode__(self):
         return u'%s' % self.name
 
+
 class IdeaManager(models.Manager):
+
     def related_with_counts(self):
         idea_type = ContentType.objects.get(app_label="idea", model="idea")
         return self.select_related().extra(select={
@@ -71,12 +79,15 @@ class IdeaManager(models.Manager):
             'vote_count': """
                 SELECT count(*) FROM idea_vote WHERE idea_id = idea_idea.id
             """
-            }, select_params=[idea_type.id])
+        }, select_params=[idea_type.id])
+
 
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False)
-    text = models.TextField(max_length=2000, blank=True, null=True, verbose_name="description")
-    banner = models.ForeignKey(Banner, verbose_name="challenge", blank=True, null=True)
+    text = models.TextField(
+        max_length=2000, blank=True, null=True, verbose_name="description")
+    banner = models.ForeignKey(
+        Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
 
     tags = TaggableManager(blank=True)
@@ -93,15 +104,16 @@ class Idea(UserTrackable):
     def get_creator_profile(self):
         try:
             return self.creator.get_profile()
-        except (ObjectDoesNotExist, SiteProfileNotAvailable): 
+        except (ObjectDoesNotExist, SiteProfileNotAvailable):
             return None
 
     objects = IdeaManager()
 
-#We can only upvote. 
+# We can only upvote.
 UP_VOTE = 1
 VOTE_CHOICES = ((u'+1', UP_VOTE),)
 
+
 class Vote(UserTrackable):
-    vote = models.SmallIntegerField(choices=VOTE_CHOICES, default=1) 
+    vote = models.SmallIntegerField(choices=VOTE_CHOICES, default=1)
     idea = models.ForeignKey(Idea)
