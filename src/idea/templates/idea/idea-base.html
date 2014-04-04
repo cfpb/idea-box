@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block "css_files" %}
-	<link rel="stylesheet" href="{{ STATIC_URL }}idea/css/idea.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}idea/css/idea.css">
 
-	{% if page.description %}
-		<meta name="description" content="{{ page.description|striptags }}"> 
-	{% endif %}
+    {% if page.description %}
+        <meta name="description" content="{{ page.description|striptags }}"> 
+    {% endif %}
 
 {% endblock %}
 
 {% block "content" %}{% endblock %}
 
 {% block "js_scripts" %}
-		<script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+        <script src="{{ STATIC_URL }}idea/js/functions.js"></script>
 {% endblock %}
