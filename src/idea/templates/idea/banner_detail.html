@@ -2,93 +2,93 @@
 
 {% block "content" %}
 
-		<div id="content" class="idea-home ic" role="main">
-			<div class="row">
-			<div class="left span9">
-			<div class="row compact-header">
-				<h2 class="logo span7 project-title section">
-					<a href="{% url 'idea:idea_list' %}">Idea Box</a>
-				</h2><!-- /logo -->
-			</div>
-			<div class="row challenge-info">
-				<h3>Challenge: {{banner.title}}</h3>
-				<p class="challenge-entry-content">{{banner.text}}</p>
-				<div>
-					<div id="start">Start Date: {{banner.start_date}}</div>
-					<div id="end">End Date: {{banner.end_date}}</div>
-				</div>
-			</div><!-- /row -->
-			<div class="row">
-				<section id="main" class="main-content">
-				<hr>
+        <div id="content" class="idea-home ic" role="main">
+            <div class="row">
+            <div class="left span9">
+            <div class="row compact-header">
+                <h2 class="logo span7 project-title section">
+                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
+                </h2><!-- /logo -->
+            </div>
+            <div class="row challenge-info">
+                <h3>Challenge: {{banner.title}}</h3>
+                <p class="challenge-entry-content">{{banner.text}}</p>
+                <div>
+                    <div id="start">Start Date: {{banner.start_date}}</div>
+                    <div id="end">End Date: {{banner.end_date}}</div>
+                </div>
+            </div><!-- /row -->
+            <div class="row">
+                <section id="main" class="main-content">
+                <hr>
                 {% if ideas %}
                 {% for idea in ideas %}
                         <article class="idea-entry">
-						<div class="row">
-							<div class="idea-votes span2">
-								{{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
-							</div><!-- /idea-votes -->
-							<div class="idea-wrap span10">
-								<header class="idea-title">
-									<a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
-								</header>
-								<div class="idea-description">
-									{{ idea.summary|truncatechars:250 }}
-								</div>
-								<div class="idea-more">
-									<a href="{% url 'idea:idea_detail' idea.id %}">Read More</a>
-								</div>
-								<footer class="idea-footer">
-									<div class="idea-info">
-										<span class="commented"><a href="{% url 'idea:idea_detail' idea.id %}#comments">{{idea.comment_count}} Comment{{idea.comment_count|pluralize:",s"}}</a></span> | <span class="suggested">Suggested on {{idea.time|date:"M d, Y"}}</span>
-									</div><!-- /idea-info -->
-								</footer>
-							</div><!-- /idea-wrap -->
-						</div><!-- /row -->
-					</article>
+                        <div class="row">
+                            <div class="idea-votes span2">
+                                {{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
+                            </div><!-- /idea-votes -->
+                            <div class="idea-wrap span10">
+                                <header class="idea-title">
+                                    <a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
+                                </header>
+                                <div class="idea-description">
+                                    {{ idea.summary|truncatechars:250 }}
+                                </div>
+                                <div class="idea-more">
+                                    <a href="{% url 'idea:idea_detail' idea.id %}">Read More</a>
+                                </div>
+                                <footer class="idea-footer">
+                                    <div class="idea-info">
+                                        <span class="commented"><a href="{% url 'idea:idea_detail' idea.id %}#comments">{{idea.comment_count}} Comment{{idea.comment_count|pluralize:",s"}}</a></span> | <span class="suggested">Suggested on {{idea.time|date:"M d, Y"}}</span>
+                                    </div><!-- /idea-info -->
+                                </footer>
+                            </div><!-- /idea-wrap -->
+                        </div><!-- /row -->
+                    </article>
                 {% endfor %}
                 {% else %}
-                	<article class="no-results">
-                		<div class="row">
-                    		<p class="span9">There are no ideas to display.</p>
-                    	</div><!-- /row -->
+                    <article class="no-results">
+                        <div class="row">
+                            <p class="span9">There are no ideas to display.</p>
+                        </div><!-- /row -->
                     </article><!-- /no-results -->
                 {% endif %}
-					<nav id="bottom-nav" class="bottom-internal-nav span12" role="navigation">
-					<h4 class="visuallyhidden">Idea Post Navigation</h4>
+                    <nav id="bottom-nav" class="bottom-internal-nav span12" role="navigation">
+                    <h4 class="visuallyhidden">Idea Post Navigation</h4>
                     {% if ideas.has_previous %}
                         <a href="?page_num={{ideas.previous_page_number}}" class="left">Previous Ideas</a>
                     {% endif %}
                     {% if ideas.has_next %}
-						<a href="?page_num={{ideas.next_page_number}}" class="more">More Ideas</a>
+                        <a href="?page_num={{ideas.next_page_number}}" class="more">More Ideas</a>
                     {% endif %}
-					</nav><!-- /bottom-nav /bottom-internal-nav -->
-				</section><!-- /main /main-content -->
-			</div><!-- /row -->
-			</div><!-- /span_main -->
+                    </nav><!-- /bottom-nav /bottom-internal-nav -->
+                </section><!-- /main /main-content -->
+            </div><!-- /row -->
+            </div><!-- /span_main -->
                 <div class="sidebar left span3">
-					<div class="project-add-idea">
-						<a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
-					</div><!-- /project-add-idea -->
-					<aside class="tags">
-						<h4>Browse by Tag:</h4>
-						<ul>
-   	                        {% for tag in tags %}
-   	                        <li class="tag"><a class="tag_name" href="{{tag.tag_url}}" 
-   	                            {% if tag.active %}
-   	                                class="active"
-   	                            {% endif %}
-   	                        >{{tag}} </a><span class="tag_remove">{{tag.count}}</span></li>
-   	                        {% endfor %}
-						</ul>   
-					</aside>
-				</div><!-- /span_side -->
-			</div><!-- /row -->
-		</div><!-- /main -->
+                    <div class="project-add-idea">
+                        <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
+                    </div><!-- /project-add-idea -->
+                    <aside class="tags">
+                        <h4>Browse by Tag:</h4>
+                        <ul>
+                               {% for tag in tags %}
+                               <li class="tag"><a class="tag_name" href="{{tag.tag_url}}" 
+                                   {% if tag.active %}
+                                       class="active"
+                                   {% endif %}
+                               >{{tag}} </a><span class="tag_remove">{{tag.count}}</span></li>
+                               {% endfor %}
+                        </ul>   
+                    </aside>
+                </div><!-- /span_side -->
+            </div><!-- /row -->
+        </div><!-- /main -->
 
 {% endblock %}
 
 {% block "js_scripts" %}
-		<script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+        <script src="{{ STATIC_URL }}idea/js/functions.js"></script>
 {% block "design_js_scripts" %}{% endblock %}
 {% endblock %}
