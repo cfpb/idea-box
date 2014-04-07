@@ -9,7 +9,8 @@ class IdeaIndex(indexes.SearchIndex, indexes.Indexable):
     description = indexes.CharField(model_attr="summary", null=True)
     index_name = indexes.CharField(indexed=False)
     index_priority = indexes.IntegerField(indexed=False)
-    index_sort = indexes.IntegerField(indexed=False, null=True)
+#  TODO causes all tests to fail
+#    index_sort = indexes.IntegerField(indexed=False, null=True)
     url = indexes.CharField(indexed=False, null=True)
 
     PRIORITY = 4
