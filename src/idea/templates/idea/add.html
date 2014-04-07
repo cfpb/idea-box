@@ -2,54 +2,54 @@
 
 {% block "content" %}
 
-		<div id="content" class="idea-add ic" role="main">
-			<div class="row compact-header">
-				<h2 class="logo span7 project-title section">
-					<a href="{% url 'idea:idea_list' %}">Idea Box</a>
-				</h2><!-- /logo -->
-			</div>
-			<div class="project-add">
-				<h1>Add an idea</h1>
-				<p class="instructions">Please complete all fields to add the idea</p>
-				<a id="activate-help" class="visuallyhidden">Toggle instructions for each field.</a>
-				<form action="{% url 'idea:add_idea' %}" method="post">
-					{% csrf_token %}
-					{% for field in form %}
-						<div class="input_right {{ field.html_name }}">
-							<label for="{{ field.auto_id }}">
-								{{ field.label }}
-								{% if field.help_text %}
-									<span class="help_text">
-										<i class="icon-question-sign" title="{{ field.help_text }}"></i>
-										<span>{{ field.help_text }}</span>
-									</span>
-								{% endif %}
-							</label>
-						   {{ field }}
-						   {{ field.errors }}
-						</div>
-					{% endfor %}
-					<span id="submit-buttons">
-						<input type="submit" class="btn" id="add-idea-btn" value="Add this idea">
-						<input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="Cancel">
-					</span>
-				</form>
-			</div><!-- /project-add -->					
-		</div><!-- /main -->
+        <div id="content" class="idea-add ic" role="main">
+            <div class="row compact-header">
+                <h2 class="logo span7 project-title section">
+                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
+                </h2><!-- /logo -->
+            </div>
+            <div class="project-add">
+                <h1>Add an idea</h1>
+                <p class="instructions">Please complete all fields to add the idea</p>
+                <a id="activate-help" class="visuallyhidden">Toggle instructions for each field.</a>
+                <form action="{% url 'idea:add_idea' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="input_right {{ field.html_name }}">
+                            <label for="{{ field.auto_id }}">
+                                {{ field.label }}
+                                {% if field.help_text %}
+                                    <span class="help_text">
+                                        <i class="icon-question-sign" title="{{ field.help_text }}"></i>
+                                        <span>{{ field.help_text }}</span>
+                                    </span>
+                                {% endif %}
+                            </label>
+                           {{ field }}
+                           {{ field.errors }}
+                        </div>
+                    {% endfor %}
+                    <span id="submit-buttons">
+                        <input type="submit" class="btn" id="add-idea-btn" value="Add this idea">
+                        <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="Cancel">
+                    </span>
+                </form>
+            </div><!-- /project-add -->                    
+        </div><!-- /main -->
 
 {% endblock %}
 
 {% block "js_ready" %}
-	$(".icon-question-sign").tooltip({
-		delay: 100,
-		left: -16
-	});
-	$("#activate-help").click(function() {
-		$(".help_text span").toggle();
-	});
+    $(".icon-question-sign").tooltip({
+        delay: 100,
+        left: -16
+    });
+    $("#activate-help").click(function() {
+        $(".help_text span").toggle();
+    });
 {% endblock %}
 
 {% block "js_scripts" %}
-		<script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+        <script src="{{ STATIC_URL }}idea/js/functions.js"></script>
 {% block "design_js_scripts" %}{% endblock %}
 {% endblock %}
