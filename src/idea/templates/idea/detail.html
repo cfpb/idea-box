@@ -43,7 +43,6 @@
                             <p class="date">{{idea.time|date:"H:m A; M d, Y "}}</p>
                         </div><!-- /author-info -->
                         <div class="idea-entry-content span8">
-                            <p>{{idea.text}}</p>
                             <p>Summary: {{idea.summary}}</p>
                             <p>Detail: {{idea.text}}</p>
                             {% get_comment_list for idea.idea idea.id as comment_list %}
