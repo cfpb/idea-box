@@ -75,11 +75,13 @@
                     <div class="project-add-idea">
                         <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
                     </div><!-- /project-add-idea -->
+                    {% if banner %}
                     <div class="challenge-banner">
                         <h5>Current Challenge:</h5>
                         <h3 class="challenge-description">{{banner.title}}</h3>
                         <div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}">View Challenge ideas</a></div>
                     </div><!-- /challenge-banner -->
+                    {% endif %}
                     <aside class="tags">
                         <h4>Browse by Tag:</h4>
                         <ul>
