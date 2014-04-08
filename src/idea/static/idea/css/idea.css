@@ -209,8 +209,15 @@ ul.section-nav li.active a {
     font-weight: normal;
 }
 .comment {
-    padding: 2.5em 0 1.5em;
+    padding: 1em 0 1em;
     border-bottom: 1px solid #ccc;
+}
+
+.comment .comment {
+    padding: .5em 0 .5em;
+    margin-left: 2.5em;
+    border-top: 1px solid #ccc;
+    border-bottom: 0;
 }
 
 /* Internal Nav */
