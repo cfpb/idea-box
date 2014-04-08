@@ -17,7 +17,7 @@ class AddIdeaTest(TestCase):
         self.assertEquals(models.Idea.objects.all().count(), 0)
         num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
-        resp = self.client.post(reverse('idea:add_idea'), {'title':'JSON format for HMDA data', 'text':'HMDA data in JSON format. '})
+        resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
         self.assertEqual(resp.status_code, 302)
         self.assertIn('detail', resp['Location'])
         self.assertEquals(models.Idea.objects.all().count(), 1)
@@ -25,9 +25,24 @@ class AddIdeaTest(TestCase):
         num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 1)
 
+    def test_bad_idea(self):
+        """ Test an incomplete POST submission to add an idea. """
+
+        self.client.login(username='test1@example.com', password='1')
+        self.assertEquals(models.Idea.objects.all().count(), 0)
+        num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
+        self.assertEqual(num_voters, 0)
+        resp = self.client.post(reverse('idea:add_idea'), {'text':'test text'})
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('This field is required.', resp.content)
+        self.assertEquals(models.Idea.objects.all().count(), 0)
+
+        num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
+        self.assertEqual(num_voters, 0)
+
     def test_must_be_logged_in(self):
         """ A user must be logged in to create an idea. """
-        resp = self.client.post(reverse('idea:add_idea'), {'title':'JSON format for HMDA data', 'text':'HMDA data in JSON format. '})
+        resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
         self.assertEqual(resp.status_code, 302)
         self.assertIn('login', resp['Location'])
         self.assertEqual(models.Idea.objects.all().count(), 0)
