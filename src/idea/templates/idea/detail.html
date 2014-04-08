@@ -1,5 +1,8 @@
 {% extends "idea/idea-base.html" %}
 
+{% load comments %}
+{% load mptt_tags %}
+
 {% block "content" %}
 
         <div id="content" class="idea-single ic" role="main">
@@ -17,7 +20,6 @@
                             </header>
                         </div><!-- /idea-title-wrap -->
                         <div class="vote-cta span3">
-                            {% load comments %}
                             {% if idea.state.name == 'Archive' %}
                                 <span class="btn-archive">Archived</span>
                             {% elif support %}
@@ -44,7 +46,7 @@
                         </div><!-- /author-info -->
                         <div class="idea-entry-content span8">
                             <p>{{idea.text}}</p>
-                                                        {% get_comment_list for idea.idea idea.id as comment_list %}
+                            {% get_comment_list for idea.idea idea.id as comment_list %}
                             <div id="comments" class="comments">                            
                             <div class="comment-total">
                                 <h4>{{comment_list|length}} Comments</h4>
@@ -60,27 +62,35 @@
                                     {{comment_form.object_pk}}
                                     {{comment_form.timestamp}}
                                     {{comment_form.security_hash}}
+                                        <input type="hidden" name="parent" id="parent_id" value="" />
                                         <input type="hidden" name = "next" value="{% url 'idea:idea_detail' idea.id %}" />
                                         <input type="submit" class="btn right" value="Submit" id="id_submit" />
                                     </form>
                                 </div><!-- /comment-form -->
                                 <ol class="comment-list">
-                                    {% for comment in comment_list reversed %}
+                                    {% recursetree comment_list %}
                                     <li class="comment">
                                         <article>
-                                                <footer class="comment-meta">
-                                                {% if idea.get_creator_profile %}
-                                                <p class="comment-author"><a href="{{comment.user.get_profile.get_absolute_url}}">{{comment.user_name}}</a><span class="comment-date"> on {{comment.submit_date|date:"M d, Y H:m A"}}</span></p>
-                                                {% else %}
-                                                <p class="comment-author">{{comment.user_name}}<span class="comment-date"> on {{comment.submit_date|date:"M d, Y H:m A"}}</span></p>
-                                                {% endif %}
-                                                </footer><!-- /comment-meta -->
+                                            <footer class="comment-meta">
+                                            {% if idea.get_creator_profile %}
+                                                <p class="comment-author"><a href="{{node.user.get_profile.get_absolute_url}}">{{node.user_name}}</a><span class="comment-date"> on {{node.submit_date|date:"M d, Y H:m A"}}</span>
+                                                {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
+                                                | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
+                                            {% else %}
+                                                <p class="comment-author">{{node.user_name}}<span class="comment-date"> on {{node.submit_date|date:"M d, Y H:m A"}}</span>
+                                                {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
+                                                | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
+                                            {% endif %}
+                                            </footer><!-- /comment-meta -->
                                             <div class="comment-content">
-                                                <p>{{comment.comment}}</p>
+                                                <p>{{node.comment}}</p>
                                             </div><!-- /comment-content -->
+                                            {% if not node.is_leaf_node %}
+                                                {{ children }}
+                                            {% endif %}
                                         </article>
                                     </li>
-                                    {% endfor %}
+                                    {% endrecursetree %}
                                 </ol><!-- /comments-list -->
                             </div><!-- /comments-wrap -->
                         </div><!-- /comments -->
