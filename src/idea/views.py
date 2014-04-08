@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Count
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
@@ -30,6 +30,8 @@ def _render(req, template_name, context={}):
     context['app_link'] = reverse('idea:idea_list')
     return render(req, template_name, context)
 
+def get_current_banners():
+    return Banner.objects.filter(start_date__lte=date.today()).exclude(end_date__lt=date.today())
 
 def get_banner():
     today = date.today()
@@ -226,6 +228,7 @@ def detail(request, idea_id):
     })
 
 
+
 @login_required
 def add_idea(request):
     if request.method == 'POST':
@@ -237,15 +240,19 @@ def add_idea(request):
                 vote_up(new_idea, request.user)
                 return HttpResponseRedirect(reverse('idea:idea_detail',
                                                     args=(idea.id,)))
+            else:
+                form.fields["banner"].queryset = get_current_banners()
+                return _render(request, 'idea/add.html', {'form':form, })
         else:
             return HttpResponse('Idea is archived', status=403)
     else:
         idea_title = request.GET.get('idea_title', '')
         form = IdeaForm(initial={'title': idea_title})
+        form.fields["banner"].queryset = get_current_banners()
         return _render(request, 'idea/add.html', {
             'form': form,
             'similar': [r.object for r in more_like_text(idea_title, Idea)]
-        })
+            })
 
 
 @login_required

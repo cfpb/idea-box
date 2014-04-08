@@ -314,6 +314,7 @@ ul.section-nav li.active a {
 }
 .project-add input#id_title,
 .project-add input#id_text,
+.project-add input#id_summary,
 .project-add input#id_tags {
     width: 48.57142%;
     display: inline-block;
@@ -321,6 +322,10 @@ ul.section-nav li.active a {
 }
 .project-add .helptext {
     margin-left: 25.75%;
+}
+.project-add .errorlist {
+    margin-left: 5px;
+    width: 22.85714%;
 }
 .project-add span#submit-buttons {
     display: block;
