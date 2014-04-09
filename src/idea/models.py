@@ -99,7 +99,7 @@ class Idea(UserTrackable):
         """
         Lookup the view url for this idea.
         """
-        return reverse('idea.views.detail', args=(self.id,))
+        return reverse('idea:idea_detail', args=(self.id,))
 
     @property
     def comments(self):
@@ -115,10 +115,12 @@ class Idea(UserTrackable):
         members = []
         members.append(self.creator)
         for v in self.vote_set.all():
-            members.append(v.creator)
+            if v.creator not in members:
+                members.append(v.creator)
 
         for c in self.comments:
-            members.append(c.user)
+            if c.user not in members:
+                members.append(c.user)
 
         return members
 

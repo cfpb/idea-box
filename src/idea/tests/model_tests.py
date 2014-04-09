@@ -38,7 +38,7 @@ class VotingTests(TestCase):
 
     def test_members_with_comments(self):
         user = random_user()
-        idea = models.Idea(creator=user, title='Transit subsidy to Mars', 
+        idea = models.Idea(creator=user, title='Transit subsidy to Mars',
                     text='Aliens need assistance.', state=self.state)
         idea.save()
         
@@ -55,4 +55,24 @@ class VotingTests(TestCase):
 
         self.assertEqual(len(idea.members), 2)
         self.assertIn(commenter, idea.members)
+        self.assertIn(user, idea.members)
+
+    def test_members_with_comment_by_same_user(self):
+        user = random_user()
+        idea = models.Idea(creator=user, title='Transit subsidy to Mars',
+                    text='Aliens need assistance.', state=self.state)
+        idea.save()
+
+        commenter = user
+
+        comment = Comment()
+        comment.user = commenter
+        comment.content_object = idea
+        comment.comment = 'Test'
+        comment.is_public = True
+        comment.is_removed = False
+        comment.site_id = 1
+        comment.save()
+
+        self.assertEqual(len(idea.members), 1)
         self.assertIn(user, idea.members)
