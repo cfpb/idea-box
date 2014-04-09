@@ -101,6 +101,27 @@ class Idea(UserTrackable):
         """
         return reverse('idea.views.detail', args=(self.id,))
 
+    @property
+    def comments(self):
+        return Comment.objects.for_model(self.__class__).filter(is_public = True,
+                                                                is_removed = False,
+                                                                object_pk = self.pk)
+
+    @property
+    def members(self):
+        """
+        Return all users participating in an idea
+        """
+        members = []
+        members.append(self.creator)
+        for v in self.vote_set.all():
+            members.append(v.creator)
+
+        for c in self.comments:
+            members.append(c.user)
+
+        return members
+
     def get_creator_profile(self):
         try:
             return self.creator.get_profile()
