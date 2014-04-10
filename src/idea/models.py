@@ -84,7 +84,7 @@ class IdeaManager(models.Manager):
 
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False)
-    summary = models.CharField(max_length=250)
+    summary = models.CharField(max_length=200)
     text = models.TextField(max_length=2000, null=False, verbose_name="detail")
     banner = models.ForeignKey(
         Banner, verbose_name="challenge", blank=True, null=True)
