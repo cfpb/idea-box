@@ -42,7 +42,7 @@
                             {% else %}
                             <p class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </p>
                             {% endif %}
-                            <p class="date">{{idea.time|date:"H:m A; M d, Y "}}</p>
+                            <p class="date">{{idea.time|date:"M d, Y"}}</p>
                         </div><!-- /author-info -->
                         <div class="idea-entry-content span8">
                             <p>{{idea.text}}</p>
@@ -73,11 +73,11 @@
                                         <article>
                                             <footer class="comment-meta">
                                             {% if idea.get_creator_profile %}
-                                                <p class="comment-author"><a href="{{node.user.get_profile.get_absolute_url}}">{{node.user_name}}</a><span class="comment-date"> on {{node.submit_date|date:"M d, Y H:m A"}}</span>
+                                                <p class="comment-author"><a href="{{node.user.get_profile.get_absolute_url}}">{{node.user_name}}</a><span class="comment-date"> on {{node.submit_date|date:"M d, Y g:i A"}}</span>
                                                 {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
                                                 | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
                                             {% else %}
-                                                <p class="comment-author">{{node.user_name}}<span class="comment-date"> on {{node.submit_date|date:"M d, Y H:m A"}}</span>
+                                                <p class="comment-author">{{node.user_name}}<span class="comment-date"> on {{node.submit_date|date:"M d, Y g:i A"}}</span>
                                                 {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
                                                 | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
                                             {% endif %}
