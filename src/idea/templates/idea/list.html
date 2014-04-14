@@ -3,9 +3,7 @@
 {% block "content" %}
 
         <div id="content" class="idea-home ic" role="main">
-            <div class="row">
             <div class="left span9">
-            <div class="row">
                 <section id="idea-hero" class="idea-hero">
                     <header class="project-header">
                         <div class="row">
@@ -22,24 +20,25 @@
                             </p>
                         </div><!-- /row -->
                     </header><!-- /project-header -->
-                <div class="visuallyhidden">
-                    <h2>Main Navigation for Idea Box</h2>
-                </div> <!-- /visuallyhidden -->
+                    <div class="visuallyhidden">
+                        <h2>Main Navigation for Idea Box</h2>
+                    </div> <!-- /visuallyhidden -->
                     <ul class="section-nav">
                             <li {% if sort_or_state == 'trending' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "trending" %}">Trending</a></li>
                             <li {% if sort_or_state == 'vote' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "vote" %}">Likes</a></li>
                             <li {% if sort_or_state == 'recent' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "recent" %}">Recent</a></li>
                     </ul><!-- /nav -->
                 </section><!-- /idea-hero -->
-            </div><!-- /row -->
-            <div class="row">
+            </div><!-- /left -->
+            <div class="left span12">
+            <div class="left span9">
                 <section id="main" class="main-content">
                 {% if ideas %}
                 {% for idea in ideas %}
                         <article class="idea-entry">
                         <div class="row">
                             <div class="idea-votes span2">
-                                {{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
+                                {{idea.vote_count}} <div class="votes">Like{{idea.vote_count|pluralize:",s"}} </div>
                                 {% if idea.state.name == 'Archive' %}
                                     <span class="btn-archive">Archived</span>
                                 {% elif request.user in idea.voters.all %}
@@ -52,17 +51,16 @@
                                         <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
                                     </form>
                                 {% endif %}
-
                             </div><!-- /idea-votes -->
                             <div class="idea-wrap span10">
                                 <header class="idea-title">
-                                    <a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
+                                    <a href="{% url 'idea:idea_detail' idea.id %}"><h2>{{idea.title}}</h2></a>
                                 </header>
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
-                                </div>
-                                <div class="idea-more">
-                                    <a href="{% url 'idea:idea_detail' idea.id %}">Read More</a>
+                                    <span class="idea-more">
+                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read More &#xf054</a>
+                                    </span>
                                 </div>
                                 <footer class="idea-footer">
                                     <div class="idea-info">
@@ -91,7 +89,6 @@
                     </nav><!-- /bottom-nav /bottom-internal-nav -->
                 </section><!-- /main /main-content -->
             </div><!-- /row -->
-            </div><!-- /span_main -->
                 <div class="sidebar left span3">
                     <div class="project-add-idea">
                         <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>

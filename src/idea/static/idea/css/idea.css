@@ -8,18 +8,6 @@
 [class^="icon-"] {
     font-family: FontAwesome;
 }
-.span1 { width: 5.714285714286%; }
-.span2 { width: 14.28571%; }
-.span3 { width: 22.85714%; }
-.span4, .span_side { width: 31.42857%; }
-.span5 { width: 40%; }
-.span6 { width: 48.57142%; }
-.span7 { width: 57.14285%; }
-.span8, .span_main { width: 65.71428%; }
-.span9 { width: 74.28571%; }
-.span10 { width: 82.85714%; }
-.span11 { width: 91.42857%; }
-.span12 { margin-left: 0; width: 100%; }
 @media screen {
     [class*="span"] {
         border: 0px solid rgba(0,0,0,0);
@@ -36,6 +24,23 @@
         margin-left: 0;
     }
 }
+.span1 { width: 5.714285714286%; }
+.span2 { width: 14.28571%; }
+.span3 { width: 22.85714%; }
+.span4, .span_side { width: 31.42857%; }
+.span5 { width: 40%; }
+.span6 { width: 48.57142%; }
+.span7 { width: 57.14285%; }
+.span8, .span_main { width: 65.71428%; }
+.span9 { width: 74.28571%; }
+.span10 { width: 82.85714%; }
+.span11 { width: 91.42857%; }
+.span12 { margin-left: 0; width: 100%; }
+
+.idea-home {
+    overflow: auto;
+}
+
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 .ic a:hover,
 .ic a:active {
@@ -105,9 +110,11 @@ ul.section-nav {
     border-bottom: 1px solid #000;
     padding-left: 0;
     margin-top: 0;
-    margin-bottom: 2.25em;
+    margin-bottom: .5em;
     list-style: none;
     overflow: auto;
+    overflow-y:hidden;
+    overflow-x:hidden;
 }
 ul.section-nav li {
     display: inline-block;
@@ -145,39 +152,38 @@ ul.section-nav li.active a {
     padding: 2.5em 0;
 }
 .idea-votes {
-    font-size: 312.5%; /* 50px */
-    font-weight: 600;
+    font-size: 2.125em;
     line-height: 0.3;
     padding-top: 0.4em;
+    vertical-align: none;
     text-align: center;
 }
 .idea-votes .votes {
     display: block;
-    font-size: 22%; /* 11px */
-    font-weight: 600;
-    padding-top: 2em;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    font-size: .47058824em;
+    padding-top: 1.5em;
     text-transform: uppercase;
 }
 .idea-title {
     padding-right: 1.875em;
 }
-.idea-title h3 {
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-}
 .idea-description {
+    font-family: Georgia, "Times New Roman", serif;
     margin: 1em 0;
 }
-.idea-more {
-    margin: 0 0 1em 0;
+.idea-more a {
+    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+}
+.idea-footer {
+    font-size: 16px;
 }
 .idea-info .suggested {
     color: #63666a;
-    font-size: 87.5%; /* 14px */
     margin-left: .5em;
 }
 .idea-info .commented {
     color: #63666a;
-    font-size: 87.5%; /* 14px */
     margin-right: .5em;
 }
 
@@ -250,9 +256,6 @@ ul.section-nav li.active a {
 }
 
 /* Sidebar */
-.sidebar {
-    padding-top: 2.5em;
-}
 .sidebar ul {
     list-style: none;
     padding-left: 0;
