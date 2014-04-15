@@ -8,7 +8,9 @@
                     <header class="project-header">
                         <div class="row">
                             <div class="logo span5">
-                                <a href="{% url 'idea:idea_list' %}"><h2 class="project-title">Idea Box</h2></a>
+                                <h2 class="section">
+                                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
+                                </h2>
                             </div>
                             <p class="info">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -37,8 +39,10 @@
                 {% for idea in ideas %}
                         <article class="idea-entry">
                         <div class="row">
-                            <div class="idea-votes span2">
-                                {{idea.vote_count}} <div class="votes">Like{{idea.vote_count|pluralize:",s"}} </div>
+                            <div class="idea-votes left">
+                                <div class="count">{{idea.vote_count}}</div>
+                                <div class="phrase">Like{{idea.vote_count|pluralize:",s"}}</div>
+                                <div class="action">
                                 {% if idea.state.name == 'Archive' %}
                                     <span class="btn-archive">Archived</span>
                                 {% elif request.user in idea.voters.all %}
@@ -51,6 +55,7 @@
                                         <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
                                     </form>
                                 {% endif %}
+                                </div>
                             </div><!-- /idea-votes -->
                             <div class="idea-wrap span10">
                                 <header class="idea-title">
@@ -59,7 +64,7 @@
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
                                     <span class="idea-more">
-                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read More &#xf054</a>
+                                        &nbsp;<a href="{% url 'idea:idea_detail' idea.id %}">Read More &#xf054</a>
                                     </span>
                                 </div>
                                 <footer class="idea-footer">
