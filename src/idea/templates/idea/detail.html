@@ -4,47 +4,49 @@
 
         <div id="content" class="idea-single ic" role="main">
             <div class="row compact-header">
-                <h2 class="logo span7 project-title section">
+                <h1 class="logo span7 section project-title">
                     <a href="{% url 'idea:idea_list' %}">Idea Box</a>
-                </h2><!-- /logo -->
+                </h1><!-- /logo -->
             </div>
             <section id="main" class="main-content">
-                <article class="single-idea-entry">
-                    <div class="row border-bottom">
-                        <div class="idea-title-wrap span9">
+                <div class="idea-votes left">
+                    <div class="count">{{voters|length}}</div>
+                    <div class="phrase">Like{{voters|pluralize:",s"}}</div>
+                    <div class="action">
+                        {% load comments %}
+                        {% if idea.state.name == 'Archive' %}
+                            <span class="btn btn-archive">Archived</span>
+                        {% elif support %}
+                            <span class="btn btn-voted">Liked</span>
+                        {% else %}
+                            <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                {% csrf_token %}
+                                <input type="hidden" name="idea_id" value="{{idea.id}}"/>
+                                <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
+                                <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                            </form>
+                        {% endif %}
+                    </div><!-- /bitton -->
+                </div><!-- /idea-votes -->
+                <article class="single-idea-entry span11">
+                    <div class="row">
+                        <div class="idea-title-wrap">
                             <header class="idea-title">
-                                <h3>{{idea.title}}</h3>
+                                <h1>{{idea.title}}</h1>
                             </header>
                         </div><!-- /idea-title-wrap -->
-                        <div class="vote-cta span3">
-                            {% load comments %}
-                            {% if idea.state.name == 'Archive' %}
-                                <span class="btn-archive">Archived</span>
-                            {% elif support %}
-                                <span class="btn btn-voted">Liked</span>
-                            {% else %}
-                                <form action="{% url 'idea:upvote_idea' %}" method=POST>
-                                    {% csrf_token %}
-                                    <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                    <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
-                                    <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
-                                </form>
-                            {% endif %}
-                            <span class="vote-count">Liked by {{voters|length}} {{voters|pluralize:"person,people"}}</span>
-                        </div><!-- /vote-cta -->
                     </div><!-- /row -->
-                    <div class="row">
-                        <div class="author-info span1">
-                            {% if idea.get_creator_profile %}
-                            <p class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></p>
-                            {% else %}
-                            <p class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </p>
-                            {% endif %}
-                            <p class="date">{{idea.time|date:"H:m A; M d, Y "}}</p>
-                        </div><!-- /author-info -->
-                        <div class="idea-entry-content span8">
+                    <div class="idea-entry-content">
                             <p>Summary: {{idea.summary}}</p>
                             <p>Detail: {{idea.text}}</p>
+                            Posted by
+                            {% if idea.get_creator_profile %}
+                            <span class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></span>
+                            {% else %}
+                            <span class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </span>
+                            {% endif %}
+                            on {{idea.time|date:"M d, Y "}}
+                            
                             {% get_comment_list for idea.idea idea.id as comment_list %}
                             <div id="comments" class="comments">                            
                             <div class="comment-total">
@@ -85,8 +87,24 @@
                                 </ol><!-- /comments-list -->
                             </div><!-- /comments-wrap -->
                         </div><!-- /comments -->
-                        </div><!-- /idea-entry-content -->
+                    </div><!-- /idea-entry-content -->
+                </article><!-- /single-idea-entry -->
                         <div id="sidebar" class="sidebar span3" role="complementary">
+                            <aside class="project-add-idea">
+                                <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
+                            </aside><!-- /project-add-idea -->
+                            <aside class="voters">
+                                <h4>Liked by</h4>
+                                <ul>
+                                {% for voter in voters %}
+                                    {% if voter.profile %}
+                                    <li><a href="{{voter.profile.get_absolute_url}}">{{voter.first_name}} {{voter.last_name}}</a></li>
+                                    {% else %}
+                                    <li>{{voter.first_name}} {{voter.last_name}}</li>
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>                
+                            </aside>    
                             <aside class="tags">
                                 <h4>Idea Tags</h4>
                                 <ul>
@@ -106,21 +124,7 @@
                                     </form>
                                 </div><!-- /ic-add-tags tags -->   
                             </aside>
-                            <aside class="voters">
-                                <h4>Liked by</h4>
-                                <ul>
-                                {% for voter in voters %}
-                                    {% if voter.profile %}
-                                    <li><a href="{{voter.profile.get_absolute_url}}">{{voter.first_name}} {{voter.last_name}}</a></li>
-                                    {% else %}
-                                    <li>{{voter.first_name}} {{voter.last_name}}</li>
-                                    {% endif %}
-                                {% endfor %}
-                                </ul>                
-                            </aside>    
                         </div><!-- /sidebar /sidebar -->
-                    </div><!-- /row -->
-                </article><!-- /single-idea-entry -->
             </section><!-- /main /main-content -->
         </div><!-- /content -->
 
