@@ -12,4 +12,23 @@ $(document).ready(function() {
                 $('.id_comment').removeClass('active');
             }
     });
+
+    function show_reply_form(event) {
+        var $this = $(this);
+        var comment_id = $this.data('comment-id');
+        $('#parent_id').attr("value", comment_id);
+        $('.comment-form').insertAfter($this.closest('.comment'));
+    };
+
+    function cancel_reply_form(event) {
+        $('#id_comment').val('');
+        $('#id_parent').val('');
+        $('.comment-form').appendTo($('#comment-wrap'));
+    };
+
+    $.fn.ready(function() {
+        $('.comment_reply_link').click(show_reply_form);
+        $('#cancel_reply').click(cancel_reply_form);
+    });
+
 });
