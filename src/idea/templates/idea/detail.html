@@ -23,12 +23,12 @@
                             {% elif support %}
                                 <span class="btn btn-voted">Liked</span>
                             {% else %}
-                            <form action="{% url 'idea:upvote_idea' %}" method=POST>
-                                {% csrf_token %}
-                                <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
-                                <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
-                            </form>
+                                <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="idea_id" value="{{idea.id}}"/>
+                                    <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
+                                    <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                </form>
                             {% endif %}
                             <span class="vote-count">Liked by {{voters|length}} {{voters|pluralize:"person,people"}}</span>
                         </div><!-- /vote-cta -->
