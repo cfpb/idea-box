@@ -8,18 +8,6 @@
 [class^="icon-"] {
     font-family: FontAwesome;
 }
-.span1 { width: 5.714285714286%; }
-.span2 { width: 14.28571%; }
-.span3 { width: 22.85714%; }
-.span4, .span_side { width: 31.42857%; }
-.span5 { width: 40%; }
-.span6 { width: 48.57142%; }
-.span7 { width: 57.14285%; }
-.span8, .span_main { width: 65.71428%; }
-.span9 { width: 74.28571%; }
-.span10 { width: 82.85714%; }
-.span11 { width: 91.42857%; }
-.span12 { margin-left: 0; width: 100%; }
 @media screen {
     [class*="span"] {
         border: 0px solid rgba(0,0,0,0);
@@ -36,6 +24,23 @@
         margin-left: 0;
     }
 }
+.span1 { width: 5.714285714286%; }
+.span2 { width: 14.28571%; }
+.span3 { width: 22.85714%; }
+.span4, .span_side { width: 31.42857%; }
+.span5 { width: 40%; }
+.span6 { width: 48.57142%; }
+.span7 { width: 57.14285%; }
+.span8, .span_main { width: 65.71428%; }
+.span9 { width: 74.28571%; }
+.span10 { width: 82.85714%; }
+.span11 { width: 91.42857%; }
+.span12 { margin-left: 0; width: 100%; }
+
+.idea-home {
+    overflow: auto;
+}
+
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 .ic a:hover,
 .ic a:active {
@@ -44,7 +49,10 @@
 
 /* Header */
 .project-header .row {
-    padding: 1.5em 0;
+    padding: 0 0 1.5em 0;
+}
+.project-header .row p {
+    margin: 0;
 }
 .logo a,
 .logo a:hover {
@@ -56,12 +64,14 @@
     margin-bottom: 10px;
     font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
 }
-.project-title {
+.compact-header .project-title {
+    margin-top: 0;
+}
+.project-title a {
     color: #2cb34a;
-    display: inline;
-    font-size: 312.5%; /* 50px */
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-    line-height: 0.80;
+    letter-spacing: normal;
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+    line-height: 1.25em;
 }
 
 h4.project-title {
@@ -99,15 +109,19 @@ h4.project-title a {
 }
 /* Navigation */
 h2.section a {
-    font-family: "Avenir Next Bold", Arial, sans-serif;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    text-transform: none;
+    font-weight: normal;
 }
 ul.section-nav {
     border-bottom: 1px solid #000;
     padding-left: 0;
     margin-top: 0;
-    margin-bottom: 2.25em;
+    margin-bottom: .5em;
     list-style: none;
     overflow: auto;
+    overflow-y:hidden;
+    overflow-x:hidden;
 }
 ul.section-nav li {
     display: inline-block;
@@ -145,39 +159,43 @@ ul.section-nav li.active a {
     padding: 2.5em 0;
 }
 .idea-votes {
-    font-size: 312.5%; /* 50px */
-    font-weight: 600;
-    line-height: 0.3;
-    padding-top: 0.4em;
     text-align: center;
 }
-.idea-votes .votes {
+.idea-votes .count {
+    font-size: 2.125em;
+    line-height: 0.3;
+    padding-top: 0.475em;
+    vertical-align: none;
+}
+.idea-votes .phrase {
+    font-size: .875em;
     display: block;
-    font-size: 22%; /* 11px */
-    font-weight: 600;
-    padding-top: 2em;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    padding-top: 1em;
     text-transform: uppercase;
+}
+.idea-votes .action {
+    margin-top: .75em;
 }
 .idea-title {
     padding-right: 1.875em;
 }
-.idea-title h3 {
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-}
 .idea-description {
+    font-family: Georgia, "Times New Roman", serif;
     margin: 1em 0;
 }
-.idea-more {
-    margin: 0 0 1em 0;
+.idea-more a {
+    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+}
+.idea-footer {
+    font-size: 16px;
 }
 .idea-info .suggested {
     color: #63666a;
-    font-size: 87.5%; /* 14px */
     margin-left: .5em;
 }
 .idea-info .commented {
     color: #63666a;
-    font-size: 87.5%; /* 14px */
     margin-right: .5em;
 }
 
@@ -193,6 +211,9 @@ ul.section-nav li.active a {
     min-height: 1.75em;
     padding-left: 3.3125em;
     text-transform: uppercase;
+}
+.comment-meta {
+    font-size: 16px;
 }
 .comment-form {
     padding: 0.625em 0.625em 2.8em;
@@ -215,6 +236,9 @@ ul.section-nav li.active a {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+.single-idea-entry {
+    width: 63.71428%; /* slightly smaller than span8 due to wide idea-votes */
 }
 .single-idea-entry .idea-entry-content .comment-author {
     font-size: 87.5%;
@@ -257,9 +281,6 @@ ul.section-nav li.active a {
 }
 
 /* Sidebar */
-.sidebar {
-    padding-top: 2.5em;
-}
 .sidebar ul {
     list-style: none;
     padding-left: 0;
@@ -295,9 +316,12 @@ ul.section-nav li.active a {
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
 }
+.voters {
+    margin-bottom: 2.5em;
+}
 .tags .tag {
     display: block;
-    margin: 0 0 .5em 1em;
+    margin: 0 0.5em 0.75em 1em;
 }
 .tags .tag a {
     font-family: "Avenir Next Demi", Arial, sans-serif;
@@ -380,14 +404,7 @@ ul.section-nav li.active a {
 }
 
 /* Single View */
-.challenge-info h2,
-.single-idea-entry .idea-title h3 {
-    font-size: 225%; /* 24px */
-    font-weight: 600;
-    line-height: 1.26;
-    margin-bottom: 0;
-}
-.challenge-info  p.challenge-entry-content,
+.challenge-info p.challenge-entry-content,
 .single-idea-entry .idea-entry-content p {
     font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
 }
@@ -395,48 +412,16 @@ ul.section-nav li.active a {
 .challenge-info  p.challenge-entry-content {
     margin-bottom: 0;
 }
-.challenge-info,
-.single-idea-entry {
-    padding: 2.5em 0;
+.idea-single {
+    padding-top: 1.5em;
 }
-.idea-title-wrap {
-    padding-bottom: 2.5em;
-}
-.idea-single .author-info,
-.idea-single .idea-entry-content {
-    padding-top: 2.5em;
-}
-.idea-single .author-info p {
-    font-size: 75%;
-    line-height: 1.33;
-    margin: 0.35em 0;
-}
-.idea-single .author {
-    font-weight: 600;
-}
-.idea-single .date {
-    color: #63666a;
+.idea-single .main-content {
+    padding-top: 1.5em;
 }
 .idea-single .comments {
     border-top: 3px solid #f2f2f2;
     margin-top: 2.5em;
     padding-top: 1.5625em;
-}
-.idea-single .vote-cta {
-    padding-bottom: 0.625em;
-}
-.idea-single .vote-count {
-    color: #2cb34a;
-    display: block;
-    font-size: 1.125em;
-    font-weight: 600;
-    margin-top: 0.625em;
-    text-align: center;
-}
-.idea-single .voters {
-    color: #666;
-    font-size: 87.5%;
-    line-height: 1.57;
 }
 
 /* ==========================================================================
@@ -450,40 +435,11 @@ ul.section-nav li.active a {
 #work_tag_submit_btn {
     margin-top: .5em;
 }
-.btn-vote {
-    display: inline-block;
-    font-size: 150%;
-    font-weight: bold;
-    padding: 0.625em 0;
-    text-transform: uppercase;
-    width: 100%;
-}
 span.btn-voted,
 span.btn-voted:hover {
-    background: #E4E2E0 url(../img/vote-thumb-hover.png) 20% 50% no-repeat;
-    color: #101820;
-    cursor: text;
-    display: inline-block;
-    font-size: 150%;
-    font-weight: bold;
-    padding: 0.625em 0;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
-}
-span.btn-archive,
-span.btn-archive:hover {
-    background: #f2f2f2 url(../img/archive.png) 18% 48% no-repeat;
-    border: 1px solid #f2f2f2;
-    color: #101820;
-    cursor: text;
-    display: inline-block;
-    font-size: 150%;
-    font-weight: bold;
-    padding: 0.625em 0;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
+    color: #75787B;
+    background-color: #E3E4E5;
+    cursor: default;
 }
 .idea-add .alert {
     color: #d14124;
@@ -607,8 +563,6 @@ section.main-content hr {
 }
 
 .idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
-    width: 80px;
-    font-size: 18px;
-    margin-top: 20px;
-    background-image: none;
+    padding: 0.71428571428571em 1em;
+    font-size: 16px;
 }
