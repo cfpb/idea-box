@@ -598,3 +598,10 @@ section.main-content hr {
     border: 0;
     padding: 0;
 }
+
+.idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
+    width: 80px;
+    font-size: 18px;
+    margin-top: 20px;
+    background-image: none;
+}

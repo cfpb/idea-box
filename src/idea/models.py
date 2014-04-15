@@ -91,6 +91,7 @@ class Idea(UserTrackable):
     state = models.ForeignKey(State)
 
     tags = TaggableManager(blank=False)
+    voters = models.ManyToManyField(User, through="Vote", related_name="idea_vote_creator")
 
     def __unicode__(self):
         return u'%s' % self.title
