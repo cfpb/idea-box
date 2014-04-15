@@ -6,16 +6,21 @@
             <div class="row">
             <div class="left span9">
             <div class="row compact-header">
-                <h2 class="logo span7 project-title section">
+                <h4 class="logo span7 project-title">
                     <a href="{% url 'idea:idea_list' %}">Idea Box</a>
-                </h2><!-- /logo -->
+                </h4><!-- /logo -->
             </div>
             <div class="row challenge-info">
-                <h3>Challenge: {{banner.title}}</h3>
-                <p class="challenge-entry-content">{{banner.text}}</p>
+                <h3>Current Challenge:</h3> 
+                <h2>{{banner.title}}</h2>
+                <p class="challenge-entry-content">
+                    {{banner.text}}
+                </p>
+                <div id="challenge-link"><a href="{% url 'idea:add_idea' %}">Submit an idea for this challenge</a></div>
+                
                 <div>
-                    <div id="start">Start Date: {{banner.start_date}}</div>
-                    <div id="end">End Date: {{banner.end_date}}</div>
+                    <div id="start">Challenge Start Date: {{banner.start_date}}</div>
+                    <div id="end">Challenge End Date: {{banner.end_date}}</div>
                 </div>
             </div><!-- /row -->
             <div class="row">
@@ -27,6 +32,18 @@
                         <div class="row">
                             <div class="idea-votes span2">
                                 {{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
+                                {% if idea.state.name == 'Archive' %}
+                                    <span class="btn-archive">Archived</span>
+                                {% elif request.user in idea.voters.all %}
+                                    <span class="btn btn-voted">Liked</span>
+                                {% else %}
+                                    <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                        {% csrf_token %}
+                                        <input type="hidden" name="idea_id" value="{{idea.id}}"/>
+                                        <input type="hidden" name="next" value="{% url 'idea:banner_detail' banner.id %}"/>
+                                        <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                    </form>
+                                {% endif %}
                             </div><!-- /idea-votes -->
                             <div class="idea-wrap span10">
                                 <header class="idea-title">

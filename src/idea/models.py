@@ -84,13 +84,14 @@ class IdeaManager(models.Manager):
 
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False)
-    summary = models.CharField(max_length=250)
+    summary = models.CharField(max_length=200)
     text = models.TextField(max_length=2000, null=False, verbose_name="detail")
     banner = models.ForeignKey(
         Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
 
     tags = TaggableManager(blank=False)
+    voters = models.ManyToManyField(User, through="Vote", related_name="idea_vote_creator", null=True)
 
     def __unicode__(self):
         return u'%s' % self.title
@@ -99,7 +100,30 @@ class Idea(UserTrackable):
         """
         Lookup the view url for this idea.
         """
-        return reverse('idea.views.detail', args=(self.id,))
+        return reverse('idea:idea_detail', args=(self.id,))
+
+    @property
+    def comments(self):
+        return Comment.objects.for_model(self.__class__).filter(is_public = True,
+                                                                is_removed = False,
+                                                                object_pk = self.pk)
+
+    @property
+    def members(self):
+        """
+        Return all users participating in an idea
+        """
+        members = []
+        members.append(self.creator)
+        for v in self.vote_set.all():
+            if v.creator not in members:
+                members.append(v.creator)
+
+        for c in self.comments:
+            if c.user not in members:
+                members.append(c.user)
+
+        return members
 
     def get_creator_profile(self):
         try:

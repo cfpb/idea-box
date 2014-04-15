@@ -12,6 +12,14 @@
                             <div class="logo span5">
                                 <a href="{% url 'idea:idea_list' %}"><h2 class="project-title">Idea Box</h2></a>
                             </div>
+                            <p class="info">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
                         </div><!-- /row -->
                     </header><!-- /project-header -->
                 <div class="visuallyhidden">
@@ -32,6 +40,19 @@
                         <div class="row">
                             <div class="idea-votes span2">
                                 {{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
+                                {% if idea.state.name == 'Archive' %}
+                                    <span class="btn-archive">Archived</span>
+                                {% elif request.user in idea.voters.all %}
+                                    <span class="btn btn-voted">Liked</span>
+                                {% else %}
+                                    <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                        {% csrf_token %}
+                                        <input type="hidden" name="idea_id" value="{{idea.id}}"/>
+                                        <input type="hidden" name="next" value="{% url 'idea:idea_list' %}"/>
+                                        <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                    </form>
+                                {% endif %}
+
                             </div><!-- /idea-votes -->
                             <div class="idea-wrap span10">
                                 <header class="idea-title">
