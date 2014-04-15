@@ -198,7 +198,7 @@ def detail(request, idea_id):
     else:
         tag_form = IdeaTagForm()
 
-    voters = User.objects.filter(vote__idea=idea, vote__vote=UP_VOTE)
+    voters = idea.voters.all()
 
     for v in voters:
         try:
