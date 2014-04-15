@@ -6,7 +6,7 @@ class IdeaForm(forms.ModelForm):
 
     class Meta:
         model = Idea
-        exclude = ('creator', 'time', 'state',)
+        exclude = ('creator', 'time', 'state', 'voters')
 
     def __init__(self, *args, **kwargs):
         super(IdeaForm, self).__init__(*args, **kwargs)
