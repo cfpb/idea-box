@@ -38,21 +38,6 @@
                                 <h1>{{idea.title}}</h1>
                             </header>
                         </div><!-- /idea-title-wrap -->
-                        <div class="vote-cta span3">
-                            {% if idea.state.name == 'Archive' %}
-                                <span class="btn-archive">Archived</span>
-                            {% elif support %}
-                                <span class="btn btn-voted">Liked</span>
-                            {% else %}
-                                <form action="{% url 'idea:upvote_idea' %}" method=POST>
-                                    {% csrf_token %}
-                                    <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                    <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
-                                    <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
-                                </form>
-                            {% endif %}
-                            <span class="vote-count">Liked by {{voters|length}} {{voters|pluralize:"person,people"}}</span>
-                        </div><!-- /vote-cta -->
                     </div><!-- /row -->
                     <div class="idea-entry-content">
                             <p>Summary: {{idea.summary}}</p>
@@ -63,16 +48,7 @@
                             {% else %}
                             <span class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </span>
                             {% endif %}
-<<<<<<< HEAD
-                            <p class="date">{{idea.time|date:"M d, Y"}}</p>
-                        </div><!-- /author-info -->
-                        <div class="idea-entry-content span8">
-                            <p>Summary: {{idea.summary}}</p>
-                            <p>Detail: {{idea.text}}</p>
-=======
                             on {{idea.time|date:"M d, Y "}}
-                            
->>>>>>> e7e700dd8675de4d7fbed906ef6f03c053bd2b97
                             {% get_comment_list for idea.idea idea.id as comment_list %}
                             <div id="comments" class="comments">                            
                             <div class="comment-total">
@@ -113,7 +89,9 @@
                                                 <p>{{node.comment}}</p>
                                             </div><!-- /comment-content -->
                                             {% if not node.is_leaf_node %}
-                                                {{ children }}
+                                                <ol class="comment-list">
+                                                    {{ children }}
+                                                </ol>>
                                             {% endif %}
                                         </article>
                                     </li>

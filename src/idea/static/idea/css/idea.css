@@ -39,6 +39,8 @@
 
 .idea-home {
     overflow: auto;
+    overflow-y:hidden;
+    overflow-x:hidden;
 }
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
@@ -204,19 +206,17 @@ ul.section-nav li.active a {
     position: relative;
 }
 .comments h4 {
-    background: url(../img/comment-icon-detail.png) 0 0 no-repeat;
     font-size: 100%;
-    font-weight: bold;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
     line-height: 1.66;
     min-height: 1.75em;
-    padding-left: 3.3125em;
     text-transform: uppercase;
 }
 .comment-meta {
     font-size: 16px;
 }
 .comment-form {
-    padding: 0.625em 0.625em 2.8em;
+    padding: 0 0 2.8em;
     margin: 1.5625em 0 0;
 }
 .comment-form textarea {
