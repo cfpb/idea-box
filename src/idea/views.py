@@ -30,8 +30,10 @@ def _render(req, template_name, context={}):
     context['app_link'] = reverse('idea:idea_list')
     return render(req, template_name, context)
 
+
 def get_current_banners():
     return Banner.objects.filter(start_date__lte=date.today()).exclude(end_date__lt=date.today())
+
 
 def get_banner():
     today = date.today()
@@ -106,7 +108,7 @@ def list(request, sort_or_state=None):
         else:
             tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list',
                                                   args=(sort_or_state,)),
-                                                  tag.slug)
+                                          tag.slug)
             tag.active = False
 
     banner = get_banner()
@@ -228,7 +230,6 @@ def detail(request, idea_id):
     })
 
 
-
 @login_required
 def add_idea(request):
     if request.method == 'POST':
@@ -242,7 +243,7 @@ def add_idea(request):
                                                     args=(idea.id,)))
             else:
                 form.fields["banner"].queryset = get_current_banners()
-                return _render(request, 'idea/add.html', {'form':form, })
+                return _render(request, 'idea/add.html', {'form': form, })
         else:
             return HttpResponse('Idea is archived', status=403)
     else:
@@ -252,7 +253,7 @@ def add_idea(request):
         return _render(request, 'idea/add.html', {
             'form': form,
             'similar': [r.object for r in more_like_text(idea_title, Idea)]
-            })
+        })
 
 
 @login_required
@@ -306,7 +307,7 @@ def banner_detail(request, banner_id):
         else:
             tag.tag_url = "%s?tags=%s" % (reverse('idea:banner_detail',
                                                   args=(banner_id,)),
-                                                  tag.slug)
+                                          tag.slug)
             tag.active = False
 
     return _render(request, 'idea/banner_detail.html', {
