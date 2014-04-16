@@ -112,9 +112,9 @@ class Idea(UserTrackable):
 
     @property
     def comments(self):
-        return Comment.objects.for_model(self.__class__).filter(is_public = True,
-                                                                is_removed = False,
-                                                                object_pk = self.pk)
+        return Comment.objects.for_model(self.__class__).filter(is_public=True,
+                                                                is_removed=False,
+                                                                object_pk=self.pk)
 
     @property
     def members(self):
