@@ -83,15 +83,23 @@ class IdeaManager(models.Manager):
 
 
 class Idea(UserTrackable):
-    title = models.CharField(max_length=50, blank=False, null=False)
-    summary = models.CharField(max_length=200)
-    text = models.TextField(max_length=2000, null=False, verbose_name="detail")
+    title = models.CharField(max_length=50, blank=False, null=False,
+                             help_text="Give your idea a descriptive name.")
+    summary = models.CharField(max_length=200, help_text="\
+        The first 200 characters display on the main page.")
+    text = models.TextField(max_length=2000, null=False,
+                            verbose_name="detail", help_text="\
+        Please add more information to explain your idea.")
     banner = models.ForeignKey(
-        Banner, verbose_name="challenge", blank=True, null=True)
+        Banner, verbose_name="challenge", blank=True, null=True, help_text="\
+        Select if your idea relates to a particular challenge.")
     state = models.ForeignKey(State)
 
-    tags = TaggableManager(blank=False)
-    voters = models.ManyToManyField(User, through="Vote", related_name="idea_vote_creator", null=True)
+    tags = TaggableManager(blank=False, help_text="\
+        You must add at least 1 tag.  We suggest the office to which the \
+        idea relates.")
+    voters = models.ManyToManyField(User, through="Vote", null=True,
+                                    related_name="idea_vote_creator")
 
     def __unicode__(self):
         return u'%s' % self.title
