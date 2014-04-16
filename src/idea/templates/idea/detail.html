@@ -89,7 +89,9 @@
                                                 <p>{{node.comment}}</p>
                                             </div><!-- /comment-content -->
                                             {% if not node.is_leaf_node %}
-                                                {{ children }}
+                                                <ol class="comment-list">
+                                                    {{ children }}
+                                                </ol>>
                                             {% endif %}
                                         </article>
                                     </li>
