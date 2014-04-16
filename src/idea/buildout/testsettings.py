@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django_nose',
     'django.contrib.comments',
     'django.contrib.staticfiles',
-    'django-mptt',
+    'mptt',
 ]
 
 ROOT_URLCONF = 'idea.buildout.urls'
