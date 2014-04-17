@@ -11,13 +11,10 @@ class SearchTest(TestCase):
     backend = connections['default'].get_backend()
     backend_type = connections['default'].backend.__name__
 
-    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
-            "Simple backend doesn't allow itself to be cleared")
     def setUp(self):
-        self.backend.clear()
+        if SearchTest.backend_type != 'SimpleSearchBackend':
+            self.backend.clear()
 
-    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
-            "See https://github.com/toastdriven/django-haystack/issues/908")
     def test_add_idea_title(self):
         """
         Check that adding a new idea allows title to be immediately
@@ -34,8 +31,6 @@ class SearchTest(TestCase):
         results = self.backend.search('example_title')
         self.assertEqual(1, results['hits'])
 
-    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
-            "See https://github.com/toastdriven/django-haystack/issues/908")
     def test_add_idea_summary(self):
         """
         Check that adding a new idea allows title to be immediately
@@ -52,8 +47,6 @@ class SearchTest(TestCase):
         results = self.backend.search('example_summary')
         self.assertEqual(1, results['hits'])
 
-    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
-            "See https://github.com/toastdriven/django-haystack/issues/908")
     def test_add_idea_text(self):
         """
         Check that adding a new idea allows title to be immediately
@@ -112,8 +105,6 @@ class SearchTest(TestCase):
         results = self.backend.search('example_tag')
         self.assertEqual(1, results['hits'])
 
-    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
-            "See https://github.com/toastdriven/django-haystack/issues/908")
     def test_banner_title(self):
         """
         Check that adding a new idea allows title to be immediately
@@ -127,8 +118,6 @@ class SearchTest(TestCase):
         results = self.backend.search('example_title')
         self.assertEqual(1, results['hits'])
 
-    @unittest.skipIf(backend_type == 'SimpleSearchBackend', 
-            "See https://github.com/toastdriven/django-haystack/issues/908")
     def test_banner_text(self):
         """
         Check that adding a new idea allows title to be immediately
