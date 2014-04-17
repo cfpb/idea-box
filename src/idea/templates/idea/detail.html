@@ -163,3 +163,9 @@
         </div><!-- /content -->
 
 {% endblock %}
+
+{% block "js_ready" %}
+    $(".tags_autocomplete").autocomplete({
+        source: "{% url "search:model_tags_json" "idea" %}",
+    });
+{% endblock %}

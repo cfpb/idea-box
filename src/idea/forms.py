@@ -30,7 +30,8 @@ class UpVoteForm(forms.Form):
 
 
 class IdeaTagForm(forms.Form):
-    tags = forms.CharField(max_length=512)
+    tags = forms.CharField(max_length=512,
+                           widget=forms.TextInput(attrs={'class':'tags_autocomplete'}))
 
     def clean_tags(self):
         """ Force tags to lowercase, since tags are case-sensitive otherwise. """
