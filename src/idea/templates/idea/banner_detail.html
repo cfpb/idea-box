@@ -2,14 +2,14 @@
 
 {% block "content" %}
 
-        <div id="content" class="idea-home ic" role="main">
+        <div id="content" class="idea-banner-single ic" role="main">
+            <div class="row">
+                <h5 class="logo span7 section project-title">
+                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
+                </h5><!-- /logo -->
+            </div>
             <div class="row">
             <div class="left span9">
-            <div class="row compact-header">
-                <h4 class="logo span7 project-title">
-                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
-                </h4><!-- /logo -->
-            </div>
             <div class="row challenge-info">
                 <h3>Current Challenge:</h3> 
                 <h2>{{banner.title}}</h2>
