@@ -121,7 +121,8 @@
                                 <h4>Idea Tags</h4>
                                 <ul>
                                     {% for tag in tags %}
-                                    <li class="tag"><a class="tag_name" href="{{tag.tag_url}}">{{tag}} </a><span class="tag_remove">{{tag.tag_count}}</span></li>
+                                    <li class="tag"><a class="tag_name" href="{{tag.tag_url}}">{{tag}}</a>
+                                    {% if tag.name in tags_created_by_user %}<a href="{% url "idea:remove_tag" idea.id tag.slug %}" class="tag_remove">x</a></li>{% endif %}
                                     {% endfor %}
                                 </ul>
                                 <div class="ic-add-tags tags">
