@@ -66,14 +66,14 @@
     margin-bottom: 10px;
     font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
 }
-.compact-header .project-title {
+.project-title {
     margin-top: 0;
 }
 .project-title a {
     color: #2cb34a;
-    letter-spacing: normal;
-    font-family: "Avenir Next Medium", Arial, sans-serif;
-    line-height: 1.25em;
+    letter-spacing: 1px;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    line-height: 1.57142857142857em;
 }
 
 h4.project-title {
@@ -412,7 +412,9 @@ ul.section-nav li.active a {
 .challenge-info  p.challenge-entry-content {
     margin-bottom: 0;
 }
-.idea-single {
+.idea-add,
+.idea-single,
+.idea-banner-single {
     padding-top: 1.5em;
 }
 .idea-single .main-content {
