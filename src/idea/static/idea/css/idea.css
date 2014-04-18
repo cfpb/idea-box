@@ -240,10 +240,12 @@ ul.section-nav li.active a {
 .single-idea-entry {
     width: 63.71428%; /* slightly smaller than span8 due to wide idea-votes */
 }
-.single-idea-entry .idea-entry-content .comment-author {
-    font-size: 87.5%;
-    line-height: 1.9;
-    font-weight: 600;
+.single-idea-entry .idea-entry-content h4 {
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+    margin-top: 1.5em;
+}
+.single-idea-entry .idea-entry-content p {
+    margin-top: .5em;
 }
 .comment-date {
     color: #666;
