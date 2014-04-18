@@ -154,8 +154,11 @@ ul.section-nav li.active a {
 
 /* Content */
 .idea-entry {
-    border-bottom: 1px solid #f2f2f2;
+    border-top: 1px solid #000;
     padding: 20px 20px 20px 0;
+}
+.idea-entry:first-child {
+    border-top: 0;
 }
 .no-results {
     padding: 2.5em 0;
