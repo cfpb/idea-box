@@ -7,16 +7,14 @@ from idea import models, views
 from idea.tests.utils import mock_req, random_user
 try:
     from core.taggit.utils import add_tags
-    from core.taggit.models import TaggedItem
-    ADD_TAGS = True;
+    COLLAB_TAGS = True;
 except ImportError:
-    from taggit.models import TaggedItem
-    ADD_TAGS = False;
+    COLLAB_TAGS = False;
 
 class TagTest(TestCase):
     fixtures = ['state', 'core-test-fixtures']
 
-    @unittest.skipIf(ADD_TAGS == False, "Remove only works with collab's core.taggit")
+    @unittest.skipIf(COLLAB_TAGS == False, "Remove only works with collab's core.taggit")
     def test_tag_remove_exists_for_creator(self):
         """
         Detail page allows for removal of tags created by the current user
@@ -32,7 +30,7 @@ class TagTest(TestCase):
         self.assertContains(response, 'aaa')
         self.assertContains(response, 'tag_remove')
 
-    @unittest.skipIf(ADD_TAGS == False, "Remove only works with collab's core.taggit")
+    @unittest.skipIf(COLLAB_TAGS == False, "Remove only works with collab's core.taggit")
     def test_tag_remove_not_exists_for_random_user(self):
         """
         Detail page does not allow for removal of tags created by a different user
@@ -48,7 +46,7 @@ class TagTest(TestCase):
         self.assertContains(response, 'aaa')
         self.assertNotContains(response, 'tag_remove')
 
-    @unittest.skipIf(ADD_TAGS == False, "Remove only works with collab's core.taggit")
+    @unittest.skipIf(COLLAB_TAGS == False, "Remove only works with collab's core.taggit")
     def test_tag_remove(self):
         """
         Detail page tag form submission should add tags.
