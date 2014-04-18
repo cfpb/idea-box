@@ -20,8 +20,10 @@ from idea.models import UP_VOTE
 try:
     from core.taggit.models import Tag, TaggedItem
     from core.taggit.utils import add_tags
+    COLLAB_TAGS = True;
 except ImportError:
-    from taggit.models import Tag, TaggedItem
+    from taggit.models import Tag
+    COLLAB_TAGS = False;
 
 from haystack import connections
 
@@ -224,12 +226,13 @@ def detail(request, idea_id):
     }, select_params=[idea_type.id]).order_by('name')
 
     tags_created_by_user = []
-    for tag in tags:
-        tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list'), tag.slug)
-        for ti in tag.taggit_taggeditem_items.all():
-            if ti.tag_creator == request.user and \
-               ti.content_type.name == "idea":
-                tags_created_by_user.append(tag.name)
+    if COLLAB_TAGS:
+        for tag in tags:
+            tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list'), tag.slug)
+            for ti in tag.taggit_taggeditem_items.all():
+                if ti.tag_creator == request.user and \
+                   ti.content_type.name == "idea":
+                    tags_created_by_user.append(tag.name)
 
     return _render(request, 'idea/detail.html', {
         'idea': idea,  # title, body, user name, user photo, time
