@@ -12,7 +12,7 @@
                 </h5><!-- /logo -->
             </div>
             <section id="main" class="main-content">
-                <div class="idea-votes left">
+                <div class="idea-votes span">
                     <div class="count">{{voters|length}}</div>
                     <div class="phrase">Like{{voters|pluralize:",s"}}</div>
                     <div class="action">
@@ -31,17 +31,18 @@
                         {% endif %}
                     </div><!-- /bitton -->
                 </div><!-- /idea-votes -->
-                <article class="single-idea-entry span11">
-                    <div class="row">
+                <article class="single-idea-entry span">
+                    <div class="row span9">
                         <div class="idea-title-wrap">
                             <header class="idea-title">
                                 <h1>{{idea.title}}</h1>
                             </header>
                         </div><!-- /idea-title-wrap -->
                     </div><!-- /row -->
-                    <div class="idea-entry-content">
-                            <h4>Summary</h4><p>{{idea.summary}}</p>
-                            <h4>Detail</h4><p>{{idea.text}}</p>
+                    <div class="row body">
+                        <div class="idea-entry-content span9">
+                            <h4 class="summary">Summary</h4><p>{{idea.summary}}</p>
+                            <h4 class="detail">Detail</h4><p>{{idea.text}}</p>
                             Posted by
                             {% if idea.get_creator_profile %}
                             <span class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></span>
@@ -99,8 +100,7 @@
                                 </ol><!-- /comments-list -->
                             </div><!-- /comments-wrap -->
                         </div><!-- /comments -->
-                    </div><!-- /idea-entry-content -->
-                </article><!-- /single-idea-entry -->
+                        </div><!-- /idea-entry-content -->
                         <div id="sidebar" class="sidebar span3" role="complementary">
                             <aside class="project-add-idea">
                                 <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
@@ -137,6 +137,8 @@
                                 </div><!-- /ic-add-tags tags -->   
                             </aside>
                         </div><!-- /sidebar /sidebar -->
+                    </div>
+                </article><!-- /single-idea-entry -->
             </section><!-- /main /main-content -->
         </div><!-- /content -->
 
