@@ -2,36 +2,38 @@
 
 {% block "content" %}
 
-        <div id="content" class="idea-home ic" role="main">
+        <div id="content" class="idea-banner-single ic" role="main">
             <div class="row">
-            <div class="left span9">
-            <div class="row compact-header">
-                <h4 class="logo span7 project-title">
+                <h5 class="logo span7 section project-title">
                     <a href="{% url 'idea:idea_list' %}">Idea Box</a>
-                </h4><!-- /logo -->
+                </h5><!-- /logo -->
             </div>
-            <div class="row challenge-info">
-                <h3>Current Challenge:</h3> 
-                <h2>{{banner.title}}</h2>
-                <p class="challenge-entry-content">
-                    {{banner.text}}
-                </p>
-                <div id="challenge-link"><a href="{% url 'idea:add_idea' %}">Submit an idea for this challenge</a></div>
-                
-                <div>
-                    <div id="start">Challenge Start Date: {{banner.start_date}}</div>
-                    <div id="end">Challenge End Date: {{banner.end_date}}</div>
-                </div>
-            </div><!-- /row -->
             <div class="row">
-                <section id="main" class="main-content">
-                <hr>
+                <div class="row challenge-info span9">
+                    <div class="challenge-banner">
+                        <h3>Current Challenge:</h3> 
+                        <h2>{{banner.title}}</h2>
+                    </div>
+                    <p class="challenge-entry-content">
+                        {{banner.text}}
+                    </p>
+                    <div id="challenge-link"><a href="{% url 'idea:add_idea' %}">Submit an idea for this challenge</a></div>
+                    <div>
+                        <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
+                        <span id="end">Challenge end date: {{banner.end_date|date:"SHORT_DATE_FORMAT"}}</span>
+                    </div>
+                </div><!-- /row -->
+            </div>
+            <div class="row">
+                <section id="main" class="main-content span9">
                 {% if ideas %}
                 {% for idea in ideas %}
                         <article class="idea-entry">
                         <div class="row">
-                            <div class="idea-votes span2">
-                                {{idea.vote_count}} <span class="votes">Like{{idea.vote_count|pluralize:",s"}} </span>
+                            <div class="idea-votes left">
+                                <div class="count">{{idea.vote_count}}</div>
+                                <div class="phrase">Like{{idea.vote_count|pluralize:",s"}}</div>
+                                <div class="action">
                                 {% if idea.state.name == 'Archive' %}
                                     <span class="btn-archive">Archived</span>
                                 {% elif request.user in idea.voters.all %}
@@ -40,10 +42,11 @@
                                     <form action="{% url 'idea:upvote_idea' %}" method=POST>
                                         {% csrf_token %}
                                         <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                        <input type="hidden" name="next" value="{% url 'idea:banner_detail' banner.id %}"/>
+                                        <input type="hidden" name="next" value="{% url 'idea:idea_list' %}"/>
                                         <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
                                     </form>
                                 {% endif %}
+                                </div>
                             </div><!-- /idea-votes -->
                             <div class="idea-wrap span10">
                                 <header class="idea-title">
@@ -51,9 +54,9 @@
                                 </header>
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
-                                </div>
-                                <div class="idea-more">
-                                    <a href="{% url 'idea:idea_detail' idea.id %}">Read More</a>
+                                    <span class="idea-more">
+                                        &nbsp;<a href="{% url 'idea:idea_detail' idea.id %}">Read More &#xf054;</a>
+                                    </span>
                                 </div>
                                 <footer class="idea-footer">
                                     <div class="idea-info">
@@ -81,9 +84,7 @@
                     {% endif %}
                     </nav><!-- /bottom-nav /bottom-internal-nav -->
                 </section><!-- /main /main-content -->
-            </div><!-- /row -->
-            </div><!-- /span_main -->
-                <div class="sidebar left span3">
+                <div class="sidebar span3">
                     <div class="project-add-idea">
                         <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
                     </div><!-- /project-add-idea -->
@@ -100,6 +101,7 @@
                         </ul>   
                     </aside>
                 </div><!-- /span_side -->
+            </div><!-- /row -->
             </div><!-- /row -->
         </div><!-- /main -->
 
