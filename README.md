@@ -8,7 +8,7 @@ easily integrate-able interface. Idea-Box also takes a strong stance on transpar
 such that ideas, votes, etc. are tied to specific users.
 
 ## Features
-* Searching (via Solr's "more-like-this")
+* Searching 
 * Idea Submission
 * Tagging (via taggit)
 * Voting
