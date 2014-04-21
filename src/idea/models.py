@@ -39,7 +39,7 @@ class Banner(models.Model):
                                 "should be continued indefinitely. ")
 
     def __unicode__(self):
-        return u'%s (%s to %s)' % (self.title, self.start_date, self.end_date)
+        return u'%s (ends %s)' % (self.title, self.end_date)
 
 
 class State(models.Model):
