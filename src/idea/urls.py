@@ -8,6 +8,8 @@ urlpatterns = patterns(
     url(r'^list/$', 'list', name='idea_list'),
     url(r'^list/(?P<sort_or_state>\w+)/$', 'list', name='idea_list'),
     url(r'^detail/(?P<idea_id>\d+)/$', 'detail', name='idea_detail'),
+    url(r'^detail/(?P<idea_id>\d+)/remove_tag/(?P<tag_slug>\w+)/$',
+        'remove_tag', name='remove_tag'),
     url(r'^vote/up/$', 'up_vote', name='upvote_idea'),
     url(r'^challenge/(?P<banner_id>\d+)/$',
         'banner_detail', name='banner_detail'),

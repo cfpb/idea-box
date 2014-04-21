@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Count
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
@@ -18,9 +18,12 @@ from idea.utility import state_helper
 from idea.models import UP_VOTE
 
 try:
-    from core.taggit.models import Tag
+    from core.taggit.models import Tag, TaggedItem
+    from core.taggit.utils import add_tags
+    COLLAB_TAGS = True;
 except ImportError:
     from taggit.models import Tag
+    COLLAB_TAGS = False;
 
 from haystack import connections
 
@@ -194,7 +197,11 @@ def detail(request, idea_id):
             data = tag_form.clean()['tags']
             tags = [tag.strip() for tag in data.split(',')
                     if tag.strip() != '']
-            idea.tags.add(*tags)
+            try:
+                for t in tags:
+                    add_tags(idea, t, None, request.user, 'idea')
+            except NameError:  # catch if add_tags doesn't exist
+                idea.tags.add(*tags)
             return HttpResponseRedirect(
                 reverse('idea:idea_detail', args=(idea.id,)))
     else:
@@ -218,13 +225,20 @@ def detail(request, idea_id):
         """
     }, select_params=[idea_type.id]).order_by('name')
 
-    for tag in tags:
-        tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list'), tag.slug)
+    tags_created_by_user = []
+    if COLLAB_TAGS:
+        for tag in tags:
+            tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list'), tag.slug)
+            for ti in tag.taggit_taggeditem_items.all():
+                if ti.tag_creator == request.user and \
+                   ti.content_type.name == "idea":
+                    tags_created_by_user.append(tag.name)
 
     return _render(request, 'idea/detail.html', {
         'idea': idea,  # title, body, user name, user photo, time
         'support': request.user in voters,
         'tags': tags,
+        'tags_created_by_user': tags_created_by_user,
         'voters': voters,
         'tag_form': tag_form
     })
@@ -315,3 +329,18 @@ def banner_detail(request, banner_id):
         'tags':     tags,  # list of tags associated with banner ideas
         'banner': banner,
     })
+
+@login_required
+def remove_tag(request, idea_id, tag_slug):
+    idea = Idea.objects.get(pk=idea_id)
+    tag = Tag.objects.get(slug=tag_slug)
+    try:
+        taggeditem = TaggedItem.objects.get(tag_creator=request.user,
+                                            object_id=idea.id, tag=tag)
+        taggeditem.delete()
+    except TaggedItem.DoesNotExist:  # catch if object not found
+        pass
+    except NameError:  # catch if TaggedItem doesn't exist
+        pass
+    return HttpResponseRedirect(reverse('idea:idea_detail', args=(idea.id,)))
+
