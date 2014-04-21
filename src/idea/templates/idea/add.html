@@ -1,5 +1,43 @@
 {% extends "idea/idea-base.html" %}
 
+
+{%block "css_files" %}
+<link rel="stylesheet" href="{{ STATIC_URL }}idea/css/selectize.default.css">
+<style type="text/css">
+input[type="text"], textarea {
+    width: 375px;
+}
+
+.selectize-control {
+    display: inline-block;
+    width: 385px;
+    height: 38px;
+    vertical-align: bottom;
+}
+
+.selectize-input {
+    border: 1px solid #919395;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+    -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+    -webkit-transition: border linear .2s,box-shadow linear .2s;
+    -moz-transition: border linear .2s,box-shadow linear .2s;
+    -ms-transition: border linear .2s,box-shadow linear .2s;
+    -o-transition: border linear .2s,box-shadow linear .2s;
+    transition: border linear .2s,box-shadow linear .2s;
+    border-radius: 0;
+}
+.tags {
+    font-family: "Avenir Next",Arial,sans-serif;
+}
+div.option span, div.create span {
+    margin-left: 0;
+    display: inline;
+}
+</style>
+{% endblock %}
+
+
 {% block "content" %}
 
         <div id="content" class="idea-add ic" role="main">
@@ -34,7 +72,7 @@
                         <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="Cancel">
                     </span>
                 </form>
-            </div><!-- /project-add -->                    
+            </div><!-- /project-add -->
         </div><!-- /main -->
 
 {% endblock %}
@@ -47,9 +85,38 @@
     $("#activate-help").click(function() {
         $(".help_text span").toggle();
     });
+
+    $('#id_tags').selectize({
+        valueField: 'value',
+        labelField: 'label',
+        searchField: ['label'],
+        delimiter: ',',
+        persist: false,
+        create: function(input) {
+            return {
+                value: input,
+                text: input
+            }
+        },
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '/search/tags/json/model/idea/?term=' + query,
+                type: 'GET',
+                dataType: 'json',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res);
+                }
+            });
+        }
+    });
 {% endblock %}
 
 {% block "js_scripts" %}
-        <script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+    <script src="{{ STATIC_URL }}idea/js/functions.js"></script>
+    <script src="{{ STATIC_URL }}idea/js/selectize.min.js"></script>
 {% block "design_js_scripts" %}{% endblock %}
 {% endblock %}
