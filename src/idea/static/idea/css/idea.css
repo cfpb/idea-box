@@ -66,14 +66,14 @@
     margin-bottom: 10px;
     font: 100%/1.375 Georgia, "Times New Roman", serif; /* 16px font size */
 }
-.compact-header .project-title {
+.project-title {
     margin-top: 0;
 }
 .project-title a {
     color: #2cb34a;
-    letter-spacing: normal;
-    font-family: "Avenir Next Medium", Arial, sans-serif;
-    line-height: 1.25em;
+    letter-spacing: 1px;
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    line-height: 1.57142857142857em;
 }
 
 h4.project-title {
@@ -119,7 +119,7 @@ ul.section-nav {
     border-bottom: 1px solid #000;
     padding-left: 0;
     margin-top: 0;
-    margin-bottom: .5em;
+    margin-bottom: 0;
     list-style: none;
     overflow: auto;
     overflow-y:hidden;
@@ -154,13 +154,20 @@ ul.section-nav li.active a {
 
 /* Content */
 .idea-entry {
-    border-bottom: 1px solid #f2f2f2;
+    border-top: 1px solid #000;
     padding: 20px 20px 20px 0;
+}
+.idea-entry:first-child {
+    border-top: 0;
 }
 .no-results {
     padding: 2.5em 0;
 }
-.idea-votes {
+.idea-single .idea-votes {
+    width: 6.9%; /* 72 px */
+    text-align: center;
+}
+.idea-entry .idea-votes {
     text-align: center;
 }
 .idea-votes .count {
@@ -238,12 +245,19 @@ ul.section-nav li.active a {
     padding: 0;
 }
 .single-idea-entry {
-    width: 63.71428%; /* slightly smaller than span8 due to wide idea-votes */
+    width: 90%; /* slightly smaller than span11 due to wide idea-votes */
 }
-.single-idea-entry .idea-entry-content .comment-author {
-    font-size: 87.5%;
-    line-height: 1.9;
-    font-weight: 600;
+.single-idea-entry .body {
+    margin-top: 1.5em;
+}
+.single-idea-entry .idea-entry-content h4 {
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+}
+.single-idea-entry .idea-entry-content .detail {
+    margin-top: 1.5em;
+}
+.single-idea-entry .idea-entry-content p {
+    margin-top: .5em;
 }
 .comment-date {
     color: #666;
@@ -281,6 +295,9 @@ ul.section-nav li.active a {
 }
 
 /* Sidebar */
+.sidebar {
+    //margin-top: 1em;
+}
 .sidebar ul {
     list-style: none;
     padding-left: 0;
@@ -410,10 +427,13 @@ ul.section-nav li.active a {
 }
 
 .challenge-info  p.challenge-entry-content {
-    margin-bottom: 0;
+    margin: .5em 0;
 }
-.idea-single {
+.idea-add,
+.idea-single,
+.idea-banner-single {
     padding-top: 1.5em;
+    overflow: auto;
 }
 .idea-single .main-content {
     padding-top: 1.5em;
@@ -549,10 +569,18 @@ span.btn-voted:hover {
 .challenge-info h2 {
     font-weight: normal;
 }
-
+.challenge-info .challenge-banner {
+    margin-top: 0.5em;
+    background-color: #DBEDD4;
+    padding: 0.75em;
+}
 .challenge-info {
+    border-bottom: 1px solid #000;
     padding: 0;
     padding-bottom: 20px;
+}
+.challenge-info #start {
+    margin-right: 2.5em;
 }
 
 section.main-content hr {
