@@ -433,7 +433,6 @@ ul.section-nav li.active a {
 .idea-single,
 .idea-banner-single {
     padding-top: 1.5em;
-    overflow: auto;
 }
 .idea-single .main-content {
     padding-top: 1.5em;
