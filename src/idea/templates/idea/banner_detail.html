@@ -50,7 +50,7 @@
                             </div><!-- /idea-votes -->
                             <div class="idea-wrap span10">
                                 <header class="idea-title">
-                                    <a href="{% url 'idea:idea_detail' idea.id %}"><h3>{{idea.title}}</h3></a>
+                                    <a href="{% url 'idea:idea_detail' idea.id %}"><h2>{{idea.title}}</h2></a>
                                 </header>
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
