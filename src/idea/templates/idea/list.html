@@ -82,15 +82,27 @@
                         </div><!-- /row -->
                     </article><!-- /no-results -->
                 {% endif %}
-                    <nav id="bottom-nav" class="bottom-internal-nav span12" role="navigation">
-                    <h4 class="visuallyhidden">Idea Post Navigation</h4>
-                    {% if ideas.has_previous %}
-                        <a href="?page_num={{ideas.previous_page_number}}" class="left">Previous Ideas</a>
-                    {% endif %}
-                    {% if ideas.has_next %}
-                        <a href="?page_num={{ideas.next_page_number}}" class="more">More Ideas</a>
-                    {% endif %}
-                    </nav><!-- /bottom-nav /bottom-internal-nav -->
+
+                {% if ideas.object_list.count > 5 %}
+                    <a href="#" class="back-to-top"><i class="icon-chevron-up"></i> Back to top</i></a>
+                {% endif %}
+
+                <div class="pagination">
+                    <ul>
+                        {% if ideas.has_previous %}
+                            <li><a href="?page_num={{ ideas.previous_page_number }}"><i class="icon-chevron-left"></i></a></li>
+                        {% endif %}
+                        {% for page in ideas.paginator.page_range %}
+                            <li class="{% if page == ideas.number %}active{% endif %}">
+                                <a href="?page_num={{ page }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if ideas.has_next %}
+                            <li><a href="?page_num={{ ideas.next_page_number }}"><i class="icon-chevron-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
                 </section><!-- /main /main-content -->
             </div><!-- /row -->
                 <div class="sidebar left span3">
