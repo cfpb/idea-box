@@ -392,6 +392,12 @@ ul.section-nav li.active a {
     display: inline-block;
     margin: 0.625em 0;
 }
+.project-add .selectize-control {
+    width: 49.366%; /* 48.57142% + padding to match other elements */
+    margin: 0.625em 0;
+    vertical-align: top;
+    display: inline-block;
+}
 .project-add .helptext {
     margin-left: 25.75%;
 }
@@ -592,4 +598,37 @@ section.main-content hr {
 .idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
     padding: 0.71428571428571em 1em;
     font-size: 16px;
+}
+
+/* Selectize */
+.selectize-input {
+    border: 1px solid #919395;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+    -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+    -webkit-transition: border linear .2s,box-shadow linear .2s;
+    -moz-transition: border linear .2s,box-shadow linear .2s;
+    -ms-transition: border linear .2s,box-shadow linear .2s;
+    -o-transition: border linear .2s,box-shadow linear .2s;
+    transition: border linear .2s,box-shadow linear .2s;
+    border-radius: 0;
+    font-size: 14px;
+}
+.selectize-input .item {
+    background: #0072CE !important;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: none !important;
+    color: #FFF;
+}
+.selectize-input input[type="text"],
+.selectize-control textarea {
+    vertical-align: middle;
+    width: 375px;
+}
+.selectize-control div.option span,
+.selectize-control div.create span {
+    margin-left: 0;
+    display: inline;
 }
