@@ -118,5 +118,6 @@ div.option span, div.create span {
 {% block "js_scripts" %}
     <script src="{{ STATIC_URL }}idea/js/functions.js"></script>
     <script src="{{ STATIC_URL }}idea/js/selectize.min.js"></script>
+    <!--[if lt IE 9]><script src="{{ STATIC_URL }}idea/js/es5-shim.min.js"></script><![endif]-->
 {% block "design_js_scripts" %}{% endblock %}
 {% endblock %}
