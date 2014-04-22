@@ -17,7 +17,7 @@
                     <p class="challenge-entry-content">
                         {{banner.text}}
                     </p>
-                    <div id="challenge-link"><a href="{% url 'idea:add_idea' %}">Submit an idea for this challenge</a></div>
+                    <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}">Submit an idea for this challenge</a></div>
                     <div>
                         <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
                         <span id="end">Challenge end date: {{banner.end_date|date:"SHORT_DATE_FORMAT"}}</span>
