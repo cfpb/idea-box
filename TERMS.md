@@ -46,3 +46,6 @@ https://github.com/thedayhascome/Fluid-Baseline-Grid
 Designed & Built by Josh Hopkins and 40 Horse, http://40horse.com   
 Licensed under Unlicense, http://unlicense.org/
 
+### Selectize.js
+Selectize.js by Brian Reavis & Contributors - https://github.com/brianreavis/selectize.js
+Licensed under Apache version 2.0: http://www.apache.org/licenses/LICENSE-2.0
