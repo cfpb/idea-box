@@ -17,7 +17,7 @@
             </div>
             <div class="project-add">
                 <h1>Add an idea</h1>
-                <p class="instructions">Please complete all fields to add the idea</p>
+                <p class="instructions">Please complete all form fields to submit an idea.</p>
                 <a id="activate-help" class="visuallyhidden">Toggle instructions for each field.</a>
                 <form action="{% url 'idea:add_idea' %}" method="post">
                     {% csrf_token %}
