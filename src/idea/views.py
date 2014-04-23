@@ -96,7 +96,7 @@ def list(request, sort_or_state=None):
     tags = Tag.objects.filter(
         taggit_taggeditem_items__content_type__name='idea'
     ).annotate(count=Count('taggit_taggeditem_items')
-               ).order_by('-count', 'name')[:10]
+               ).order_by('-count', 'name')[:25]
 
     for tag in tags:
         if tag.slug in tag_strs:
@@ -310,7 +310,7 @@ def banner_detail(request, banner_id):
     tags = banner_tags.filter(
         taggit_taggeditem_items__content_type__name='idea'
     ).annotate(count=Count('taggit_taggeditem_items')
-               ).order_by('-count', 'name')[:10]
+               ).order_by('-count', 'name')[:25]
 
     for tag in tags:
         if tag.slug in tag_strs:
