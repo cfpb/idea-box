@@ -245,7 +245,7 @@ def detail(request, idea_id):
 
 
 @login_required
-def add_idea(request):
+def add_idea(request, banner_id=None):
     if request.method == 'POST':
         idea = Idea(creator=request.user, state=state_helper.get_first_state())
         if idea.state.name == 'Active':
@@ -262,7 +262,11 @@ def add_idea(request):
             return HttpResponse('Idea is archived', status=403)
     else:
         idea_title = request.GET.get('idea_title', '')
-        form = IdeaForm(initial={'title': idea_title})
+        if banner_id:
+            banner = Banner.objects.get(id=banner_id)
+        else:
+            banner = None
+        form = IdeaForm(initial={'title': idea_title, 'banner': banner})
         form.fields["banner"].queryset = get_current_banners()
         return _render(request, 'idea/add.html', {
             'form': form,
