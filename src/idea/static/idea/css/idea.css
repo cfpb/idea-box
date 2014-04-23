@@ -576,7 +576,8 @@ section.main-content hr {
 }
 
 .idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
-    padding: 0.71428571428571em 1em;
+    padding: 0.71428571428571em 0;
+    width: 4em;
     font-size: 16px;
 }
 
