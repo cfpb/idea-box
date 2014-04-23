@@ -252,6 +252,19 @@ def add_idea(request, banner_id=None):
             form = IdeaForm(request.POST, instance=idea)
             if form.is_valid():
                 new_idea = form.save()
+
+                # assign user id to the new tagged_item objects
+                # TODO use separate forms for tags
+                if COLLAB_TAGS:
+                    for tag in new_idea.tags.all():
+                        ti = tag.taggit_taggeditem_items.get(
+                            content_type__name="idea",
+                            object_id=new_idea.id)
+                        # should always be None, but check just in case
+                        if ti.tag_creator is None:
+                            ti.tag_creator=request.user
+                            ti.save()
+
                 vote_up(new_idea, request.user)
                 return HttpResponseRedirect(reverse('idea:idea_detail',
                                                     args=(idea.id,)))
