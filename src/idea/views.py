@@ -229,10 +229,10 @@ def detail(request, idea_id):
     if COLLAB_TAGS:
         for tag in tags:
             tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list'), tag.slug)
-            for ti in tag.taggit_taggeditem_items.all():
-                if ti.tag_creator == request.user and \
-                   ti.content_type.name == "idea":
-                    tags_created_by_user.append(tag.name)
+            for ti in tag.taggit_taggeditem_items.filter(tag_creator=request.user,
+                                                         content_type__name="idea",
+                                                         object_id=idea_id):
+                tags_created_by_user.append(tag.name)
 
     return _render(request, 'idea/detail.html', {
         'idea': idea,  # title, body, user name, user photo, time
