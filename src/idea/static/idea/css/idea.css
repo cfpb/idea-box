@@ -576,7 +576,8 @@ section.main-content hr {
 }
 
 .idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
-    padding: 0.71428571428571em 1em;
+    padding: 0.71428571428571em 0;
+    width: 4em;
     font-size: 16px;
 }
 
@@ -592,20 +593,21 @@ section.main-content hr {
     -o-transition: border linear .2s,box-shadow linear .2s;
     transition: border linear .2s,box-shadow linear .2s;
     border-radius: 0;
-    font-size: 14px;
 }
-.selectize-input .item {
-    background: #0072CE !important;
+.multi.selectize-control .selectize-input [data-value] {
+    background: #0072CE;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    border: none !important;
+    border: none;
     color: #FFF;
+    filter: none;
+    font-size: 14px;
 }
 .selectize-input input[type="text"],
 .selectize-control textarea {
     vertical-align: middle;
-    width: 375px;
+    font-size: 14px;
 }
 .selectize-control div.option span,
 .selectize-control div.create span {
