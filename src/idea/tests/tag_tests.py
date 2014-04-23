@@ -47,6 +47,27 @@ class TagTest(TestCase):
         self.assertNotContains(response, 'tag_remove')
 
     @unittest.skipIf(COLLAB_TAGS == False, "Remove only works with collab's core.taggit")
+    def test_tag_remove_not_exists_for_different_idea(self):
+        """
+        Detail page does not allow for removal of tags created by a different user
+        """
+        self.client.login(username='test1@example.com', password='1')
+        user1 = User.objects.get(username='test1@example.com')
+        user2 = random_user()
+        idea = models.Idea(creator=user1, title='AAAA', 
+                state = models.State.objects.get(name='Active'))
+        idea.save()
+        idea2 = models.Idea(creator=user2, title='BBBB', 
+                state = models.State.objects.get(name='Active'))
+        idea2.save()
+        add_tags(idea, 'AAA', None, user1, 'idea')
+        add_tags(idea2, 'AAA', None, user2, 'idea')
+
+        response = self.client.get(reverse("idea:idea_detail", args=(str(idea2.id),)))
+        self.assertContains(response, 'aaa')
+        self.assertNotContains(response, 'tag_remove')
+
+    @unittest.skipIf(COLLAB_TAGS == False, "Remove only works with collab's core.taggit")
     def test_tag_remove(self):
         """
         Detail page tag form submission should add tags.
