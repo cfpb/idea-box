@@ -20,10 +20,10 @@ from idea.models import UP_VOTE
 try:
     from core.taggit.models import Tag, TaggedItem
     from core.taggit.utils import add_tags
-    COLLAB_TAGS = True;
+    COLLAB_TAGS = True
 except ImportError:
     from taggit.models import Tag
-    COLLAB_TAGS = False;
+    COLLAB_TAGS = False
 
 from haystack import connections
 
@@ -96,7 +96,7 @@ def list(request, sort_or_state=None):
     tags = Tag.objects.filter(
         taggit_taggeditem_items__content_type__name='idea'
     ).annotate(count=Count('taggit_taggeditem_items')
-               ).order_by('-count', 'name')[:10]
+               ).order_by('-count', 'name')[:25]
 
     for tag in tags:
         if tag.slug in tag_strs:
@@ -286,7 +286,10 @@ def banner_detail(request, banner_id):
     tag_ids = [tag.id for tag in Tag.objects.filter(slug__in=tag_strs)]
     page_num = request.GET.get('page_num')
 
-    ideas = Idea.objects.related_with_counts().filter(banner=banner)
+    ideas = Idea.objects.related_with_counts().filter(
+        banner=banner,
+        state=State.objects.get(name='Active')
+    ).order_by('-time')
 
     #   Tag Filter
     if tag_ids:
@@ -310,7 +313,7 @@ def banner_detail(request, banner_id):
     tags = banner_tags.filter(
         taggit_taggeditem_items__content_type__name='idea'
     ).annotate(count=Count('taggit_taggeditem_items')
-               ).order_by('-count', 'name')[:10]
+               ).order_by('-count', 'name')[:25]
 
     for tag in tags:
         if tag.slug in tag_strs:
@@ -334,6 +337,7 @@ def banner_detail(request, banner_id):
         'banner': banner,
     })
 
+
 @login_required
 def remove_tag(request, idea_id, tag_slug):
     idea = Idea.objects.get(pk=idea_id)
@@ -347,4 +351,3 @@ def remove_tag(request, idea_id, tag_slug):
     except NameError:  # catch if TaggedItem doesn't exist
         pass
     return HttpResponseRedirect(reverse('idea:idea_detail', args=(idea.id,)))
-

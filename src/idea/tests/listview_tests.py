@@ -218,7 +218,7 @@ class ListViewTest(TestCase):
                 set([t.name for t in context['tags']]))
 
     @patch('idea.views.render')
-    def test_tags_top_ten(self, render):
+    def test_tags_top_list(self, render):
         """
         Tag list should be in proper order.
         """
@@ -227,7 +227,7 @@ class ListViewTest(TestCase):
         state.save()
 
         #   Make 13 tags, and assign each to a set of ideas
-        for count in range(13):
+        for count in range(30):
             tag = str(count)*4
             for i in range(count+1):
                 idea = models.Idea(creator=user, title=str(i)*4, 
@@ -238,9 +238,9 @@ class ListViewTest(TestCase):
         views.list(mock_req())
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
-        self.assertEqual(10, len(context['tags']))
-        # 12121212, 11111111, 10101010, 9999, ...
-        self.assertEqual([str(i)*4 for i in range(12,2,-1)],
+        self.assertEqual(25, len(context['tags']))
+        # 29292929, 28282828, 27272727, ...
+        self.assertEqual([str(i)*4 for i in range(29,4,-1)],
                 [t.name for t in context['tags']])
 
     @patch('idea.views.render')
