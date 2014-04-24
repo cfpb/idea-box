@@ -119,13 +119,12 @@
                     <aside class="tags">
                         <h4>Browse by Tag:</h4>
                         <ul>
-                               {% for tag in tags %}
-                               <li class="tag"><a class="tag_name" href="{{tag.tag_url}}" 
-                                   {% if tag.active %}
-                                       class="active"
-                                   {% endif %}
-                               >{{tag}}</a> <span class="tag_remove">{{tag.count}}</span></li>
-                               {% endfor %}
+                            {% for tag in tags %}
+                            <li class="tag">
+                                <a class="tag_name {% if tag.active %}pushed{% endif %}" href="{{tag.tag_url}}">{{tag}}</a>
+                                <span class="tag_remove">{{tag.count}}</span>
+                            </li>
+                            {% endfor %}
                         </ul>   
                     </aside>
                 </div><!-- /span_side -->
