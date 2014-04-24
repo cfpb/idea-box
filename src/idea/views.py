@@ -105,6 +105,7 @@ def list(request, sort_or_state=None):
             tag.active = True
         else:
             tag_slugs = ",".join(tag_strs + [tag.slug])
+            tag.active = False
         if tag_strs == [tag.slug]:
             tag.tag_url = "%s" % (reverse('idea:idea_list',
                                           args=(sort_or_state,)))
@@ -317,6 +318,7 @@ def banner_detail(request, banner_id):
             tag.active = True
         else:
             tag_slugs = ",".join(tag_strs + [tag.slug])
+            tag.active = False
         if tag_strs == [tag.slug]:
             tag.tag_url = "%s" % (reverse('idea:banner_detail',
                                           args=(banner_id,)))
