@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.contrib.auth.models import User
 from django.utils.timezone import get_default_timezone
 from django.test import TestCase
@@ -6,6 +6,9 @@ from idea import models, views
 from idea.tests.utils import mock_req, random_user
 from mock import patch
 import string
+
+def get_relative_date(delta_days=0):
+    return datetime.date.today() + datetime.timedelta(days=delta_days)
 
 class BannerViewTest(TestCase):
     """
@@ -23,7 +26,7 @@ class BannerViewTest(TestCase):
         state.save()
 
         banner = models.Banner(id=1, title="XXXX", text="text",
-                               start_date=datetime.now())
+                               start_date=datetime.date.today())
         banner.save()
 
         def make_idea(nonce, title, banner=banner):
@@ -61,7 +64,7 @@ class BannerViewTest(TestCase):
         Verify sort order.
         """
         def add_time(kwargs, nonce):
-            kwargs['time'] = datetime(2013, 1, nonce, tzinfo=get_default_timezone())
+            kwargs['time'] = datetime.datetime(2013, 1, nonce, tzinfo=get_default_timezone())
         self._generate_data(paramfn=add_time)
         views.banner_detail(mock_req(), banner_id=1)
         self._verify_order(render)
@@ -295,3 +298,38 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','2']),
                 set([t.name for t in context['tags']]))
 
+    @patch('idea.views.render')
+    def test_banner_is_current(self, render):
+        """
+        Test boolean flag for banner status (active or not)
+        """
+        yesterday = get_relative_date(-1)
+        today = datetime.date.today()
+        tomorrow = get_relative_date(+1)
+
+        banner = models.Banner(id=1, title="XXXX", text="text",
+                               start_date=today)
+        banner.save()
+
+        banner2 = models.Banner(id=2, title="XXXX", text="text",
+                               start_date=tomorrow)
+        banner2.save()
+
+        banner3 = models.Banner(id=3, title="XXXX", text="text",
+                               start_date=yesterday, end_date=today)
+        banner3.save()
+
+        views.banner_detail(mock_req(), banner_id=1)
+        context = render.call_args[0][2]
+        self.assertTrue('is_current_banner' in context)
+        self.assertTrue(context['is_current_banner'])
+
+        views.banner_detail(mock_req(), banner_id=2)
+        context = render.call_args[0][2]
+        self.assertTrue('is_current_banner' in context)
+        self.assertFalse(context['is_current_banner'])
+
+        views.banner_detail(mock_req(), banner_id=3)
+        context = render.call_args[0][2]
+        self.assertTrue('is_current_banner' in context)
+        self.assertTrue(context['is_current_banner'])

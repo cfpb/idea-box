@@ -262,7 +262,7 @@ def add_idea(request, banner_id=None):
             return HttpResponse('Idea is archived', status=403)
     else:
         idea_title = request.GET.get('idea_title', '')
-        if banner_id:
+        if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
             banner = Banner.objects.get(id=banner_id)
         else:
             banner = None
@@ -280,6 +280,7 @@ def banner_detail(request, banner_id):
     Banner detail view; banner_id must be a string containing an int.
     """
     banner = Banner.objects.get(id=banner_id)
+    is_current_banner = True if banner in get_current_banners() else False
 
     tag_strs = request.GET.get('tags', '').split(',')
     tag_strs = [t for t in tag_strs if t != u'']
@@ -331,6 +332,7 @@ def banner_detail(request, banner_id):
         'ideas':    page,
         'tags':     tags,  # list of tags associated with banner ideas
         'banner': banner,
+        'is_current_banner': is_current_banner,
     })
 
 
