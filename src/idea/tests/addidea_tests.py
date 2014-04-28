@@ -6,6 +6,8 @@ from haystack import connections
 from idea import models, views
 from idea.tests.utils import mock_req, random_user
 from mock import patch
+from datetime import date, timedelta
+from idea.forms import IdeaForm
 
 try:
     from core.taggit.utils import add_tags
@@ -102,4 +104,58 @@ class AddIdeaTest(TestCase):
         for ti in tagged_items:
             self.assertEqual(user, ti.tag_creator)
         
+    @patch('idea.views.render')
+    def test_add_idea_with_banner(self, render):
+        """
+        Verify that the banner field auto-populates properly
+        """
 
+        banner1 = models.Banner(id=1, title="AAAA", text="text1",
+                               start_date=date.today())
+        banner1.save()
+        banner2 = models.Banner(id=2, title="BBBB", text="text2",
+                               start_date=date.today(),
+                               end_date=date.today() + timedelta(days=1))
+        banner2.save()
+        banner3 = models.Banner(id=3, title="BBBB", text="text3",
+                               start_date=date.today() - timedelta(days=2),
+                               end_date=date.today() - timedelta(days=1))
+        banner3.save()
+
+        views.add_idea(mock_req())
+        context = render.call_args[0][2]
+        self.assertTrue('form' in context)
+        self.assertTrue(isinstance(context['form'], IdeaForm))
+        banner_field = context['form'].fields['banner']
+        selected = context['form'].initial['banner']
+        self.assertEqual(None, selected)
+        self.assertIn(banner1, banner_field._queryset)
+        self.assertIn(banner2, banner_field._queryset)
+        self.assertNotIn(banner3, banner_field._queryset)
+
+        views.add_idea(mock_req(), banner1.id)
+        context = render.call_args[0][2]
+        banner_field = context['form'].fields['banner']
+        selected = context['form'].initial['banner']
+        self.assertEqual(banner1, selected)
+        self.assertIn(banner1, banner_field._queryset)
+        self.assertIn(banner2, banner_field._queryset)
+        self.assertNotIn(banner3, banner_field._queryset)
+
+        views.add_idea(mock_req(), banner2.id)
+        context = render.call_args[0][2]
+        banner_field = context['form'].fields['banner']
+        selected = context['form'].initial['banner']
+        self.assertEqual(banner2, selected)
+        self.assertIn(banner1, banner_field._queryset)
+        self.assertIn(banner2, banner_field._queryset)
+        self.assertNotIn(banner3, banner_field._queryset)
+
+        views.add_idea(mock_req(), banner3.id)
+        context = render.call_args[0][2]
+        banner_field = context['form'].fields['banner']
+        selected = context['form'].initial['banner']
+        self.assertEqual(None, selected)
+        self.assertIn(banner1, banner_field._queryset)
+        self.assertIn(banner2, banner_field._queryset)
+        self.assertNotIn(banner3, banner_field._queryset)
