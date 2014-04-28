@@ -193,6 +193,9 @@ ul.section-nav li.active a {
     font-family: Georgia, "Times New Roman", serif;
     margin: 1em 0;
 }
+.idea-more {
+    display: inline-block;
+}
 .idea-more a {
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
 }
