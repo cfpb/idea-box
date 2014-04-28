@@ -193,6 +193,9 @@ ul.section-nav li.active a {
     font-family: Georgia, "Times New Roman", serif;
     margin: 1em 0;
 }
+.idea-more {
+    display: inline-block;
+}
 .idea-more a {
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
 }
@@ -294,7 +297,7 @@ ul.section-nav li.active a {
 .sidebar .challenge-banner {
     margin-bottom: 2.5em;
     background-color: #DBEDD4;
-    padding: 2em;
+    padding: 1.25em;
 }
 #challenge-link a {
     border-bottom-width: 1px;
@@ -557,7 +560,7 @@ span.btn-voted:hover {
 .challenge-info .challenge-banner {
     margin-top: 0.5em;
     background-color: #DBEDD4;
-    padding: 0.75em;
+    padding: 1em;
 }
 .challenge-info {
     border-bottom: 1px solid #000;
