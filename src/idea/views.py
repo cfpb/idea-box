@@ -65,8 +65,8 @@ def list(request, sort_or_state=None):
     ideas = Idea.objects.related_with_counts()
 
     #   Tag Filter
-    if tag_ids:
-        ideas = ideas.filter(tags__pk__in=tag_ids).distinct()
+    for tag_id in tag_ids:
+        ideas = ideas.filter(tags__pk=tag_id)
 
     #   URL Filter - either archive or one of the sorts
     if sort_or_state == 'archived':
@@ -94,25 +94,25 @@ def list(request, sort_or_state=None):
 
     #   List of tags
     tags = Tag.objects.filter(
-        taggit_taggeditem_items__content_type__name='idea'
+        taggit_taggeditem_items__content_type__name='idea',
+        taggit_taggeditem_items__object_id__in=ideas
     ).annotate(count=Count('taggit_taggeditem_items')
                ).order_by('-count', 'name')[:25]
 
     for tag in tags:
         if tag.slug in tag_strs:
             tag_slugs = ",".join([s for s in tag_strs if s != tag.slug])
+            tag.active = True
         else:
             tag_slugs = ",".join(tag_strs + [tag.slug])
-        #   Minor tweak: Links just turn on/off a single tag
-        if tag.slug in tag_strs:
+            tag.active = False
+        if tag_strs == [tag.slug]:
             tag.tag_url = "%s" % (reverse('idea:idea_list',
                                           args=(sort_or_state,)))
-            tag.active = True
         else:
             tag.tag_url = "%s?tags=%s" % (reverse('idea:idea_list',
                                                   args=(sort_or_state,)),
-                                          tag.slug)
-            tag.active = False
+                                          tag_slugs)
 
     banner = get_banner()
 
@@ -262,7 +262,7 @@ def add_idea(request, banner_id=None):
             return HttpResponse('Idea is archived', status=403)
     else:
         idea_title = request.GET.get('idea_title', '')
-        if banner_id:
+        if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
             banner = Banner.objects.get(id=banner_id)
         else:
             banner = None
@@ -280,6 +280,7 @@ def banner_detail(request, banner_id):
     Banner detail view; banner_id must be a string containing an int.
     """
     banner = Banner.objects.get(id=banner_id)
+    is_current_banner = True if banner in get_current_banners() else False
 
     tag_strs = request.GET.get('tags', '').split(',')
     tag_strs = [t for t in tag_strs if t != u'']
@@ -292,8 +293,8 @@ def banner_detail(request, banner_id):
     ).order_by('-time')
 
     #   Tag Filter
-    if tag_ids:
-        ideas = ideas.filter(tags__pk__in=tag_ids).distinct()
+    for tag_id in tag_ids:
+        ideas = ideas.filter(tags__pk=tag_id).distinct()
 
     IDEAS_PER_PAGE = getattr(settings, 'IDEAS_PER_PAGE', 10)
     pager = Paginator(ideas, IDEAS_PER_PAGE)
@@ -306,35 +307,32 @@ def banner_detail(request, banner_id):
         page = pager.page(pager.num_pages)
 
     #   List of tags that are associated with an idea in the banner list
-    banner_ideas = Idea.objects.filter(banner=banner)
-    banner_tags = Tag.objects.filter(
+    tags = Tag.objects.filter(
         taggit_taggeditem_items__content_type__name='idea',
-        taggit_taggeditem_items__object_id__in=banner_ideas)
-    tags = banner_tags.filter(
-        taggit_taggeditem_items__content_type__name='idea'
+        taggit_taggeditem_items__object_id__in=ideas
     ).annotate(count=Count('taggit_taggeditem_items')
                ).order_by('-count', 'name')[:25]
 
     for tag in tags:
         if tag.slug in tag_strs:
             tag_slugs = ",".join([s for s in tag_strs if s != tag.slug])
+            tag.active = True
         else:
             tag_slugs = ",".join(tag_strs + [tag.slug])
-        #   Minor tweak: Links just turn on/off a single tag
-        if tag.slug in tag_strs:
+            tag.active = False
+        if tag_strs == [tag.slug]:
             tag.tag_url = "%s" % (reverse('idea:banner_detail',
                                           args=(banner_id,)))
-            tag.active = True
         else:
             tag.tag_url = "%s?tags=%s" % (reverse('idea:banner_detail',
                                                   args=(banner_id,)),
-                                          tag.slug)
-            tag.active = False
+                                          tag_slugs)
 
     return _render(request, 'idea/banner_detail.html', {
         'ideas':    page,
         'tags':     tags,  # list of tags associated with banner ideas
         'banner': banner,
+        'is_current_banner': is_current_banner,
     })
 
 
