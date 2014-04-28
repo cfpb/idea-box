@@ -1,6 +1,10 @@
 from django import forms
 from idea.models import Idea
 
+try:
+    from core.taggit.utils import add_tags
+except ImportError:
+    pass
 
 class IdeaForm(forms.ModelForm):
 
@@ -11,6 +15,19 @@ class IdeaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(IdeaForm, self).__init__(*args, **kwargs)
         self.fields['banner'].empty_label = "No challenge"
+
+    def save(self, commit=True):
+        instance = super(IdeaForm, self).save(commit=False)
+        # add tags separately
+        tags = self.cleaned_data['tags']
+        self.cleaned_data['tags'] = []
+        instance.save()
+        try:
+            for t in tags:
+                add_tags(instance, t, None, instance.creator, 'idea')
+        except NameError:  # catch if add_tags doesn't exist
+            instance.tags.add(*tags)
+        return instance
 
     def clean_tags(self):
         """ Force tags to lowercase, since tags are case-sensitive otherwise. """

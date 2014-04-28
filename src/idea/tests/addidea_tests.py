@@ -1,11 +1,18 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.utils import unittest
 from haystack import connections
 from idea import models, views
 from idea.tests.utils import mock_req, random_user
 from mock import patch
 
+try:
+    from core.taggit.utils import add_tags
+    from core.taggit.models import TaggedItem
+    COLLAB_TAGS = True;
+except ImportError:
+    COLLAB_TAGS = False;
 
 class AddIdeaTest(TestCase):
     fixtures = ['state', 'core-test-fixtures']
@@ -80,4 +87,19 @@ class AddIdeaTest(TestCase):
             self.assertTrue('similar' in context)
             self.assertEqual(2, len(context['similar']))
             self.assertEqual(set(context['similar']), set([similar1, similar2]))
+
+    @unittest.skipIf(COLLAB_TAGS == False, "TaggedItem creator field requires collab's core.taggit")
+    def test_tagged_item_creator(self):
+        """ Test tag fields from a normal POST submission to add an idea. """
+
+        self.client.login(username='test1@example.com', password='1')
+        self.assertEquals(models.Idea.objects.all().count(), 0)
+        resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
+        tagged_items = TaggedItem.objects.filter(content_type__name='idea')
+        self.assertEqual(2, tagged_items.count())
+        user = User.objects.get(username='test1@example.com')
+        idea = models.Idea.objects.all()[0]
+        for ti in tagged_items:
+            self.assertEqual(user, ti.tag_creator)
+        
 
