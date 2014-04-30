@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
 from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
-from idea.models import Idea, State, Vote, Banner
+from idea.models import Idea, State, Vote, Banner, Config
 from idea.utility import state_helper
 from idea.models import UP_VOTE
 
@@ -115,12 +115,17 @@ def list(request, sort_or_state=None):
                                           tag_slugs)
 
     banner = get_banner()
+    try:
+        about_text = Config.objects.get(key="list_about").value
+    except Config.DoesNotExist:
+        about_text = ""
 
     return _render(request, 'idea/list.html', {
         'sort_or_state': sort_or_state,
         'ideas':    page,
         'tags':     tags,  # list of popular tags
         'banner': banner,
+        'about_text': about_text,
     })
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from idea.models import Idea, State, Vote, Banner
+from idea.models import Idea, State, Vote, Banner, Config
 
 idea_actions = []
 vote_actions = []
@@ -41,6 +41,7 @@ class BannerAdmin(admin.ModelAdmin):
     actions = banner_actions
 
 admin.site.register(State)
+admin.site.register(Config)
 admin.site.register(Idea, IdeaAdmin)
 admin.site.register(Vote, VoteAdmin)
 admin.site.register(Banner, BannerAdmin)

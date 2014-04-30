@@ -149,3 +149,7 @@ VOTE_CHOICES = ((u'+1', UP_VOTE),)
 class Vote(UserTrackable):
     vote = models.SmallIntegerField(choices=VOTE_CHOICES, default=1)
     idea = models.ForeignKey(Idea)
+
+class Config(models.Model):
+    key = models.CharField(max_length=50)
+    value = models.TextField(max_length=2000)
