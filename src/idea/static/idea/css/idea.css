@@ -598,12 +598,16 @@ section.main-content hr {
     border-radius: 0;
 }
 .multi.selectize-control .selectize-input [data-value] {
-    background: #0072CE;
+    background: #FFCE8D;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     border: none;
-    color: #FFF;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    text-shadow: none;
+    color: #000;
     filter: none;
     font-size: 14px;
 }
