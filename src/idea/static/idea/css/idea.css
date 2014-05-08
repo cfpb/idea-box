@@ -290,10 +290,6 @@ ul.section-nav li.active a {
 .sidebar-nav {
     margin-bottom: 2.5em;
 }
-.sidebar h4 {
-    font-size: 120%; /* 24px */
-    line-height: 0.95;
-}
 .sidebar .challenge-banner {
     margin-bottom: 2.5em;
     background-color: #DBEDD4;
