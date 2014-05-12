@@ -106,7 +106,7 @@
                                 <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
                             </aside><!-- /project-add-idea -->
                             <aside class="voters">
-                                <h4>Liked by</h4>
+                                <h3>Liked by</h3>
                                 <ul>
                                 {% for voter in voters %}
                                     {% if voter.profile %}
@@ -118,7 +118,7 @@
                                 </ul>                
                             </aside>    
                             <aside class="tags">
-                                <h4>Idea Tags</h4>
+                                <h3>Idea Tags</h3>
                                 <ul>
                                     {% for tag in tags %}
                                     <li class="tag"><a class="tag_name" href="{{tag.tag_url}}">{{tag}}</a>
@@ -132,7 +132,6 @@
                                             <label for="id_tags">Add tag (optional)</label>
                                             {{ tag_form.tags }}
                                             <input type="submit" value="Add" class="btn" id="work_tag_submit_btn"></input>
-                                            <span class="help-text">Separate tags with comma</span>
                                          </div>
                                     </form>
                                 </div><!-- /ic-add-tags tags -->   
