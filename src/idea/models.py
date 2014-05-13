@@ -123,9 +123,6 @@ class Idea(UserTrackable):
         """
         members = []
         members.append(self.creator)
-        for v in self.vote_set.all():
-            if v.creator not in members:
-                members.append(v.creator)
 
         for c in self.comments:
             if c.user not in members:
@@ -151,5 +148,5 @@ class Vote(UserTrackable):
     idea = models.ForeignKey(Idea)
 
 class Config(models.Model):
-    key = models.CharField(max_length=50)
+    key = models.CharField(max_length=50, unique=True)
     value = models.TextField(max_length=2000)
