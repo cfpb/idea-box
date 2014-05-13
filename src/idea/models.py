@@ -123,9 +123,6 @@ class Idea(UserTrackable):
         """
         members = []
         members.append(self.creator)
-        for v in self.vote_set.all():
-            if v.creator not in members:
-                members.append(v.creator)
 
         for c in self.comments:
             if c.user not in members:
