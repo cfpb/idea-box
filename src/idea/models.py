@@ -151,5 +151,5 @@ class Vote(UserTrackable):
     idea = models.ForeignKey(Idea)
 
 class Config(models.Model):
-    key = models.CharField(max_length=50)
+    key = models.CharField(max_length=50, unique=True)
     value = models.TextField(max_length=2000)
