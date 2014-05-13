@@ -32,8 +32,8 @@ class VotingTests(TestCase):
         vote.creator = voter
         vote.save()
 
-        self.assertEqual(len(idea.members), 2)
-        self.assertIn(voter, idea.members)
+        self.assertEqual(len(idea.members), 1)
+        self.assertNotIn(voter, idea.members)
         self.assertIn(user, idea.members)
 
     def test_members_with_comments(self):
