@@ -71,20 +71,14 @@
 }
 .project-title a {
     color: #2cb34a;
-    letter-spacing: 1px;
-    font-family: "Avenir Next Demi", Arial, sans-serif;
+    font-family: FontAwesome, "Avenir Next Demi", Arial, sans-serif;
     line-height: 1.57142857142857em;
 }
-
-h4.project-title {
-    font-size: 22px;
-    padding: 30px 0;
-    display: block;
+.project-title a:before {
+    content: "\f053\200a Back To ";
+    font-family: FontAwesome, "Avenir Next Demi", Arial, sans-serif;
+    margin-right: 0;
 }
-h4.project-title a {
-    color: #000;
-}
-
 
 .project-add-idea {
     margin-bottom: 2.5em;
