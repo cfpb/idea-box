@@ -159,3 +159,23 @@ class AddIdeaTest(TestCase):
         self.assertIn(banner1, banner_field._queryset)
         self.assertIn(banner2, banner_field._queryset)
         self.assertNotIn(banner3, banner_field._queryset)
+
+    @patch('idea.views.render')
+    def test_add_idea_with_no_banner(self, render):
+        """
+        Verify that the banner field disappears if no current challenge
+        """
+
+        banner1 = models.Banner(id=1, title="AAAA", text="text1",
+                               start_date=date.today() - timedelta(days=2),
+                               end_date=date.today() - timedelta(days=1))
+        banner1.save()
+        banner2 = models.Banner(id=2, title="BBBB", text="text2",
+                               start_date=date.today() + timedelta(days=1))
+        banner2.save()
+
+        views.add_idea(mock_req())
+        context = render.call_args[0][2]
+        self.assertTrue('form' in context)
+        self.assertTrue(isinstance(context['form'], IdeaForm))
+        self.assertNotIn('banner', context['form'].fields.keys())
