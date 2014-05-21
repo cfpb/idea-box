@@ -267,12 +267,17 @@ def add_idea(request, banner_id=None):
             return HttpResponse('Idea is archived', status=403)
     else:
         idea_title = request.GET.get('idea_title', '')
-        if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
-            banner = Banner.objects.get(id=banner_id)
+        current_banners = get_current_banners()
+        if current_banners.count() == 0:
+            form = IdeaForm(initial={'title': idea_title})
+            form.fields.pop('banner')
         else:
-            banner = None
-        form = IdeaForm(initial={'title': idea_title, 'banner': banner})
-        form.fields["banner"].queryset = get_current_banners()
+            if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
+                banner = Banner.objects.get(id=banner_id)
+            else:
+                banner = None
+            form = IdeaForm(initial={'title': idea_title, 'banner': banner})
+            form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/add.html', {
             'form': form,
             'similar': [r.object for r in more_like_text(idea_title, Idea)]

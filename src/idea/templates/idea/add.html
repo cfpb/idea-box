@@ -16,7 +16,7 @@
                 </h5><!-- /logo -->
             </div>
             <div class="project-add">
-                <h1>Add an idea</h1>
+                <h1>Share your idea</h1>
                 <p class="instructions">Please complete all form fields to submit an idea.</p>
                 <a id="activate-help" class="visuallyhidden">Toggle instructions for each field.</a>
                 <form action="{% url 'idea:add_idea' %}" method="post">
@@ -37,7 +37,7 @@
                         </div>
                     {% endfor %}
                     <span id="submit-buttons">
-                        <input type="submit" class="btn" id="add-idea-btn" value="Add this idea">
+                        <input type="submit" class="btn" id="add-idea-btn" value="Submit this idea">
                         <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="Cancel">
                     </span>
                 </form>
