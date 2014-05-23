@@ -27,12 +27,22 @@ class AddIdeaTest(TestCase):
         num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
         resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
-        self.assertEqual(resp.status_code, 302)
-        self.assertIn('detail', resp['Location'])
+        self.assertContains(resp, 'Thanks for sharing your idea')
         self.assertEquals(models.Idea.objects.all().count(), 1)
 
         num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 1)
+
+    def test_duplicate_idea(self):
+        """ Test an duplicate POST submission to add an idea. """
+        self.client.login(username='test1@example.com', password='1')
+        self.assertEquals(models.Idea.objects.all().count(), 0)
+        resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
+        self.assertEquals(models.Idea.objects.all().count(), 1)
+        resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'new summary', 'text':'new text', 'tags':'new, tags'})
+        self.assertEqual(resp.status_code, 302)
+        self.assertIn('detail', resp['Location'])
+        self.assertEquals(models.Idea.objects.all().count(), 1)
 
     def test_bad_idea(self):
         """ Test an incomplete POST submission to add an idea. """
