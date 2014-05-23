@@ -30,6 +30,7 @@ from haystack import connections
 
 def _render(req, template_name, context={}):
     context['active_app'] = 'Idea'
+    context['is_idea'] = True
     context['app_link'] = reverse('idea:idea_list')
     return render(req, template_name, context)
 
