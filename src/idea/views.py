@@ -267,7 +267,10 @@ def add_idea(request, banner_id=None):
                 return _render(request, 'idea/add_success.html',
                                {'idea': new_idea,})
             else:
-                form.fields["banner"].queryset = get_current_banners()
+                if 'banner' in request.POST:
+                    form.fields["banner"].queryset = get_current_banners()
+                else:
+                    form.fields.pop('banner')
                 return _render(request, 'idea/add.html', {'form': form, })
         else:
             return HttpResponse('Idea is archived', status=403)
