@@ -12,7 +12,7 @@
                                     <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
                                 </h2>
                             </div>
-                            <p class="info">{{ about_text }}</p>
+                            <p class="info">{{ about_text|safe }}</p>
                         </div><!-- /row -->
                     </header><!-- /project-header -->
                     <div class="visuallyhidden">
