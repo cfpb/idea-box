@@ -1,0 +1,70 @@
+{% extends "idea/idea-base.html" %}
+
+{% block "content" %}
+
+        <div id="content" class="idea-add ic" role="main">
+            <div class="row">
+                <h5 class="logo span7 section project-title">
+                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
+                </h5><!-- /logo -->
+            </div>
+            <div class="add-summary">
+                <h2>Thanks for sharing your idea</h2>
+
+                <div class="summary-text">What happens next:</div>
+
+                <div class="summary-section">
+                    <h4 class="summary-section-header">
+                        Watch the Likes go up
+                    </h4>
+                    <div class="summary-section-body">
+                        Gauge support for your idea by watching who has Liked it. Don’t
+                        worry, people can’t unlike it.
+                    </div>
+                </div>
+                
+                <div class="summary-section">
+                    <h4 class="summary-section-header">
+                        Others can leave comment
+                    </h4>
+                    <div class="summary-section-body">
+                        Start a conversation yourself, or join it by responding to any
+                        questions or comments others may have. You'll receive a notification
+                        when someone comments on your idea or responds to a comment.
+                    </div>
+                </div>
+                
+                <div class="summary-section">
+                    <h4 class="summary-section-header">
+                        Add tags to find support or collaboration
+                    </h4>
+                    <div class="summary-section-body">
+                        You or anyone can add more tags to your idea. This helps filter and
+                        group similar ideas, and find areas that people are talking the most
+                        about.
+                    </div>
+                </div>
+                
+                <div class="summary-section">
+                    <h4 class="summary-section-header">
+                        Show your support
+                    </h4>
+                    <div class="summary-section-body">
+                        Check out the ideas submitted by your colleagues on the Idea Box landing
+                        page. You may find potential collaborators for your own ideas by showing
+                        your support.
+                    </div>
+                </div>
+                
+                <div class="summary-text">
+                    Ideas with the greatest interest will receive attention from Project Boldness. 
+                </div>
+
+                <div id="submit-buttons">
+                    <a class="btn" href="{% url "idea:idea_list" %}">Take me to Idea Box</a>
+                    <a class="btn" href="{% url "idea:idea_detail" idea.id %}">Take me to my idea</a>
+                </span>
+            </div><!-- /add-summary -->
+        </div><!-- /main -->
+
+{% endblock %}

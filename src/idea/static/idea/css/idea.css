@@ -500,6 +500,31 @@ span.btn-voted:hover {
     height: 150%;
 }
 
+.add-summary {
+    margin-top: 2em;
+    width: 65.71428%;
+}
+.add-summary #submit-buttons {
+    margin: 2em 0;
+    text-align: center;
+}
+.add-summary #submit-buttons a {
+    margin-right: 8em;
+}
+
+.summary-text {
+    margin: 1em 0;
+}
+.summary-section {
+    padding: 1em 0;
+}
+.summary-section-header {
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+}
+.summary-section-body {
+    margin-top: 0.5em;
+}
+
 /* Hide from both screenreaders and browsers: h5bp.com/u */
 .hidden {
     display: none !important;
