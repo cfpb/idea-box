@@ -252,14 +252,19 @@ def detail(request, idea_id):
 @login_required
 def add_idea(request, banner_id=None):
     if request.method == 'POST':
+        matching_ideas = Idea.objects.filter(creator=request.user, title=request.POST.get('title',''))
+        if matching_ideas.count() > 0:
+            # user already submitted this idea
+            return HttpResponseRedirect(reverse('idea:idea_detail',
+                                                 args=(matching_ideas[0].id,)))
         idea = Idea(creator=request.user, state=state_helper.get_first_state())
         if idea.state.name == 'Active':
             form = IdeaForm(request.POST, instance=idea)
             if form.is_valid():
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
-                return HttpResponseRedirect(reverse('idea:idea_detail',
-                                                    args=(idea.id,)))
+                return _render(request, 'idea/add_success.html',
+                               {'idea': new_idea,})
             else:
                 form.fields["banner"].queryset = get_current_banners()
                 return _render(request, 'idea/add.html', {'form': form, })
