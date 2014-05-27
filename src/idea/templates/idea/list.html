@@ -9,14 +9,14 @@
                         <div class="row">
                             <div class="logo span5">
                                 <h2 class="section">
-                                    <a href="{% url 'idea:idea_list' %}">Idea Box</a>
+                                    <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
                                 </h2>
                             </div>
-                            <p class="info">{{ about_text }}</p>
+                            <p class="info">{{ about_text|safe }}</p>
                         </div><!-- /row -->
                     </header><!-- /project-header -->
                     <div class="visuallyhidden">
-                        <h2>Main Navigation for Idea Box</h2>
+                        <h2>Main Navigation for IdeaBox</h2>
                     </div> <!-- /visuallyhidden -->
                     <ul class="section-nav">
                             <li {% if sort_or_state == 'trending' %}class="active"{% endif %}><a href="{% url 'idea:idea_list' "trending" %}">Trending</a></li>

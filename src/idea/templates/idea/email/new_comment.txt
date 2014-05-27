@@ -2,5 +2,5 @@
 
 {% block "body" %}
 Hello {{ n.target.first_name }}!
-We're writing to let you know {{ n.actor.first_name }} commented on {{ n.obj }} in Idea Box. 
+We're writing to let you know {{ n.actor.first_name }} commented on {{ n.obj }} in IdeaBox. 
 {% endblock %}
