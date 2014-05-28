@@ -71,12 +71,12 @@
 }
 .project-title a {
     color: #2cb34a;
-    font-family: FontAwesome, "Avenir Next Demi", Arial, sans-serif;
+    font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
     line-height: 1.57142857142857em;
 }
 .project-title a:before {
-    content: "\f053\200a Back To ";
-    font-family: FontAwesome, "Avenir Next Demi", Arial, sans-serif;
+    content: "\f053\00a0 Back To ";
+    font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
     margin-right: 0;
 }
 
@@ -498,6 +498,31 @@ span.btn-voted:hover {
     display: block;
     width: 0;
     height: 150%;
+}
+
+.add-summary {
+    margin-top: 2em;
+    width: 65.71428%;
+}
+.add-summary #submit-buttons {
+    margin: 2em 0;
+    text-align: center;
+}
+.add-summary #submit-buttons a {
+    margin-right: 8em;
+}
+
+.summary-text {
+    margin: 1em 0;
+}
+.summary-section {
+    padding: 1em 0;
+}
+.summary-section-header {
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+}
+.summary-section-body {
+    margin-top: 0.5em;
 }
 
 /* Hide from both screenreaders and browsers: h5bp.com/u */
