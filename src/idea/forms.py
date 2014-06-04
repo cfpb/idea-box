@@ -6,6 +6,7 @@ try:
 except ImportError:
     pass
 
+
 class IdeaForm(forms.ModelForm):
 
     class Meta:
@@ -24,7 +25,7 @@ class IdeaForm(forms.ModelForm):
 
         self.fields['challenge-checkbox'] = forms.BooleanField(
             required=False,
-            label = "My idea is part of a Challenge")
+            label="My idea is part of a Challenge")
 
         for field in self.fields:
             form_classes = "form-control"
@@ -33,8 +34,7 @@ class IdeaForm(forms.ModelForm):
                 form_classes += " active"
             if field in self.data.keys() and self.data[field]:
                 form_classes += " populated"
-            self.fields[field].widget.attrs["class"]  = form_classes
-                      
+            self.fields[field].widget.attrs["class"] = form_classes
 
         self.fields.keyOrder = [
             'title',
@@ -65,7 +65,7 @@ class IdeaForm(forms.ModelForm):
             else:
                 classes_set.discard("input-error")
             self.fields[field].widget.attrs["class"] = " ".join(classes_set)
-                
+
     def clean_tags(self):
         """ Force tags to lowercase, since tags are case-sensitive otherwise. """
 
@@ -85,7 +85,7 @@ class UpVoteForm(forms.Form):
 
 class IdeaTagForm(forms.Form):
     tags = forms.CharField(max_length=512,
-                           widget=forms.TextInput(attrs={'class':'tags_autocomplete'}))
+                           widget=forms.TextInput(attrs={'class': 'tags_autocomplete'}))
 
     def clean_tags(self):
         """ Force tags to lowercase, since tags are case-sensitive otherwise. """
