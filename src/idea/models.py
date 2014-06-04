@@ -26,8 +26,8 @@ class UserTrackable(models.Model):
 
 class Banner(models.Model):
 
-    """ The banner text at the beginning of IdeaBox pages, asking the question. 
-    This can be used to run informal campaigns soliciting ideas around specific 
+    """ The banner text at the beginning of IdeaBox pages, asking the question.
+    This can be used to run informal campaigns soliciting ideas around specific
     topics. """
 
     title = models.CharField(max_length=50)
@@ -61,7 +61,7 @@ class IdeaManager(models.Manager):
         idea_type = ContentType.objects.get(app_label="idea", model="idea")
         return self.select_related().extra(select={
             'comment_count': """
-                SELECT count(*) FROM django_comments 
+                SELECT count(*) FROM django_comments
                 WHERE django_comments.content_type_id = %s
                 AND django_comments.object_pk = idea_idea.id
             """,
@@ -72,7 +72,7 @@ class IdeaManager(models.Manager):
                            END)
                 FROM idea_idea a
                 LEFT OUTER JOIN django_comments b ON a.id = b.object_pk
-                LEFT OUTER JOIN idea_vote c ON a.id = c.idea_id 
+                LEFT OUTER JOIN idea_vote c ON a.id = c.idea_id
                 WHERE a.id = idea_idea.id
             """,
             #   Don't use annotate() as it conflicts with extra()
@@ -149,6 +149,7 @@ VOTE_CHOICES = ((u'+1', UP_VOTE),)
 class Vote(UserTrackable):
     vote = models.SmallIntegerField(choices=VOTE_CHOICES, default=1)
     idea = models.ForeignKey(Idea)
+
 
 class Config(models.Model):
     key = models.CharField(max_length=50, unique=True)
