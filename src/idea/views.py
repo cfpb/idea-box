@@ -271,6 +271,8 @@ def add_idea(request, banner_id=None):
                     form.fields["banner"].queryset = get_current_banners()
                 else:
                     form.fields.pop('banner')
+                    form.fields.pop('challenge-checkbox')
+                form.set_error_css()
                 return _render(request, 'idea/add.html', {'form': form, })
         else:
             return HttpResponse('Idea is archived', status=403)
@@ -280,6 +282,7 @@ def add_idea(request, banner_id=None):
         if current_banners.count() == 0:
             form = IdeaForm(initial={'title': idea_title})
             form.fields.pop('banner')
+            form.fields.pop('challenge-checkbox')
         else:
             if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
                 banner = Banner.objects.get(id=banner_id)

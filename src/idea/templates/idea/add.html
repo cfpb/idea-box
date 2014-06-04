@@ -17,28 +17,39 @@
             </div>
             <div class="project-add">
                 <h1>Share your idea</h1>
-                <p class="instructions">Please complete all form fields to submit an idea.</p>
                 <a id="activate-help" class="visuallyhidden">Toggle instructions for each field.</a>
                 <form action="{% url 'idea:add_idea' %}" method="post">
                     {% csrf_token %}
                     {% for field in form %}
-                        <div class="input_right {{ field.html_name }}">
-                            <label for="{{ field.auto_id }}">
-                                {{ field.label }}
-                                {% if field.help_text %}
-                                    <span class="help_text">
-                                        <i class="icon-question-sign" title="{{ field.help_text }}"></i>
-                                        <span>{{ field.help_text }}</span>
-                                    </span>
+                        <div class="{{ field.html_name }}">
+                            {% if 'challenge-checkbox' == field.html_name %}
+                                {{ field }}
+                                <label for="{{ field.auto_id }}">
+                                    {{ field.label }}
+                                </label>
+                            {% elif 'banner' == field.html_name %}
+                                {{ field }}
+                            {% else %}
+                                {% if 'banner' != field.html_name %}
+                                    <label for="{{ field.auto_id }}">
+                                        {{ field.label }}
+                                    </label>
                                 {% endif %}
-                            </label>
-                           {{ field }}
-                           {{ field.errors }}
+                            {{ field }}
+                            <div class="form-field-footer">
+                                {% if field.help_text %}
+                                    <div class="help_text">
+                                        <span>{{ field.help_text }}</span>
+                                    </div>
+                                {% endif %}
+                                {{ field.errors }}
+                            </div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                     <span id="submit-buttons">
                         <input type="submit" class="btn" id="add-idea-btn" value="Submit this idea">
-                        <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="Cancel">
+                        <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="I changed my mind">
                     </span>
                 </form>
             </div><!-- /project-add -->
@@ -47,10 +58,15 @@
 {% endblock %}
 
 {% block "js_ready" %}
-    $(".icon-question-sign").tooltip({
-        delay: 100,
-        left: -16
+    $('#id_challenge-checkbox').change(function(){
+        if($(this).is(":checked")) {
+            $('#id_banner').addClass("active");
+        } else {
+            $('#id_banner').prop('selectedIndex',0);
+            $('#id_banner').removeClass("active");
+        }
     });
+
     $("#activate-help").click(function() {
         $(".help_text span").toggle();
     });
@@ -83,6 +99,32 @@
             });
         }
     });
+
+    //  Show help_text, hide error text when input box is focused
+    function field_focus(field) {
+        field.next().children('.errorlist').css("visibility", "hidden");
+        field.next().children('.help_text').css("visibility", "visible");
+        field.removeClass("input-error").removeClass("populated").addClass("input-active")
+    };
+    function field_blur(field) {
+        field.next().children('.help_text').css("visibility", "hidden");
+        field.removeClass("input-active")
+    }
+    $('.project-add').find(".form-control")
+        .focus(function(){
+            field_focus($(this));
+        })
+        .blur(function(){
+            field_blur($(this));
+    });
+    $('.project-add').find(".selectize-input").children("input")
+        .focus(function(){
+            field_focus($('.selectize-control'));
+        })
+        .blur(function(){
+            field_blur($('.selectize-control'));
+    });
+
 {% endblock %}
 
 {% block "js_scripts" %}

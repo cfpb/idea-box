@@ -16,6 +16,34 @@ class IdeaForm(forms.ModelForm):
         super(IdeaForm, self).__init__(*args, **kwargs)
         self.fields['banner'].empty_label = "No challenge"
 
+        self.fields['title'].label = "What is your idea?"
+        self.fields['banner'].label = None
+        self.fields['summary'].label = "Pitch your idea"
+        self.fields['tags'].label = "Tag it with keywords"
+        self.fields['text'].label = "Give us the details"
+
+        self.fields['challenge-checkbox'] = forms.BooleanField(
+            required=False,
+            label = "My idea is part of a Challenge")
+
+        for field in self.fields:
+            form_classes = "form-control"
+            if field == "banner" and 'challenge-checkbox' in self.data.keys() \
+                    and self.data['challenge-checkbox'] == 'on':
+                form_classes += " active"
+            if field in self.data.keys() and self.data[field]:
+                form_classes += " populated"
+            self.fields[field].widget.attrs["class"]  = form_classes
+                      
+
+        self.fields.keyOrder = [
+            'title',
+            'challenge-checkbox',
+            'banner',
+            'summary',
+            'tags',
+            'text']
+
     def save(self, commit=True):
         instance = super(IdeaForm, self).save(commit=False)
         # add tags separately
@@ -29,6 +57,15 @@ class IdeaForm(forms.ModelForm):
             instance.tags.add(*tags)
         return instance
 
+    def set_error_css(self):
+        for field in self.fields:
+            classes_set = set(self.fields[field].widget.attrs["class"].split())
+            if field in self.errors.keys():
+                classes_set.add("input-error")
+            else:
+                classes_set.discard("input-error")
+            self.fields[field].widget.attrs["class"] = " ".join(classes_set)
+                
     def clean_tags(self):
         """ Force tags to lowercase, since tags are case-sensitive otherwise. """
 
