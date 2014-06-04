@@ -30,20 +30,18 @@
                             {% elif 'banner' == field.html_name %}
                                 {{ field }}
                             {% else %}
-                                {% if 'banner' != field.html_name %}
-                                    <label for="{{ field.auto_id }}">
-                                        {{ field.label }}
-                                    </label>
-                                {% endif %}
-                            {{ field }}
-                            <div class="form-field-footer">
-                                {% if field.help_text %}
-                                    <div class="help_text">
-                                        <span>{{ field.help_text }}</span>
-                                    </div>
-                                {% endif %}
-                                {{ field.errors }}
-                            </div>
+                                <label for="{{ field.auto_id }}">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                                <div class="form-field-footer">
+                                    {% if field.help_text %}
+                                        <div class="help_text">
+                                            <span>{{ field.help_text }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {{ field.errors }}
+                                </div>
                             {% endif %}
                         </div>
                     {% endfor %}
