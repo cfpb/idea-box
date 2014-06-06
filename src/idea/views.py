@@ -119,11 +119,8 @@ def list(request, sort_or_state=None):
     banner = get_banner()
     try:
         about_text = Config.objects.get(
-            key="list_about").value.replace(
-            '<script>',
-            '').replace(
-            '</script>',
-            '')
+            key="list_about").value.replace('<script>','')\
+                                   .replace('</script>','')
     except Config.DoesNotExist:
         about_text = ""
 
