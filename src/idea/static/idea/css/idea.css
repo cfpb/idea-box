@@ -43,6 +43,42 @@
     overflow-x:hidden;
 }
 
+input[type="text"],
+textarea[type="text"] {
+    padding: 0.25em;
+    border: 1px solid #75787B; /* Gray */
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+    margin: 0;
+    vertical-align: top;
+}
+
+.selectize-input.input-active,
+input:focus,
+input.focus,
+textarea:focus,
+textarea.focus {
+    border: 1px solid #0072CE; /* Pacific */
+    border-radius: 0;
+    outline: 1px solid #0072CE; /* Pacific */
+    outline-offset: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+.selectize-control.input-error .selectize-input,
+input.input-error,
+textarea.input-error {
+    border: 1px solid #D12124; /* Red Orange */
+    outline: 1px solid #D12124; /* Red Orange */
+}
+
+input.populated,
+textarea.populated {
+    color: #888;
+}
+
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 .ic a:hover,
 .ic a:active {
@@ -330,18 +366,9 @@ ul.section-nav li.active a {
 .project-add {
     margin: 1.5em 0 0;
 }
-.project-add h1 {
-    display: inline-block;
-    margin-right: 0.25em;
-}
-.helptext,
-.instructions {
-    color: #75787B;
-    font-family: "Avenir Next Italic", Arial, sans-serif;
-    font-style: italic;
-}
-.project-add p {
-    display: inline-block;
+.project-add form > div {
+    margin: 1em 0;
+    position: relative;
 }
 .project-add form textarea {
     height: 6.25em;
@@ -350,39 +377,69 @@ ul.section-nav li.active a {
     margin: 0.625em 0;
 }
 .project-add label {
-    display: inline-block;
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-    padding: 0.625em 0 0.625em;
+    display: block;
     position: relative;
-    width: 22.85714%;
-    margin-right: 2.5%;
-    text-align: right;
 }
 .project-add input#id_title,
-.project-add input#id_text,
+.project-add select#id_banner,
+.project-add textarea#id_text,
 .project-add input#id_summary,
-.project-add input#id_tags {
+.project-add input#id_tags,
+.selectize-control {
     width: 48.57142%;
+    display: block;
+    margin: 0;
+}
+.project-add .banner {
+    margin-top: 0;
+}
+.project-add .challenge-checkbox {
+    margin-bottom: 0;
+}
+.project-add .challenge-checkbox label {
     display: inline-block;
-    margin: 0.625em 0;
+    vertical-align: middle;
+    margin-left: .5em;
 }
-.project-add .selectize-control {
-    width: 49.366%; /* 48.57142% + padding to match other elements */
-    margin: 0.625em 0;
-    vertical-align: top;
+.project-add .challenge-checkbox input {
     display: inline-block;
+    vertical-align: middle;
 }
-.project-add .helptext {
-    margin-left: 25.75%;
+.project-add select#id_banner {
+    visibility: hidden;
+    margin-left: 1.5em;
 }
-.project-add .errorlist {
-    margin-left: 5px;
-    width: 22.85714%;
+.project-add select#id_banner.active {
+    visibility: visible;
+}
+.form-field-footer {
+    position: relative;
+}
+.project-add .help_text {
+    margin: 0;
+    font-style: italic;
+    width: 48.57142%;
+    font-size: 0.875em;
+    visibility: hidden;
+    display: block;
+}
+.errorlist {
+    list-style: none;
+    padding: 0;
+}
+.errorlist li {
+    position: absolute;
+    top: 0;
+    left: 2px;
+    margin: 0;
+    padding: 0;
 }
 .project-add span#submit-buttons {
     display: block;
     margin-top: 1.375em;
-    margin-left: 25.75%;
+}
+.project-add span#submit-buttons input {
+    vertical-align: middle;
 }
 .project-add #add-idea-btn,
 .project-add .secondary-action {
@@ -611,6 +668,7 @@ section.main-content hr {
     -o-transition: border linear .2s,box-shadow linear .2s;
     transition: border linear .2s,box-shadow linear .2s;
     border-radius: 0;
+    display: block;
 }
 .multi.selectize-control .selectize-input [data-value] {
     background: #FFCE8D;

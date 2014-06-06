@@ -26,8 +26,8 @@ class UserTrackable(models.Model):
 
 class Banner(models.Model):
 
-    """ The banner text at the beginning of IdeaBox pages, asking the question. 
-    This can be used to run informal campaigns soliciting ideas around specific 
+    """ The banner text at the beginning of IdeaBox pages, asking the question.
+    This can be used to run informal campaigns soliciting ideas around specific
     topics. """
 
     title = models.CharField(max_length=50)
@@ -61,7 +61,7 @@ class IdeaManager(models.Manager):
         idea_type = ContentType.objects.get(app_label="idea", model="idea")
         return self.select_related().extra(select={
             'comment_count': """
-                SELECT count(*) FROM django_comments 
+                SELECT count(*) FROM django_comments
                 WHERE django_comments.content_type_id = %s
                 AND django_comments.object_pk = idea_idea.id
             """,
@@ -72,7 +72,7 @@ class IdeaManager(models.Manager):
                            END)
                 FROM idea_idea a
                 LEFT OUTER JOIN django_comments b ON a.id = b.object_pk
-                LEFT OUTER JOIN idea_vote c ON a.id = c.idea_id 
+                LEFT OUTER JOIN idea_vote c ON a.id = c.idea_id
                 WHERE a.id = idea_idea.id
             """,
             #   Don't use annotate() as it conflicts with extra()
@@ -84,20 +84,23 @@ class IdeaManager(models.Manager):
 
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False,
-                             help_text="Give your idea a descriptive name.")
+                             help_text="\
+        Make your idea stand out from the rest with a good title.")
     summary = models.CharField(max_length=200, help_text="\
-        The first 200 characters display on the main page.")
+        Get people's attention and instant support! Only the first 200 \
+        characters make it onto the IdeaBox landing page.")
     text = models.TextField(max_length=2000, null=False,
                             verbose_name="detail", help_text="\
-        Please add more information to explain your idea.")
+        Describe your reasoning to garner deper support. Include links to any \
+        research, pages, or even other ideas.")
     banner = models.ForeignKey(
-        Banner, verbose_name="challenge", blank=True, null=True, help_text="\
-        Select if your idea relates to a particular challenge.")
+        Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
 
     tags = TaggableManager(blank=False, help_text="\
-        You must add at least 1 tag.  We suggest the office to which the \
-        idea relates.")
+        Make it easy for supporters to find your idea.  See how many other \
+        ideas have the same tags for potential collaboration or a little \
+        healthy competition.")
     voters = models.ManyToManyField(User, through="Vote", null=True,
                                     related_name="idea_vote_creator")
 
@@ -146,6 +149,7 @@ VOTE_CHOICES = ((u'+1', UP_VOTE),)
 class Vote(UserTrackable):
     vote = models.SmallIntegerField(choices=VOTE_CHOICES, default=1)
     idea = models.ForeignKey(Idea)
+
 
 class Config(models.Model):
     key = models.CharField(max_length=50, unique=True)

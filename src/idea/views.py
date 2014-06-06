@@ -36,7 +36,8 @@ def _render(req, template_name, context={}):
 
 
 def get_current_banners():
-    return Banner.objects.filter(start_date__lte=date.today()).exclude(end_date__lt=date.today())
+    return Banner.objects.filter(start_date__lte=date.today()).exclude(
+        end_date__lt=date.today())
 
 
 def get_banner():
@@ -117,14 +118,16 @@ def list(request, sort_or_state=None):
 
     banner = get_banner()
     try:
-        about_text = Config.objects.get(key="list_about").value.replace('<script>', '').replace('</script>', '')
+        about_text = Config.objects.get(
+            key="list_about").value.replace('<script>','')\
+                                   .replace('</script>','')
     except Config.DoesNotExist:
         about_text = ""
 
     return _render(request, 'idea/list.html', {
         'sort_or_state': sort_or_state,
-        'ideas':    page,
-        'tags':     tags,  # list of popular tags
+        'ideas': page,
+        'tags': tags,  # list of popular tags
         'banner': banner,
         'about_text': about_text,
     })
@@ -226,8 +229,8 @@ def detail(request, idea_id):
     tags = idea.tags.extra(select={
         'tag_count': """
             SELECT COUNT(*) from taggit_taggeditem tt
-            WHERE tt.tag_id = taggit_tag.id 
-            AND content_type_id = %s 
+            WHERE tt.tag_id = taggit_tag.id
+            AND content_type_id = %s
         """
     }, select_params=[idea_type.id]).order_by('name')
 
@@ -253,11 +256,13 @@ def detail(request, idea_id):
 @login_required
 def add_idea(request, banner_id=None):
     if request.method == 'POST':
-        matching_ideas = Idea.objects.filter(creator=request.user, title=request.POST.get('title',''))
+        matching_ideas = Idea.objects.filter(
+            creator=request.user,
+            title=request.POST.get('title', ''))
         if matching_ideas.count() > 0:
             # user already submitted this idea
             return HttpResponseRedirect(reverse('idea:idea_detail',
-                                                 args=(matching_ideas[0].id,)))
+                                                args=(matching_ideas[0].id,)))
         idea = Idea(creator=request.user, state=state_helper.get_first_state())
         if idea.state.name == 'Active':
             form = IdeaForm(request.POST, instance=idea)
@@ -265,12 +270,14 @@ def add_idea(request, banner_id=None):
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
                 return _render(request, 'idea/add_success.html',
-                               {'idea': new_idea,})
+                               {'idea': new_idea, })
             else:
                 if 'banner' in request.POST:
                     form.fields["banner"].queryset = get_current_banners()
                 else:
                     form.fields.pop('banner')
+                    form.fields.pop('challenge-checkbox')
+                form.set_error_css()
                 return _render(request, 'idea/add.html', {'form': form, })
         else:
             return HttpResponse('Idea is archived', status=403)
@@ -280,6 +287,7 @@ def add_idea(request, banner_id=None):
         if current_banners.count() == 0:
             form = IdeaForm(initial={'title': idea_title})
             form.fields.pop('banner')
+            form.fields.pop('challenge-checkbox')
         else:
             if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
                 banner = Banner.objects.get(id=banner_id)
@@ -348,8 +356,8 @@ def banner_detail(request, banner_id):
                                           tag_slugs)
 
     return _render(request, 'idea/banner_detail.html', {
-        'ideas':    page,
-        'tags':     tags,  # list of tags associated with banner ideas
+        'ideas': page,
+        'tags': tags,  # list of tags associated with banner ideas
         'banner': banner,
         'is_current_banner': is_current_banner,
     })
