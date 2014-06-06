@@ -15,7 +15,7 @@ class IdeaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(IdeaForm, self).__init__(*args, **kwargs)
-        self.fields['banner'].empty_label = "No challenge"
+        self.fields['banner'].empty_label = "Select"
 
         self.fields['title'].label = "What is your idea?"
         self.fields['banner'].label = None
