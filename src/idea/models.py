@@ -86,7 +86,7 @@ class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False,
                              help_text="\
         Make your idea stand out from the rest with a good title.")
-    summary = models.CharField(max_length=200, help_text="\
+    summary = models.TextField(max_length=200, help_text="\
         Get people's attention and instant support! Only the first 200 \
         characters make it onto the IdeaBox landing page.")
     text = models.TextField(max_length=2000, null=False,
