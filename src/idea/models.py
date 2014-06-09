@@ -91,8 +91,8 @@ class Idea(UserTrackable):
         characters make it onto the IdeaBox landing page.")
     text = models.TextField(max_length=2000, null=False,
                             verbose_name="detail", help_text="\
-        Describe your reasoning to garner deper support. Include links to any \
-        research, pages, or even other ideas.")
+        Describe your reasoning to garner deeper support. Include links to \
+        any research, pages, or even other ideas.")
     banner = models.ForeignKey(
         Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
