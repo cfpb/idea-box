@@ -50,6 +50,12 @@
                             <span class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </span>
                             {% endif %}
                             on {{idea.time|date:"M d, Y "}}
+                            {% if idea.creator == request.user %}
+                                <span class="edit">
+                                    <span class="edit-separator">|</span>
+                                    <a href="{% url "idea:edit_idea" idea.id %}">Edit my Idea</a>
+                                </span>
+                            {% endif %}
                             {% get_comment_list for idea.idea idea.id as comment_list %}
                             <div id="comments" class="comments">                            
                             <div class="comment-total">

@@ -292,6 +292,9 @@ ul.section-nav li.active a {
 .single-idea-entry .idea-entry-content p {
     margin-top: .5em;
 }
+.single-idea-entry .idea-entry-content .edit-separator {
+    padding: 0em .5em;
+}
 .comment-date {
     color: #666;
     font-weight: normal;
