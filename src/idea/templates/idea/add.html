@@ -18,7 +18,7 @@
             <div class="project-add">
                 <h1>Share your idea</h1>
                 <a id="activate-help" class="visuallyhidden">Toggle instructions for each field.</a>
-                <form action="{% url 'idea:add_idea' %}" method="post">
+                <form action="{% block "form-url" %}{% url 'idea:add_idea' %}{% endblock %}" method="post">
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="{{ field.html_name }}">
@@ -46,8 +46,10 @@
                         </div>
                     {% endfor %}
                     <span id="submit-buttons">
+                        {% block "submit-buttons" %}
                         <input type="submit" class="btn" id="add-idea-btn" value="Submit this idea">
                         <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="I changed my mind">
+                        {% endblock %}
                     </span>
                 </form>
             </div><!-- /project-add -->
@@ -56,6 +58,10 @@
 {% endblock %}
 
 {% block "js_ready" %}
+    if ($('#id_challenge-checkbox').is(":checked")) {
+        $('#id_banner').addClass("active");
+    };
+
     $('#id_challenge-checkbox').change(function(){
         if($(this).is(":checked")) {
             $('#id_banner').addClass("active");
