@@ -318,7 +318,7 @@ def edit_idea(request, idea_id):
         form = IdeaForm(request.POST, instance=idea)
         form.fields.pop('tags')
         if form.is_valid():
-            updated_idea = form.save()
+            form.save()
             return HttpResponseRedirect(reverse('idea:idea_detail',
                                                 args=(idea_id,)))
         else:
