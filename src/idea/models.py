@@ -84,23 +84,23 @@ class IdeaManager(models.Manager):
 
 class Idea(UserTrackable):
     title = models.CharField(max_length=50, blank=False, null=False,
-                             help_text="\
-        Make your idea stand out from the rest with a good title.")
-    summary = models.TextField(max_length=200, help_text="\
-        Get people's attention and instant support! Only the first 200 \
-        characters make it onto the IdeaBox landing page.")
+                             help_text="""
+        Make your idea stand out from the rest with a good title.""")
+    summary = models.TextField(max_length=200, help_text="""
+        Get people's attention and instant support! Only the first 200
+        characters make it onto the IdeaBox landing page.""")
     text = models.TextField(max_length=2000, null=False,
-                            verbose_name="detail", help_text="\
-        Describe your reasoning to garner deper support. Include links to any \
-        research, pages, or even other ideas.")
+                            verbose_name="detail", help_text="""
+        Describe your reasoning to garner deeper support. Include links to
+        any research, pages, or even other ideas.""")
     banner = models.ForeignKey(
         Banner, verbose_name="challenge", blank=True, null=True)
     state = models.ForeignKey(State)
 
-    tags = TaggableManager(blank=False, help_text="\
-        Make it easy for supporters to find your idea.  See how many other \
-        ideas have the same tags for potential collaboration or a little \
-        healthy competition.")
+    tags = TaggableManager(blank=False, help_text="""
+        Make it easy for supporters to find your idea.  See how many other
+        ideas have the same tags for potential collaboration or a little
+        healthy competition.""")
     voters = models.ManyToManyField(User, through="Vote", null=True,
                                     related_name="idea_vote_creator")
 
