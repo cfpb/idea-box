@@ -11,6 +11,7 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner, Config
@@ -35,9 +36,13 @@ def _render(req, template_name, context={}):
     return render(req, template_name, context)
 
 
-def get_current_banners():
-    return Banner.objects.filter(start_date__lte=date.today()).exclude(
-        end_date__lt=date.today())
+def get_current_banners(additional_ids_list=None):
+    start_date = Q(start_date__lte=date.today())
+    end_date = Q(end_date__gte=date.today())|Q(end_date__isnull=True)
+    banner_filter = (start_date&end_date)
+    if additional_ids_list:
+        banner_filter = banner_filter|Q(id__in=additional_ids_list)
+    return Banner.objects.filter(banner_filter)
 
 
 def get_banner():
@@ -299,6 +304,51 @@ def add_idea(request, banner_id=None):
             'form': form,
             'similar': [r.object for r in more_like_text(idea_title, Idea)]
         })
+
+
+@login_required
+def edit_idea(request, idea_id):
+    idea = get_object_or_404(Idea, pk=int(idea_id))
+    original_banner = idea.banner
+    if idea.creator != request.user:
+        return HttpResponseRedirect(reverse('idea:idea_detail',
+                                            args=(idea_id,)))
+    
+    if request.method == 'POST':
+        form = IdeaForm(request.POST, instance=idea)
+        form.fields.pop('tags')
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('idea:idea_detail',
+                                                args=(idea_id,)))
+        else:
+            if 'banner' in request.POST:
+                if original_banner:
+                    current_banners = get_current_banners([original_banner.id])
+                else:
+                    current_banners = get_current_banners()
+                form.fields["banner"].queryset = current_banners
+            else:
+                form.fields.pop('banner')
+                form.fields.pop('challenge-checkbox')
+            form.set_error_css()
+            return _render(request, 'idea/edit.html', {'form': form, 'idea': idea })
+    else:
+        form_initial = {}
+        if original_banner:
+            current_banners = get_current_banners([original_banner.id])
+            form_initial["challenge-checkbox"] = "on"
+        else:
+            current_banners = get_current_banners()
+        form = IdeaForm(instance=idea, initial=form_initial)
+        form.fields.pop('tags')
+        if len(current_banners) == 0:
+            form.fields.pop('banner')
+            form.fields.pop('challenge-checkbox')
+        else:
+            form.fields["banner"].queryset = current_banners
+        return _render(request, 'idea/edit.html',
+                       {'form': form, 'idea': idea })
 
 
 @login_required
