@@ -6,6 +6,7 @@ urlpatterns = patterns(
     url(r'^$', 'list'),
     url(r'^add/$', 'add_idea', name='add_idea'),
     url(r'^add/(?P<banner_id>\d+)/$', 'add_idea', name='add_idea'),
+    url(r'^edit/(?P<idea_id>\d+)/$', 'edit_idea', name='edit_idea'),
     url(r'^list/$', 'list', name='idea_list'),
     url(r'^list/(?P<sort_or_state>\w+)/$', 'list', name='idea_list'),
     url(r'^detail/(?P<idea_id>\d+)/$', 'detail', name='idea_detail'),
