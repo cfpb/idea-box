@@ -47,10 +47,7 @@ class IdeaForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(IdeaForm, self).save(commit=False)
         # add tags separately
-        try:
-            tags = self.cleaned_data['tags']
-        except KeyError:
-            tags = []
+        tags = self.cleaned_data.get('tags', [])
         self.cleaned_data['tags'] = []
         instance.save()
         try:
