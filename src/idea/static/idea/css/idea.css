@@ -386,7 +386,7 @@ ul.section-nav li.active a {
 .project-add input#id_title,
 .project-add select#id_banner,
 .project-add textarea#id_text,
-.project-add input#id_summary,
+.project-add textarea#id_summary,
 .project-add input#id_tags,
 .selectize-control {
     width: 48.57142%;
