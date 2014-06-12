@@ -34,6 +34,9 @@
                                     {{ field.label }}
                                 </label>
                                 {{ field }}
+                                <div class="textAreaCountMessage">
+                                    <span class="help-block" id="{{ field.auto_id }}_textcount"></span>
+                                </div>
                                 <div class="form-field-footer">
                                     {% if field.help_text %}
                                         <div class="help_text">
@@ -71,6 +74,22 @@
         }
     });
 
+    var textAreas = document.getElementsByTagName("TEXTAREA");
+    for (var i = 0; i < textAreas.length; i++) {
+        thisArea = document.getElementById(textAreas[i].getAttribute("id"));
+        setCounter(thisArea);
+    };
+    function setCounter(obj) {
+        $(obj).keyup(function(){countText(this);});
+        $(obj).blur(function(){countText(this);}); //handle mouse-only actions
+    };
+    function countText(elem) {
+        textAreaLength = elem.value.length;
+        counterPretty = textAreaLength.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        counterSign = ("id_" + elem.id + "_textcount").toString().slice(3);
+        document.getElementById(counterSign).innerHTML = counterPretty + " characters";
+    };
+
     $("#activate-help").click(function() {
         $(".help_text span").toggle();
     });
@@ -106,12 +125,12 @@
 
     //  Show help_text, hide error text when input box is focused
     function field_focus(field) {
-        field.next().children('.errorlist').css("visibility", "hidden");
-        field.next().children('.help_text').css("visibility", "visible");
+        field.siblings('.form-field-footer').children('.errorlist').css("visibility", "hidden");
+        field.siblings('.form-field-footer').children('.help_text').css("visibility", "visible");
         field.removeClass("input-error").removeClass("populated").addClass("input-active")
     };
     function field_blur(field) {
-        field.next().children('.help_text').css("visibility", "hidden");
+        field.siblings('.form-field-footer').children('.help_text').css("visibility", "hidden");
         field.removeClass("input-active")
     }
     $('.project-add').find(".form-control")

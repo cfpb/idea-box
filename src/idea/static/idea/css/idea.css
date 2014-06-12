@@ -374,10 +374,12 @@ ul.section-nav li.active a {
     position: relative;
 }
 .project-add form textarea {
-    height: 6.25em;
-    width: 48.57142%;
-    display: inline-block;
-    margin: 0.625em 0;
+    height: 5.25em;
+    max-width: 48.57142%;
+    padding-bottom: 1.25em;
+}
+.project-add form textarea#id_text {
+    height: 8.25em;
 }
 .project-add label {
     display: block;
@@ -392,6 +394,20 @@ ul.section-nav li.active a {
     width: 48.57142%;
     display: block;
     margin: 0;
+}
+.project-add .textAreaCountMessage {
+    width: 48.57142%;
+    position: relative;
+}
+.project-add span[id$="textcount"] {
+    font-style: italic;
+    background-color: #FFF;
+    line-height: 1em;
+    font-size: 0.875em;
+    position: absolute;
+    bottom: 2px;
+    right: 0;
+    text-align: right;
 }
 .project-add .banner {
     margin-top: 0;
