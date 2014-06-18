@@ -41,8 +41,8 @@
                     </div><!-- /row -->
                     <div class="row body">
                         <div class="idea-entry-content span9">
-                            <h4 class="summary">Summary</h4><p>{{idea.summary}}</p>
-                            <h4 class="detail">Detail</h4><p>{{idea.text}}</p>
+                            <h4 class="summary">Summary</h4><p>{{idea.summary|urlize|linebreaksbr}}</p>
+                            <h4 class="detail">Detail</h4><p>{{idea.text|urlize|linebreaksbr}}</p>
                             Posted by
                             {% if idea.get_creator_profile %}
                             <span class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></span>
