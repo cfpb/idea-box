@@ -406,7 +406,8 @@ ul.section-nav li.active a {
     font-size: 0.875em;
     position: absolute;
     bottom: 2px;
-    right: 0;
+    right: 0.75em;
+    margin-right: .25em;
     text-align: right;
 }
 .project-add .banner {
