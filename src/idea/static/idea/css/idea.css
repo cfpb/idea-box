@@ -222,6 +222,10 @@ ul.section-nav li.active a {
 .idea-banner {
     font-size: 1.125em;
     display: inline-block;
+    font-family: 'Avenir Next Medium', Arial, sans-serif;
+}
+.idea-banner a {
+    font-family: 'Avenir Next Medium', Arial, sans-serif;
 }
 .idea-description {
     font-family: Georgia, "Times New Roman", serif;
