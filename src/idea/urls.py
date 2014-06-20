@@ -15,4 +15,5 @@ urlpatterns = patterns(
     url(r'^vote/up/$', 'up_vote', name='upvote_idea'),
     url(r'^challenge/(?P<banner_id>\d+)/$',
         'banner_detail', name='banner_detail'),
+    url(r'challenge/list/$', 'banner_list', name='banner_list'),
 )
