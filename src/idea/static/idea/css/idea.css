@@ -354,6 +354,31 @@ ul.section-nav li.active a {
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
 }
+.challenge_view_all a:after {
+    content: "\f054";
+    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+    margin-left: .25em;
+}
+.list_current_challenges {
+     padding-top: 1.5em;
+}
+.list_past_challenges {
+     padding-top: 2.5em;
+}
+.list_current_challenges .current_banners ul {
+    list-style: none;
+    padding-left: 0;
+}
+.list_past_challenges .past_banners ul {
+    list-style: none;
+    padding-left: 0;
+}
+.current_banner_list_item {
+    padding-bottom: 1.0em;
+}
+.past_banner_list_item {
+    padding-bottom:1.0em;
+}
 .voters {
     margin-bottom: 2.5em;
 }
