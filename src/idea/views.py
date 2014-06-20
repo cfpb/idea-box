@@ -42,14 +42,14 @@ def get_current_banners(additional_ids_list=None):
     banner_filter = (start_date&end_date)
     if additional_ids_list:
         banner_filter = banner_filter|Q(id__in=additional_ids_list)
-    return Banner.objects.filter(banner_filter)
+    return Banner.objects.filter(banner_filter).order_by('end_date')
 
 
 def get_banner():
     today = date.today()
     timed_banners = Banner.objects.filter(start_date__lte=today,
                                           end_date__isnull=False,
-                                          end_date__gt=today)
+                                          end_date__gt=today).order_by('end_date')
 
     if timed_banners:
         return timed_banners[0]
@@ -122,6 +122,8 @@ def list(request, sort_or_state=None):
                                           tag_slugs)
 
     banner = get_banner()
+    current_banners = get_current_banners()
+    browse_banners = current_banners[1:current_banners.count()]
     try:
         about_text = Config.objects.get(key="list_about").value
     except Config.DoesNotExist:
@@ -132,9 +134,21 @@ def list(request, sort_or_state=None):
         'ideas': page,
         'tags': tags,  # list of popular tags
         'banner': banner,
+        'browse_banners': browse_banners,
         'about_text': about_text,
     })
 
+@login_required
+def banner_list(request):
+    current_banners = get_current_banners()
+    start_date = Q(start_date__lt=date.today())
+    end_date = Q(end_date__lt=date.today())|Q(end_date__isnull=True)
+    banner_filter = (start_date&end_date)
+    past_banners = Banner.objects.filter(banner_filter).order_by('end_date')
+    return _render(request, 'idea/banner_list.html', {
+        'current_banners': current_banners,
+	'past_banners': past_banners,
+    })
 
 def vote_up(idea, user):
     vote = Vote()
