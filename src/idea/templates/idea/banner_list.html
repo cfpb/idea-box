@@ -1,0 +1,40 @@
+{% extends "idea/idea-base.html" %}
+
+{% block "content" %}
+
+        <div id="content" class="idea-banner-single ic" role="main">
+            <div class="row">
+                <div class="logo span7 section project-title">
+                    <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                </div><!-- /logo -->
+            </div>
+            <div class="row list_current_challenge">
+		<div class="current_challenge_heading">
+		    <h1>Current Challenges</h1>
+            	</div>
+		<div class="current_banners">
+		    <ul>
+      		        {% for banner in current_banners %}
+		        <li class="current_banner">
+		    	    <a href="{% url 'idea:banner_detail' banner.id %}">{{banner.title}}</a>
+		        </li>
+	    	        {% endfor %}
+		    </ul>
+		</div>
+	    </div>
+            <div class="row list_past_challenges">
+		<div class="past_challenges_heading">
+		    <h1>Past Challenges</h1>
+		</div>
+		<div class="past_banners">
+		    <ul>
+			{% for banner in past_banners %}
+			<li class="past_banner">
+			    <a href="{% url 'idea:banner_detail' banner.id %}">{{banner.title}}</a>
+			</li>
+			{% endfor %}
+		    </ul>
+		</div>
+	    </div>
+	</div>
+{% endblock  %}
