@@ -37,6 +37,12 @@
                             <header class="idea-title">
                                 <h1>{{idea.title}}</h1>
                             </header>
+		            {% if idea.banner %}
+                                <span class="idea-banner">
+                                    Challenge:
+                                    <a href="{% url "idea:banner_detail" idea.banner.id %}">{{idea.banner.title}}</a>
+			        </span>
+			    {% endif %}
                         </div><!-- /idea-title-wrap -->
                     </div><!-- /row -->
                     <div class="row body">
