@@ -10,7 +10,7 @@
             </div>
             <div class="row list_current_challenges">
 		<div class="current_challenges_heading">
-		    <h1>Current Challenges</h1>
+		    <h1>Current Challenge{{ current_banners.count|pluralize }}</h1>
             	</div>
 		<div class="current_banners">
 		    <ul>
@@ -18,19 +18,27 @@
 		        <li class="current_banner_list_item">
 		    	    <a href="{% url 'idea:banner_detail' banner.id %}">{{banner.title}}</a>
 		        </li>
+                        {% empty %}
+			<li class="current_banner_list_item">
+                            There are no active challenges
+			</li>
 	    	        {% endfor %}
 		    </ul>
 		</div>
 	    </div>
             <div class="row list_past_challenges">
 		<div class="past_challenges_heading">
-		    <h1>Past Challenges</h1>
+		    <h1>Past Challenge{{ past_banners.count|pluralize }}</h1>
 		</div>
 		<div class="past_banners">
 		    <ul>
 			{% for banner in past_banners %}
 			<li class="past_banner_list_item">
 			    <a href="{% url 'idea:banner_detail' banner.id %}">{{banner.title}}</a>
+			</li>
+                        {% empty %}
+			<li class="past_banner_list_item">
+                            There are no expired challenges
 			</li>
 			{% endfor %}
 		    </ul>

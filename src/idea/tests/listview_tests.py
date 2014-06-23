@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.contrib.auth.models import User
 from django.utils.timezone import get_default_timezone
 from django.contrib.comments.models import Comment
@@ -9,6 +9,16 @@ from idea import models, views
 from idea.tests.utils import mock_req, random_user
 from mock import patch
 import string
+
+def get_relative_date(delta_days=0):
+    return datetime.date.today() + datetime.timedelta(days=delta_days)
+
+def create_banner(title, delta_days=0):
+    banner = models.Banner(title=title, text=title+' Text',
+                           start_date=get_relative_date(-delta_days),
+                           end_date=get_relative_date(delta_days))
+    banner.save()
+    return banner
 
 class ListViewTest(TestCase):
     """
@@ -56,7 +66,7 @@ class ListViewTest(TestCase):
         Verify that the recent sort params works.
         """
         def add_time(kwargs, nonce):
-            kwargs['time'] = datetime(2013, 1, nonce, tzinfo=get_default_timezone())
+            kwargs['time'] = datetime.datetime(2013, 1, nonce, tzinfo=get_default_timezone())
         self._generate_data(paramfn=add_time)
         views.list(mock_req(), sort_or_state='recent')
         self._verify_order(render)
@@ -71,20 +81,20 @@ class ListViewTest(TestCase):
         def add_time(kwargs, nonce):
             # add future timestamp for item 3
             if nonce == 3:
-                kwargs['time'] = datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                kwargs['time'] = datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
         def create_timestamp_event(idea, nonce):
             # add future timestamp for vote for items 0, 2, 4
             if nonce % 2 == 0:
                 models.Vote(creator=idea.creator,
                             idea=idea,
-                            time=datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                            time=datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
                            ).save()
             # add future timestamp for comment for items 1, 5
             elif nonce != 3:
                 Comment(content_type=idea_type, site=site,
                         object_pk=idea.pk, user=idea.creator,
                         comment='Blah',
-                        submit_date=datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                        submit_date=datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
                        ).save()
         self._generate_data(postfn=create_timestamp_event, paramfn=add_time)
         views.list(mock_req(), sort_or_state='trending')
@@ -194,6 +204,48 @@ class ListViewTest(TestCase):
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(1, len(context['ideas']))
+
+    @patch('idea.views.render')
+    def test_current_banner(self, render):
+        """
+        Check that the current banner is populated
+        """
+        views.list(mock_req())
+        context = render.call_args[0][2]
+        self.assertTrue('banner' in context)
+        self.assertIsNone(context['banner'])
+
+        banner = create_banner('AAAA')
+        views.list(mock_req())
+        context = render.call_args[0][2]
+        self.assertTrue('banner' in context)
+        self.assertEqual(context['banner'], banner)
+
+    @patch('idea.views.render')
+    def test_browse_banners(self, render):
+        """
+        Check that the banner list is populated if more than one active banner
+        """
+        views.list(mock_req())
+        context = render.call_args[0][2]
+        self.assertTrue('browse_banners' in context)
+        self.assertIsNone(context['browse_banners'])
+
+        create_banner('AAAA', 3)
+        create_banner('BBBB', 2)
+        create_banner('CCCC', 1)
+        create_banner('DDDD', 6)
+        create_banner('EEEE', 5)
+        create_banner('FFFF', 4)
+        views.list(mock_req())
+        context = render.call_args[0][2]
+        import pdb; pdb.set_trace()
+        self.assertTrue('browse_banners' in context)
+        self.assertEqual(len(context['browse_banners']), 4)
+        self.assertEqual(context['browse_banners'][0].title, 'BBBB')
+        self.assertEqual(context['browse_banners'][1].title, 'AAAA')
+        self.assertEqual(context['browse_banners'][2].title, 'FFFF')
+        self.assertEqual(context['browse_banners'][3].title, 'EEEE')
 
     @patch('idea.views.render')
     def test_tags_exist(self, render):
