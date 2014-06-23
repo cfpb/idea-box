@@ -239,7 +239,6 @@ class ListViewTest(TestCase):
         create_banner('FFFF', 4)
         views.list(mock_req())
         context = render.call_args[0][2]
-        import pdb; pdb.set_trace()
         self.assertTrue('browse_banners' in context)
         self.assertEqual(len(context['browse_banners']), 4)
         self.assertEqual(context['browse_banners'][0].title, 'BBBB')
