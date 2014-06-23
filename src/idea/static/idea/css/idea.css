@@ -332,10 +332,11 @@ ul.section-nav li.active a {
     margin-bottom: 2.5em;
 }
 .sidebar .challenge-banner {
-    margin-bottom: 2.5em;
+    margin-bottom: 1.25em;
     background-color: #DBEDD4;
     padding: 1.25em;
 }
+.sidebar a,
 #challenge-link a {
     border-bottom-width: 1px;
 }
@@ -353,6 +354,12 @@ ul.section-nav li.active a {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
+}
+.banners {
+    margin-bottom: 1.25em;
+}
+.banners .challenge {
+    margin: .5em 0;
 }
 .challenge_view_all a:after {
     content: "\f054";
