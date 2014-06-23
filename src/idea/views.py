@@ -42,24 +42,19 @@ def get_current_banners(additional_ids_list=None):
     banner_filter = (start_date&end_date)
     if additional_ids_list:
         banner_filter = banner_filter|Q(id__in=additional_ids_list)
-    return Banner.objects.filter(banner_filter).order_by('end_date')
+    banners = Banner.objects.filter(banner_filter)
+    # Banners with null end_date should be at the end
+    banners = banners.extra(select={'null_end_date': 'CASE WHEN idea_banner.end_date IS NULL THEN 0 ELSE 1 END'})
+    banners = banners.order_by('-null_end_date', 'end_date')
+    return banners
 
 
 def get_banner():
-    today = date.today()
-    timed_banners = Banner.objects.filter(start_date__lte=today,
-                                          end_date__isnull=False,
-                                          end_date__gt=today).order_by('end_date')
-
-    if timed_banners:
-        return timed_banners[0]
+    banners = get_current_banners()
+    if banners:
+        return banners[0]
     else:
-        indefinite_banners = Banner.objects.filter(start_date__lte=today,
-                                                   end_date__isnull=True)
-        if indefinite_banners:
-            return indefinite_banners[0]
-        else:
-            return None
+        return None
 
 
 @login_required
@@ -121,9 +116,12 @@ def list(request, sort_or_state=None):
                                                   args=(sort_or_state,)),
                                           tag_slugs)
 
-    banner = get_banner()
+    banner = None
+    browse_banners = None
     current_banners = get_current_banners()
-    browse_banners = current_banners[1:current_banners.count()]
+    if current_banners:
+        banner = current_banners[0]
+        browse_banners = current_banners[1:5]
     try:
         about_text = Config.objects.get(key="list_about").value
     except Config.DoesNotExist:
@@ -141,10 +139,7 @@ def list(request, sort_or_state=None):
 @login_required
 def banner_list(request):
     current_banners = get_current_banners()
-    start_date = Q(start_date__lt=date.today())
-    end_date = Q(end_date__lt=date.today())|Q(end_date__isnull=True)
-    banner_filter = (start_date&end_date)
-    past_banners = Banner.objects.filter(banner_filter).order_by('end_date')
+    past_banners = Banner.objects.filter(end_date__lt=date.today()).order_by('end_date')
     return _render(request, 'idea/banner_list.html', {
         'current_banners': current_banners,
 	'past_banners': past_banners,
