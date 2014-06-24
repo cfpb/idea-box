@@ -11,7 +11,11 @@
             <div class="row">
                 <div class="row challenge-info span9">
                     <div class="challenge-banner">
-                        <h3>Current Challenge:</h3> 
+                        {% if is_current_banner %}
+                            <h3>Current Challenge:</h3>
+                        {% else %}
+                            <h3>Expired Challenge:</h3>
+                        {% endif %}
                         <h2>{{banner.title}}</h2>
                     </div>
                     <p class="challenge-entry-content">
