@@ -27,7 +27,7 @@ class AddIdeaTest(TestCase):
         num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
         resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
-        self.assertContains(resp, 'Thanks for sharing your idea')
+        self.assertContains(resp, 'Thanks for sharing your Idea')
         self.assertEquals(models.Idea.objects.all().count(), 1)
 
         num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()

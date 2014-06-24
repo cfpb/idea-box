@@ -57,7 +57,7 @@
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
                                     <span class="idea-more">
-                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read More &#xf054;</a>
+                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more &#xf054;</a>
                                     </span>
                                 </div>
                                 <footer class="idea-footer">
@@ -101,13 +101,13 @@
             </div><!-- /row -->
                 <div class="sidebar left span3">
                     <div class="project-add-idea">
-                        <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
+                        <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                     </div><!-- /project-add-idea -->
                     {% if banner %}
                     <div class="challenge-banner">
                         <h5>Current Challenge:</h5>
                         <h3 class="challenge-description">{{banner.title}}</h3>
-                        <div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}">View Challenge ideas</a></div>
+                        <div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}">View Challenge Ideas</a></div>
                     </div><!-- /challenge-banner -->
                     {% endif %}
 		    <aside class="banners">
@@ -119,7 +119,7 @@
 			    </li>
 			    {% endfor %}
 			    <li>
-				<div class="challenge_view_all"><a  href="{% url 'idea:banner_list' %}">view past challenges &#xf054;</a></div>
+				<div class="challenge_view_all"><a  href="{% url 'idea:banner_list' %}">View past Challenges &#xf054;</a></div>
 			    </li>
 			</ul>
 		    </aside>
