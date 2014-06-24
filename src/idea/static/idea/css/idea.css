@@ -8,6 +8,9 @@
 [class^="icon-"] {
     font-family: FontAwesome;
 }
+.btn, .btn-small, .btn-huge, .btn-mini {
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+}
 @media screen {
     [class*="span"] {
         border: 0px solid rgba(0,0,0,0);
