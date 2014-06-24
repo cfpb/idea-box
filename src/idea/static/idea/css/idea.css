@@ -509,9 +509,6 @@ ul.section-nav li.active a {
 .idea-hero {
     margin: 0 0 0 0;
 }
-.idea-hero a {
-    border-bottom-width: 0;
-}
 .main-content a {
     border-bottom-width: 1px;
 }
