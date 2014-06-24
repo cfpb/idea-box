@@ -22,7 +22,7 @@
                         {{banner.text}}
                     </p>
                     {% if is_current_banner %}
-                    <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}">Submit an idea for this challenge</a></div>
+                    <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}">Submit an Idea for this Challenge</a></div>
                     {% endif %}
                     <div>
                         <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
@@ -61,7 +61,7 @@
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
                                     <span class="idea-more">
-                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read More &#xf054;</a>
+                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more &#xf054;</a>
                                     </span>
                                 </div>
                                 <footer class="idea-footer">
@@ -76,7 +76,7 @@
                 {% else %}
                     <article class="no-results">
                         <div class="row">
-                            <p class="span9">There are no ideas to display.</p>
+                            <p class="span9">There are no Ideas to display.</p>
                         </div><!-- /row -->
                     </article><!-- /no-results -->
                 {% endif %}
@@ -103,7 +103,7 @@
                 </section><!-- /main /main-content -->
                 <div class="sidebar span3">
                     <div class="project-add-idea">
-                        <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
+                        <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                     </div><!-- /project-add-idea -->
                     <aside class="tags">
                         <h3>Browse by Tag:</h3>

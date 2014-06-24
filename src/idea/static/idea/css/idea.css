@@ -111,7 +111,7 @@ textarea.populated {
     line-height: 1.57142857142857em;
 }
 .project-title a:before {
-    content: "\f053\00a0 Back To ";
+    content: "\f053\00a0 Back to ";
     font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
     margin-right: 0;
 }
