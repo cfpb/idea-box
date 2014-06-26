@@ -37,12 +37,18 @@
                             <header class="idea-title">
                                 <h1>{{idea.title}}</h1>
                             </header>
+		            {% if idea.banner %}
+                                <span class="idea-banner">
+                                    Challenge:
+                                    <a href="{% url "idea:banner_detail" idea.banner.id %}">{{idea.banner.title}}</a>
+			        </span>
+			    {% endif %}
                         </div><!-- /idea-title-wrap -->
                     </div><!-- /row -->
                     <div class="row body">
                         <div class="idea-entry-content span9">
-                            <h4 class="summary">Summary</h4><p>{{idea.summary}}</p>
-                            <h4 class="detail">Detail</h4><p>{{idea.text}}</p>
+                            <h4 class="summary">Summary</h4><p>{{idea.summary|urlize|linebreaksbr}}</p>
+                            <h4 class="detail">Detail</h4><p>{{idea.text|urlize|linebreaksbr}}</p>
                             Posted by
                             {% if idea.get_creator_profile %}
                             <span class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></span>
@@ -109,7 +115,7 @@
                         </div><!-- /idea-entry-content -->
                         <div id="sidebar" class="sidebar span3" role="complementary">
                             <aside class="project-add-idea">
-                                <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an idea</a>
+                                <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                             </aside><!-- /project-add-idea -->
                             <aside class="voters">
                                 <h3>Liked by</h3>
