@@ -20,7 +20,12 @@
                         {% if idea.state.name == 'Archive' %}
                             <span class="btn btn-archive">Archived</span>
                         {% elif support %}
-                            <span class="btn btn-voted">Liked</span>
+                            <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                {% csrf_token %}
+                                <input type="hidden" name="idea_id" value="{{idea.id}}"/>
+                                <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
+                                <input type="submit" class="btn btn-voted" value="Liked" id="vote_down"/>
+                            </form>
                         {% else %}
                             <form action="{% url 'idea:upvote_idea' %}" method=POST>
                                 {% csrf_token %}

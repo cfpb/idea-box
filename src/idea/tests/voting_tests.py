@@ -22,10 +22,26 @@ class VotingTests(TestCase):
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(idea.vote_set.all()), 1)
 
+    def test_like_display(self):
+        user = random_user()
+        idea = models.Idea(creator=user, title='We need more meetings', 
+                    text='Seriously - more meetings are productivity++.', state=self.state)
+        idea.save()
+
+        self.client.login(username='test1@example.com', password='1')
+
+        resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(len(idea.vote_set.all()), 1)
+        
+
+
+
     def test_vote_twice(self):
         """
-            Voting twice shouldn't do anything to the vote count (it's
-            idempotent).
+            When a vote exists from a user, the user should see the "Liked" button.
+            When another vote_up function is called, the user should see the "Like" button
+            and the initial vote should be deleted.
         """
         idea = models.Idea(creator=random_user(), title='Transit subsidy to Mars', 
                     text='Aliens need assistance.', state=self.state)
@@ -35,10 +51,19 @@ class VotingTests(TestCase):
         resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(idea.vote_set.all()), 1)
+        
+        resp = self.client.get(reverse('idea:idea_detail', args=(idea.id,)))
+        print resp
+        self.assertContains(resp, 'value="Liked" id="vote_down"', status_code=200, html=False)
 
         resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
-        self.assertEqual(len(idea.vote_set.all()), 1)
+        self.assertEqual(len(idea.vote_set.all()), 0)
+
+        resp = self.client.get(reverse('idea:idea_detail', args=(idea.id,)))
+        print resp
+        self.assertContains(resp, 'value="Like" id="vote_up"', status_code=200, html=False)
+
 
     def test_must_logged_in(self):
         """ 
