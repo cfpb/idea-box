@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils import unittest
@@ -24,13 +24,13 @@ class AddIdeaTest(TestCase):
 
         self.client.login(username='test1@example.com', password='1')
         self.assertEquals(models.Idea.objects.all().count(), 0)
-        num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
+        num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
         resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
         self.assertContains(resp, 'Thanks for sharing your Idea')
         self.assertEquals(models.Idea.objects.all().count(), 1)
 
-        num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
+        num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 1)
 
     def test_duplicate_idea(self):
@@ -49,14 +49,14 @@ class AddIdeaTest(TestCase):
 
         self.client.login(username='test1@example.com', password='1')
         self.assertEquals(models.Idea.objects.all().count(), 0)
-        num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
+        num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
         resp = self.client.post(reverse('idea:add_idea'), {'text':'test text'})
         self.assertEqual(resp.status_code, 200)
         self.assertIn('This field is required.', resp.content)
         self.assertEquals(models.Idea.objects.all().count(), 0)
 
-        num_voters = User.objects.filter(vote__idea__pk=1, vote__vote=1).count()
+        num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
 
     def test_must_be_logged_in(self):
@@ -109,7 +109,7 @@ class AddIdeaTest(TestCase):
         resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
         tagged_items = TaggedItem.objects.filter(content_type__name='idea')
         self.assertEqual(2, tagged_items.count())
-        user = User.objects.get(username='test1@example.com')
+        user = get_user_model().objects.get(username='test1@example.com')
         idea = models.Idea.objects.all()[0]
         for ti in tagged_items:
             self.assertEqual(user, ti.tag_creator)
