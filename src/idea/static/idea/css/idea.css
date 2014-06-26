@@ -493,12 +493,24 @@ ul.section-nav li.active a {
 #work_tag_submit_btn {
     margin-top: .5em;
 }
-span.btn-voted,
-span.btn-voted:hover {
+.btn-voted {
     color: #75787B;
     background-color: #E3E4E5;
     cursor: default;
 }
+
+input.btn-voted:hover {
+    background-color: #919395;
+    color: #fff;
+    cursor: default;
+} 
+
+input.btn-voted:active {
+    background-color: #75787b;
+    color: #fff;
+    cursor: default;
+}
+
 .idea-add .alert {
     color: #d14124;
     display: block;
@@ -653,7 +665,7 @@ section.main-content hr {
     padding: 0;
 }
 
-.idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
+.idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover, .idea-votes .btn-voted:active{
     padding: 0.71428571428571em 0;
     width: 4em;
     font-size: 16px;
