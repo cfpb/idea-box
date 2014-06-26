@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -20,7 +20,7 @@ class DetailViewTest(TestCase):
         """
         Should get a 404 when using a bad idea_id.
         """
-        user = User.objects.create_user('example')
+        user = get_user_model().objects.create_user('example')
         state = models.State.objects.get(name='Active')
         idea = models.Idea(creator=user, title='title', text='text',
                 state=state)
@@ -33,7 +33,7 @@ class DetailViewTest(TestCase):
         """
         The idea passed to the ui should be that identified by the id.
         """
-        user = User.objects.create_user('example')
+        user = get_user_model().objects.create_user('example')
         state = models.State.objects.get(name='Active')
         idea1 = models.Idea(creator=user, title='title', text='text',
                 state=state)
@@ -52,7 +52,7 @@ class DetailViewTest(TestCase):
         """
         The idea passed to the ui should have the correct voters.
         """
-        user = User.objects.create_user('example')
+        user = get_user_model().objects.create_user('example')
         state = models.State.objects.get(name='Active')
         idea = models.Idea(creator=user, title='title', text='text',
                 state=state)
@@ -60,7 +60,7 @@ class DetailViewTest(TestCase):
 
         users = []
         for i in range(5):
-            users.append(User.objects.create_user('example' + str(i)))
+            users.append(get_user_model().objects.create_user('example' + str(i)))
             models.Vote(creator=users[i], idea=idea).save()
 
         views.detail(mock_req(), str(idea.id))

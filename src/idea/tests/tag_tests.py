@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils import unittest
@@ -20,7 +20,7 @@ class TagTest(TestCase):
         Detail page allows for removal of tags created by the current user
         """
         self.client.login(username='test1@example.com', password='1')
-        user1 = User.objects.get(username='test1@example.com')
+        user1 = get_user_model().objects.get(username='test1@example.com')
         idea = models.Idea(creator=user1, title='AAAA', 
                 state = models.State.objects.get(name='Active'))
         idea.save()
@@ -52,7 +52,7 @@ class TagTest(TestCase):
         Detail page does not allow for removal of tags created by a different user
         """
         self.client.login(username='test1@example.com', password='1')
-        user1 = User.objects.get(username='test1@example.com')
+        user1 = get_user_model().objects.get(username='test1@example.com')
         user2 = random_user()
         idea = models.Idea(creator=user1, title='AAAA', 
                 state = models.State.objects.get(name='Active'))

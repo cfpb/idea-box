@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.test.client import RequestFactory
 import random
 import string
 
 def random_user():
-    return User.objects.create_user(
+    return get_user_model().objects.create_user(
             ''.join(random.choice(string.lowercase) for _ in range(12)))
 
 

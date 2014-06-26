@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from idea import models
@@ -24,7 +24,7 @@ class AddIdeaTest(TestCase):
 
     def test_edit_good_idea(self):
         """ Test an normal POST submission to edit an idea. """
-        idea = create_idea(user=User.objects.get(username='test1@example.com'))
+        idea = create_idea(user=get_user_model().objects.get(username='test1@example.com'))
 
         self.client.login(username='test1@example.com', password='1')
         self.assertEquals(models.Idea.objects.all().count(), 1)
@@ -45,7 +45,7 @@ class AddIdeaTest(TestCase):
 
         # ensure editing an idea does not up the vote count
         # vote count is 0 because votes are added in views.add_idea, which is not used in this test
-        num_voters = User.objects.filter(vote__idea__pk=idea.id, vote__vote=1).count()
+        num_voters = get_user_model().objects.filter(vote__idea__pk=idea.id, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
 
         refresh_idea = models.Idea.objects.get(id=idea.id)
@@ -61,7 +61,7 @@ class AddIdeaTest(TestCase):
 
     def test_bad_edit_idea(self):
         """ Test an incomplete POST submission to edit an idea. """
-        idea = create_idea(user=User.objects.get(username='test1@example.com'))
+        idea = create_idea(user=get_user_model().objects.get(username='test1@example.com'))
 
         self.client.login(username='test1@example.com', password='1')
         resp = self.client.post(reverse('idea:edit_idea', args=(idea.id,)), {'text':'new title'})
@@ -75,14 +75,14 @@ class AddIdeaTest(TestCase):
 
     def test_must_be_logged_in(self):
         """ A user must be logged in to edit an idea. """
-        idea = create_idea(user=User.objects.get(username='test1@example.com'))
+        idea = create_idea(user=get_user_model().objects.get(username='test1@example.com'))
         resp = self.client.post(reverse('idea:edit_idea', args=(idea.id,)), {'title':'test title', 'summary':'test summary', 'text':'test text'})
         self.assertEqual(resp.status_code, 302)
         self.assertIn('login', resp['Location'])
 
     def test_edit_ignores_tags(self):
         """ A user must be logged in to create an idea. """
-        idea = create_idea(user=User.objects.get(username='test1@example.com'))
+        idea = create_idea(user=get_user_model().objects.get(username='test1@example.com'))
 
         self.client.login(username='test1@example.com', password='1')
         resp = self.client.post(reverse('idea:edit_idea', args=(idea.id,)), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'sample, newtag'})

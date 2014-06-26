@@ -4,7 +4,7 @@ from django_webtest import WebTest
 from exam.decorators import fixture
 from exam.cases import Exam
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
 class SmokeTest(Exam, WebTest):
@@ -13,7 +13,7 @@ class SmokeTest(Exam, WebTest):
 
     @fixture
     def user(self):
-        user = User.objects.get(username="test1@example.com")
+        user = get_user_model().objects.get(username="test1@example.com")
         return user
 
     def get(self, url):
