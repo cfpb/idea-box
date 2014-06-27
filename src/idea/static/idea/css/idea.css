@@ -8,6 +8,9 @@
 [class^="icon-"] {
     font-family: FontAwesome;
 }
+.btn, .btn-small, .btn-huge, .btn-mini {
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+}
 @media screen {
     [class*="span"] {
         border: 0px solid rgba(0,0,0,0);
@@ -111,7 +114,7 @@ textarea.populated {
     line-height: 1.57142857142857em;
 }
 .project-title a:before {
-    content: "\f053\00a0 Back To ";
+    content: "\f053\00a0 Back to ";
     font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
     margin-right: 0;
 }
@@ -219,6 +222,14 @@ ul.section-nav li.active a {
 .idea-title {
     padding-right: 1.875em;
 }
+.idea-banner {
+    font-size: 1.125em;
+    display: inline-block;
+    font-family: 'Avenir Next Medium', Arial, sans-serif;
+}
+.idea-banner a {
+    font-family: 'Avenir Next Medium', Arial, sans-serif;
+}
 .idea-description {
     font-family: Georgia, "Times New Roman", serif;
     margin: 1em 0;
@@ -324,10 +335,11 @@ ul.section-nav li.active a {
     margin-bottom: 2.5em;
 }
 .sidebar .challenge-banner {
-    margin-bottom: 2.5em;
+    margin-bottom: 1.25em;
     background-color: #DBEDD4;
     padding: 1.25em;
 }
+.sidebar a,
 #challenge-link a {
     border-bottom-width: 1px;
 }
@@ -345,6 +357,37 @@ ul.section-nav li.active a {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
+}
+.banners {
+    margin-bottom: 1.25em;
+}
+.banners .challenge {
+    margin: .5em 0;
+}
+.challenge_view_all a:after {
+    content: "\f054";
+    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+    margin-left: .25em;
+}
+.list_current_challenges {
+     padding-top: 1.5em;
+}
+.list_past_challenges {
+     padding-top: 2.5em;
+}
+.list_current_challenges .current_banners ul {
+    list-style: none;
+    padding-left: 0;
+}
+.list_past_challenges .past_banners ul {
+    list-style: none;
+    padding-left: 0;
+}
+.current_banner_list_item {
+    padding-bottom: 1.0em;
+}
+.past_banner_list_item {
+    padding-bottom:1.0em;
 }
 .voters {
     margin-bottom: 2.5em;
@@ -374,10 +417,12 @@ ul.section-nav li.active a {
     position: relative;
 }
 .project-add form textarea {
-    height: 6.25em;
-    width: 48.57142%;
-    display: inline-block;
-    margin: 0.625em 0;
+    height: 5.25em;
+    max-width: 48.57142%;
+    padding-bottom: 1.25em;
+}
+.project-add form textarea#id_text {
+    height: 8.25em;
 }
 .project-add label {
     display: block;
@@ -392,6 +437,21 @@ ul.section-nav li.active a {
     width: 48.57142%;
     display: block;
     margin: 0;
+}
+.project-add .textAreaCountMessage {
+    width: 48.57142%;
+    position: relative;
+}
+.project-add span[id$="textcount"] {
+    font-style: italic;
+    background-color: #FFF;
+    line-height: 1em;
+    font-size: 0.875em;
+    position: absolute;
+    bottom: 2px;
+    right: 0.75em;
+    margin-right: .25em;
+    text-align: right;
 }
 .project-add .banner {
     margin-top: 0;
@@ -452,9 +512,6 @@ ul.section-nav li.active a {
 .idea-hero {
     margin: 0 0 0 0;
 }
-.idea-hero a {
-    border-bottom-width: 0;
-}
 .main-content a {
     border-bottom-width: 1px;
 }
@@ -493,6 +550,7 @@ ul.section-nav li.active a {
 #work_tag_submit_btn {
     margin-top: .5em;
 }
+
 .btn-voted {
     color: #75787B;
     background-color: #E3E4E5;
@@ -501,6 +559,19 @@ ul.section-nav li.active a {
 .btn-voted:focus{
     outline: none;
 
+}
+
+input.btn-voted:hover {
+    background-color: #919395;
+    color: #fff;
+    cursor: default;
+} 
+
+input.btn-voted:active, input.btn-voted:focus {
+    background-color: #75787b;
+    color: #fff;
+    cursor: default;
+    outline-width: 0;
 }
 
 input.btn,
@@ -532,35 +603,6 @@ input.btn:visited {
   font-weight: normal !important;
 }
 
-.btn + .btn {
-  margin-left: 0.42857143em;
-}
-button.btn::-moz-focus-inner,
-input.btn::-moz-focus-inner {
-  border: 0;
-}
-.lt-ie8 {
-  background: url(null) fixed no-repeat;
-}
-.lt-ie8 button.btn,
-.lt-ie8 input.btn {
-  overflow: visible;
-  padding-top: 0.51428571em;
-  padding-bottom: 0.51428571em;
-}
-
-input.btn-voted:hover {
-    background-color: #919395;
-    color: #fff;
-    cursor: default;
-} 
-
-input.btn-voted:active, input.btn-voted:focus {
-    background-color: #75787b;
-    color: #fff;
-    cursor: default;
-    outline-width: 0;
-}
 
 .idea-add .alert {
     color: #d14124;
