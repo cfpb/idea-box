@@ -26,7 +26,8 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
         
-        voter = get_user_model().objects.get(username='test1@example.com')
+        voter = random_user()
+        self.assertNotEqual(user, voter)
         vote = models.Vote()
         vote.idea = idea
         vote.creator = voter
@@ -42,8 +43,8 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
         
-        commenter = get_user_model().objects.get(username='test1@example.com')
-
+        commenter = random_user()
+        self.assertNotEqual(user, commenter)
         comment = Comment()
         comment.user = commenter
         comment.content_object = idea
