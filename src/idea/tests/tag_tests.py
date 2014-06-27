@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.utils import unittest
 from django.test.client import RequestFactory
 from idea import models, views
-from idea.tests.utils import mock_req, random_user
+from idea.tests.utils import random_user, login
 try:
     from core.taggit.utils import add_tags
     COLLAB_TAGS = True;
@@ -19,8 +19,7 @@ class TagTest(TestCase):
         """
         Detail page allows for removal of tags created by the current user
         """
-        self.client.login(username='test1@example.com', password='1')
-        user1 = get_user_model().objects.get(username='test1@example.com')
+        user1 = login(self)
         idea = models.Idea(creator=user1, title='AAAA', 
                 state = models.State.objects.get(name='Active'))
         idea.save()
@@ -35,7 +34,7 @@ class TagTest(TestCase):
         """
         Detail page does not allow for removal of tags created by a different user
         """
-        self.client.login(username='test1@example.com', password='1')
+        login(self)
         user1 = random_user()
         idea = models.Idea(creator=user1, title='AAAA', 
                 state = models.State.objects.get(name='Active'))
@@ -51,8 +50,7 @@ class TagTest(TestCase):
         """
         Detail page does not allow for removal of tags created by a different user
         """
-        self.client.login(username='test1@example.com', password='1')
-        user1 = get_user_model().objects.get(username='test1@example.com')
+        user1 = login(self)
         user2 = random_user()
         idea = models.Idea(creator=user1, title='AAAA', 
                 state = models.State.objects.get(name='Active'))

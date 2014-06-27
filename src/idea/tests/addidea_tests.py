@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.utils import unittest
 from haystack import connections
 from idea import models, views
-from idea.tests.utils import mock_req, random_user
+from idea.tests.utils import mock_req, random_user, login
 from mock import patch
 from datetime import date, timedelta
 from idea.forms import IdeaForm
@@ -17,12 +17,13 @@ except ImportError:
     COLLAB_TAGS = False;
 
 class AddIdeaTest(TestCase):
+    # core-test-fixtures required for integration with Collab
     fixtures = ['state', 'core-test-fixtures']
 
     def test_good_idea(self):
         """ Test an normal POST submission to add an idea. """
 
-        self.client.login(username='test1@example.com', password='1')
+        login(self)
         self.assertEquals(models.Idea.objects.all().count(), 0)
         num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
@@ -35,7 +36,7 @@ class AddIdeaTest(TestCase):
 
     def test_duplicate_idea(self):
         """ Test an duplicate POST submission to add an idea. """
-        self.client.login(username='test1@example.com', password='1')
+        login(self)
         self.assertEquals(models.Idea.objects.all().count(), 0)
         resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
         self.assertEquals(models.Idea.objects.all().count(), 1)
@@ -47,7 +48,7 @@ class AddIdeaTest(TestCase):
     def test_bad_idea(self):
         """ Test an incomplete POST submission to add an idea. """
 
-        self.client.login(username='test1@example.com', password='1')
+        login(self)
         self.assertEquals(models.Idea.objects.all().count(), 0)
         num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
         self.assertEqual(num_voters, 0)
@@ -104,12 +105,11 @@ class AddIdeaTest(TestCase):
     def test_tagged_item_creator(self):
         """ Test tag fields from a normal POST submission to add an idea. """
 
-        self.client.login(username='test1@example.com', password='1')
+        user = login(self)
         self.assertEquals(models.Idea.objects.all().count(), 0)
         resp = self.client.post(reverse('idea:add_idea'), {'title':'test title', 'summary':'test summary', 'text':'test text', 'tags':'test, tags'})
         tagged_items = TaggedItem.objects.filter(content_type__name='idea')
         self.assertEqual(2, tagged_items.count())
-        user = get_user_model().objects.get(username='test1@example.com')
         idea = models.Idea.objects.all()[0]
         for ti in tagged_items:
             self.assertEqual(user, ti.tag_creator)

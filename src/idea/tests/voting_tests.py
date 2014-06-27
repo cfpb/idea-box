@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from idea import models
-from idea.tests.utils import random_user
+from idea.tests.utils import random_user, login
 
 
 class VotingTests(TestCase):
@@ -16,7 +16,7 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
 
-        self.client.login(username='test1@example.com', password='1')
+        login(self)
 
         resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
@@ -45,7 +45,7 @@ class VotingTests(TestCase):
         idea.save()
 
         #Login and create a vote
-        self.client.login(username='test1@example.com', password='1')
+        login(self)
         resp = self.client.post(reverse('idea:upvote_idea'), {'idea_id':idea.id, 'next':reverse('idea:idea_detail', args=(idea.id,))})
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(len(idea.vote_set.all()), 1)
