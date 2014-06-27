@@ -38,19 +38,16 @@
                                 <div class="action">
                                 {% if idea.state.name == 'Archive' %}
                                     <span class="btn-archive">Archived</span>
-                                {% elif request.user in idea.voters.all %}
-                                    <form action="{% url 'idea:upvote_idea' %}" method=POST>
-                                        {% csrf_token %}
-                                        <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                        <input type="hidden" name="next" value="{% url 'idea:idea_list' sort_or_state %}"/>
-                                        <input type="submit" class="btn btn-voted" value="Liked" id="vote_up"/>
-                                    </form>
                                 {% else %}
-                                    <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                        <form action="{% url 'idea:upvote_idea' %}" method=POST>
                                         {% csrf_token %}
                                         <input type="hidden" name="idea_id" value="{{idea.id}}"/>
                                         <input type="hidden" name="next" value="{% url 'idea:idea_list' sort_or_state %}"/>
-                                        <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                        {% if request.user in idea.voters.all%}
+                                            <input type="submit" class="btn btn-voted" value="Liked" id="vote_up"/>
+                                        {% else %}
+                                            <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                        {% endif %}
                                     </form>
                                 {% endif %}
                                 </div>
