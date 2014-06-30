@@ -59,7 +59,7 @@
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
                                     <span class="idea-more">
-                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more &#xf054;</a>
+                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more </a>
                                     </span>
                                 </div>
                                 <footer class="idea-footer">
@@ -121,7 +121,7 @@
 			    </li>
 			    {% endfor %}
 			    <li>
-				<div class="challenge_view_all"><a  href="{% url 'idea:banner_list' %}">View past Challenges &#xf054;</a></div>
+				<div class="challenge_view_all"><a  href="{% url 'idea:banner_list' %}">View past Challenges</a></div>
 			    </li>
 			</ul>
 		    </aside>
