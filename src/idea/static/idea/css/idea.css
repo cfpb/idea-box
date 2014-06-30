@@ -1,7 +1,11 @@
-/* ==========================================================================
+ /* ==========================================================================
    Main
    ========================================================================== */
 /* Base */
+i {
+    border-bottom: none;
+}
+
 .ic * {
     font-family: "Avenir Next", Arial, sans-serif;
 }
@@ -107,16 +111,26 @@ textarea.populated {
 }
 .project-title {
     margin-top: 0;
+    position: relative;
 }
 .project-title a {
     color: #0072CE;
+    border-bottom: 1px dotted;
+    line-height: 1em;
     font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
-    line-height: 1.57142857142857em;
+    display: inline-block;
+    margin-left: 1em;
 }
-.project-title a:before {
-    content: "\f053\00a0 Back to ";
+.project-title a:before{
+    content: " Back to ";
+    right: 100%;
+}
+.project-title:before {
     font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
-    margin-right: 0;
+    content: "\f053";
+    position: absolute;
+    border: none;
+    color: #0072CE;
 }
 
 .project-add-idea {
@@ -236,9 +250,20 @@ ul.section-nav li.active a {
 }
 .idea-more {
     display: inline-block;
+    
 }
 .idea-more a {
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+    position: relative;
+}
+.idea-more a:after{
+    content: '\f105';
+    border: none;
+    position: absolute;
+    margin-left: .15em;
+    border-bottom: 0;
+    top: -.15em;
+    left: 100%;
 }
 .idea-footer {
     font-size: 16px;
@@ -352,11 +377,18 @@ ul.section-nav li.active a {
     margin-bottom: 0;
 }
 
+#challenge-link a {
+    position: relative;
+}
 
 #challenge-link a:after {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
+    border: none;
+    position: absolute;
+    left: 100%;
+    top:0;
 }
 .banners {
     margin-bottom: 1.25em;
@@ -364,10 +396,17 @@ ul.section-nav li.active a {
 .banners .challenge {
     margin: .5em 0;
 }
+.challenge_view_all a{
+    position:relative;
+}
 .challenge_view_all a:after {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
+    border: none;
+    position: absolute;
+    left: 100%;
+    top:0;
 }
 .list_current_challenges {
      padding-top: 1.5em;
