@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.contrib.auth.models import SiteProfileNotAvailable
-from collab.settings import AUTH_USER_MODEL
+from django.conf import settings
 from django.contrib.comments import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,9 +13,8 @@ try:
 except ImportError:
     from taggit.managers import TaggableManager
 
-
 class UserTrackable(models.Model):
-    creator = models.ForeignKey(AUTH_USER_MODEL)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL)
     #   use a lambda so that this is evaluated upon creation (rather than
     #   once upon class import)
     time = models.DateTimeField(
@@ -102,7 +101,8 @@ class Idea(UserTrackable):
         Make it easy for supporters to find your idea.  See how many other
         ideas have the same tags for potential collaboration or a little
         healthy competition.""")
-    voters = models.ManyToManyField(AUTH_USER_MODEL, through="Vote", null=True,
+    voters = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                    through="Vote", null=True,
                                     related_name="idea_vote_creator")
 
     def __unicode__(self):
