@@ -1,0 +1,20 @@
+[
+    {
+        "pk": 1,
+        "model": "core.CollabUser",
+        "fields": {
+            "username": "test1@example.com",
+            "first_name": "John",
+            "last_name": "Smith",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2012-08-28T14:11:00Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$10000$ggAKkiHobFL8$xQzwPeHNX1vWr9uNmZ/gKbd17uLGZVM8QNcgmaIEAUs=",
+            "email": "test1.1@example.com",
+            "date_joined": "2012-03-01T16:03:14Z"
+        }
+    }
+]
