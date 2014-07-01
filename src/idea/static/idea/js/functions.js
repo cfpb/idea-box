@@ -13,6 +13,15 @@ $(document).ready(function() {
             }
     });
 
+    //Change the button voted text to "unlike" on hover
+    $(".btn-voted").hover(
+        function(){
+            $(this).val('Unlike');
+        },
+        function(){
+            $(this).val('Liked');
+        });
+
     function show_reply_form(event) {
         var $this = $(this);
         var comment_id = $this.data('comment-id');
