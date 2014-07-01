@@ -31,12 +31,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'taggit',
     'haystack',
     'django_nose',
     'django.contrib.comments',
     'django.contrib.staticfiles',
     'mptt',
+    'core', # collab core
+    'core.taggit',
 ]
 
 ROOT_URLCONF = 'idea.buildout.urls'
@@ -54,3 +55,5 @@ STATIC_URL = '/static/'
 SECRET_KEY = '-9khc0wuc!ie88^tsqx9fiq!utst+d!!o@n+jqxz97s)ek74_@'
 
 TEST_RUNNER = 'django_nose.runner.NoseTestSuiteRunner'
+
+AUTH_USER_MODEL = 'core.CollabUser'
