@@ -1,7 +1,8 @@
-/* ==========================================================================
+ /* ==========================================================================
    Main
    ========================================================================== */
 /* Base */
+
 .ic * {
     font-family: "Avenir Next", Arial, sans-serif;
 }
@@ -107,16 +108,26 @@ textarea.populated {
 }
 .project-title {
     margin-top: 0;
+    position: relative;
 }
 .project-title a {
     color: #0072CE;
+    border-bottom: 1px dotted;
+    line-height: 1em;
     font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
-    line-height: 1.57142857142857em;
+    display: inline-block;
+    margin-left: 1em;
 }
-.project-title a:before {
-    content: "\f053\00a0 Back to ";
+.project-title a:before{
+    content: " Back to ";
+    right: 100%;
+}
+.project-title:before {
     font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
-    margin-right: 0;
+    content: "\f053";
+    position: absolute;
+    border: none;
+    color: #0072CE;
 }
 
 .project-add-idea {
@@ -236,9 +247,20 @@ ul.section-nav li.active a {
 }
 .idea-more {
     display: inline-block;
+    
 }
 .idea-more a {
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
+    position: relative;
+}
+.idea-more a:after{
+    content: '\f105';
+    border: none;
+    position: absolute;
+    margin-left: .15em;
+    border-bottom: 0;
+    top: -.15em;
+    left: 100%;
 }
 .idea-footer {
     font-size: 16px;
@@ -352,11 +374,18 @@ ul.section-nav li.active a {
     margin-bottom: 0;
 }
 
+#challenge-link a {
+    position: relative;
+}
 
 #challenge-link a:after {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
+    border: none;
+    position: absolute;
+    left: 100%;
+    top:0;
 }
 .banners {
     margin-bottom: 1.25em;
@@ -364,10 +393,17 @@ ul.section-nav li.active a {
 .banners .challenge {
     margin: .5em 0;
 }
+.challenge_view_all a{
+    position:relative;
+}
 .challenge_view_all a:after {
     content: "\f054";
     font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
     margin-left: .25em;
+    border: none;
+    position: absolute;
+    left: 100%;
+    top:0;
 }
 .list_current_challenges {
      padding-top: 1.5em;
@@ -550,12 +586,60 @@ ul.section-nav li.active a {
 #work_tag_submit_btn {
     margin-top: .5em;
 }
-span.btn-voted,
-span.btn-voted:hover {
+
+.btn-voted {
     color: #75787B;
     background-color: #E3E4E5;
     cursor: default;
 }
+.btn-voted:focus{
+    outline: none;
+
+}
+
+input.btn-voted:hover {
+    background-color: #919395;
+    color: #fff;
+    cursor: default;
+} 
+
+input.btn-voted:active, input.btn-voted:focus {
+    background-color: #75787b;
+    color: #fff;
+    cursor: default;
+    outline-width: 0;
+}
+
+input.btn,
+input.btn:link,
+input.btn:visited {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0.64285714em 1em;
+  border: 0;
+  border-radius: 0.28571429em;
+  margin: 0;
+  vertical-align: middle;
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.875em;
+  line-height: normal;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-transition: .1s;
+  transition: .1s;
+  -webkit-appearance: none;
+}
+.lt-ie9 .btn,
+.lt-ie9 .btn:link,
+.lt-ie9 .btn:visited {
+  font-weight: normal !important;
+}
+
+
 .idea-add .alert {
     color: #d14124;
     display: block;
@@ -710,10 +794,15 @@ section.main-content hr {
     padding: 0;
 }
 
-.idea-votes .btn-vote, .idea-votes .btn-voted, .idea-votes .btn-voted:hover {
+.idea-votes .btn-vote, 
+.idea-votes .btn-voted,
+.idea-votes .btn-voted:hover,
+.idea-votes .btn-voted:active,
+.idea-votes .btn-voted:focus {
     padding: 0.71428571428571em 0;
     width: 4em;
     font-size: 16px;
+    outline: none;
 }
 
 /* Selectize */

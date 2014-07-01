@@ -38,14 +38,16 @@
                                 <div class="action">
                                 {% if idea.state.name == 'Archive' %}
                                     <span class="btn-archive">Archived</span>
-                                {% elif request.user in idea.voters.all %}
-                                    <span class="btn btn-voted">Liked</span>
                                 {% else %}
-                                    <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                        <form action="{% url 'idea:upvote_idea' %}" method=POST>
                                         {% csrf_token %}
                                         <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                        <input type="hidden" name="next" value="{% url 'idea:idea_list' %}"/>
-                                        <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                        <input type="hidden" name="next" value="{% url 'idea:idea_list' sort_or_state %}"/>
+                                        {% if request.user in idea.voters.all%}
+                                            <input type="submit" class="btn btn-voted" value="Liked" id="vote_up"/>
+                                        {% else %}
+                                            <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                        {% endif %}
                                     </form>
                                 {% endif %}
                                 </div>
@@ -57,7 +59,7 @@
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
                                     <span class="idea-more">
-                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more &#xf054;</a>
+                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more </a>
                                     </span>
                                 </div>
                                 <footer class="idea-footer">
@@ -119,7 +121,7 @@
 			    </li>
 			    {% endfor %}
 			    <li>
-				<div class="challenge_view_all"><a  href="{% url 'idea:banner_list' %}">View past Challenges &#xf054;</a></div>
+				<div class="challenge_view_all"><a  href="{% url 'idea:banner_list' %}">View past Challenges</a></div>
 			    </li>
 			</ul>
 		    </aside>

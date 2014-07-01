@@ -171,6 +171,8 @@ def up_vote(request):
 
         if not existing_votes.exists():
             vote_up(idea, request.user)
+        elif existing_votes.exists():
+            existing_votes.delete()
 
         return HttpResponseRedirect(next_url)
 
