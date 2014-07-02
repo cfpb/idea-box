@@ -118,6 +118,12 @@ textarea.populated {
     display: inline-block;
     margin-left: 1em;
 }
+
+.project-title a:hover,
+.project-title a:focus,
+.project-title a:active {
+    border-bottom-style: solid;
+}
 .project-title a:before{
     content: " Back to ";
     right: 100%;
@@ -686,6 +692,31 @@ input.btn:visited {
 .result-number {
     font-weight: bold;
 }
+
+/* Profile Styles */
+.profile_images a {
+        display: inline-block;
+        max-width: 125px;
+        margin: 0 5px 10px 0;
+        color: #000;
+        font-family: "Avenir Next", Arial, sans-serif;
+        font-size: 1em;
+        line-height: 1.25;
+        text-decoration: none;
+        vertical-align: top;
+        border:none;
+}
+.profile_images img {
+        margin: 0 5px 10px 0;
+        display: block;
+        width: 125px;
+        margin-bottom: 5px;
+}
+.profile_images a:hover {
+    color: #0072CE;
+}
+
+
  /* Image replacement */
 .ir {
     background-color: transparent;

@@ -125,14 +125,15 @@
                             <aside class="voters">
                                 <h3>Liked by</h3>
                                 <ul>
-                                {% for voter in voters %}
+                                {% for voter in voters|slice:'10' %}
                                     {% if voter.profile %}
                                     <li><a href="{{voter.profile.get_absolute_url}}">{{voter.first_name}} {{voter.last_name}}</a></li>
                                     {% else %}
                                     <li>{{voter.first_name}} {{voter.last_name}}</li>
                                     {% endif %}
                                 {% endfor %}
-                                </ul>                
+                                </ul>
+                                <h4 class="idea-more"><a href="{% url 'idea:show_likes' idea.id %}">{{voters|length}} Like{{voters|pluralize:",s"}}</a></h4>                
                             </aside>    
                             <aside class="tags">
                                 <h3>Idea Tags</h3>
