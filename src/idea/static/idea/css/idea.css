@@ -114,7 +114,6 @@ textarea.populated {
     color: #0072CE;
     border-bottom: 1px dotted;
     line-height: 1em;
-    font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
     display: inline-block;
     margin-left: 1em;
 }
@@ -380,19 +379,6 @@ ul.section-nav li.active a {
     margin-bottom: 0;
 }
 
-#challenge-link a {
-    position: relative;
-}
-
-#challenge-link a:after {
-    content: "\f054";
-    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
-    margin-left: .25em;
-    border: none;
-    position: absolute;
-    left: 100%;
-    top:0;
-}
 .banners {
     margin-bottom: 1.25em;
 }

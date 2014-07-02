@@ -22,7 +22,7 @@
                         {{banner.text}}
                     </p>
                     {% if is_current_banner %}
-                    <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}">Submit an Idea for this Challenge</a></div>
+                    <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this Challenge</a></div>
                     {% endif %}
                     <div>
                         <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
