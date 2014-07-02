@@ -279,23 +279,6 @@ ul.section-nav li.active a {
     font-family: Georgia, "Times New Roman", serif;
     margin: 1em 0;
 }
-.idea-more {
-    display: inline-block;
-    
-}
-.idea-more a {
-    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
-    position: relative;
-}
-.idea-more a:after{
-    content: '\f105';
-    border: none;
-    position: absolute;
-    margin-left: .15em;
-    border-bottom: 0;
-    top: -.15em;
-    left: 100%;
-}
 .idea-footer {
     font-size: 16px;
 }
