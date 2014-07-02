@@ -99,7 +99,7 @@
                                             {% endif %}
                                             </footer><!-- /comment-meta -->
                                             <div class="comment-content">
-                                                <p>{{node.comment}}</p>
+                                                <p>{{node.comment|urlize|linebreaksbr}}</p>
                                             </div><!-- /comment-content -->
                                             {% if not node.is_leaf_node %}
                                                 <ol class="comment-list">
