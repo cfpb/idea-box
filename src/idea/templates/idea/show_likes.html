@@ -23,7 +23,7 @@
                             <form action="{% url 'idea:upvote_idea' %}" method=POST>
                                 {% csrf_token %}
                                 <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                <input type="hidden" name="next" value="{% url 'idea:idea_detail' idea.id %}"/>
+                                <input type="hidden" name="next" value="{% url 'idea:show_likes' idea.id %}"/>
                                 <input type="submit" class="btn btn-voted" value="Liked" id="vote_down"/>
                             </form>
                         {% else %}
@@ -60,7 +60,8 @@
                                         {{ voter.first_name }} {{ voter.last_name }}
                                     </a>
                                     {% else %}
-                                    <span>{{voter.first_name}} {{voter.last_name}}</span>
+
+                                    <a href="mailto:{{ voter.}}">{{voter.first_name}} {{voter.last_name}}</a>
                                     {% endif %}
                                 {% endfor %}
                             </div>
