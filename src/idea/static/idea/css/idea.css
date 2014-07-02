@@ -160,7 +160,7 @@ textarea.populated {
 .chevron-right {
     position: relative;
 }
-.chevron-right:before {
+.chevron-right:after {
         font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
         content: "\f054";
         position: absolute;
