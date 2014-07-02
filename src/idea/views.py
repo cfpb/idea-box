@@ -270,6 +270,28 @@ def detail(request, idea_id):
 
 
 @login_required
+def show_likes(request, idea_id):
+    """
+    Detail view; idea_id must be a string containing an int.
+    """
+    idea = get_object_or_404(Idea, pk=int(idea_id))
+    voters = idea.voters.all()
+
+    for v in voters:
+        try:
+            v.profile = v.get_profile()
+        except (ObjectDoesNotExist, SiteProfileNotAvailable):
+            v.profile = None
+
+    idea_type = ContentType.objects.get(app_label="idea", model="idea")
+
+    return _render(request, 'idea/show_likes.html', {
+        'idea': idea,  # title, body, user name, user photo, time
+        'support': request.user in voters,
+        'voters': voters
+    })
+
+@login_required
 def add_idea(request, banner_id=None):
     if request.method == 'POST':
         matching_ideas = Idea.objects.filter(

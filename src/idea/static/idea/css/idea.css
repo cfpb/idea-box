@@ -114,9 +114,14 @@ textarea.populated {
     color: #0072CE;
     border-bottom: 1px dotted;
     line-height: 1em;
-    font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
     display: inline-block;
     margin-left: 1em;
+}
+
+.project-title a:hover,
+.project-title a:focus,
+.project-title a:active {
+    border-bottom-style: solid;
 }
 .project-title a:before{
     content: " Back to ";
@@ -148,6 +153,35 @@ textarea.populated {
     text-align: left;
     text-transform: uppercase;
 }
+
+/*
+    Right and Left Chevron classes with appropriate underlines
+*/
+.chevron-right {
+    position: relative;
+}
+.chevron-right:after {
+        font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
+        content: "\f054";
+        position: absolute;
+        left: 100%;
+        top: 0;
+        margin-left: .15em;
+        border-bottom: none;
+}
+.chevron-left {
+    position: relative;
+}
+.chevron-left:before {
+        font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
+        content: "\f053";
+        position: absolute;
+        right: 100%;
+        top: 0;
+        margin-right: .15em;
+        border-bottom: none;
+}
+
 .search-form input[type="text"],
 .search-form textarea {
     height: 2em;
@@ -374,19 +408,6 @@ ul.section-nav li.active a {
     margin-bottom: 0;
 }
 
-#challenge-link a {
-    position: relative;
-}
-
-#challenge-link a:after {
-    content: "\f054";
-    font-family: FontAwesome, "Avenir Next", Arial, sans-serif;
-    margin-left: .25em;
-    border: none;
-    position: absolute;
-    left: 100%;
-    top:0;
-}
 .banners {
     margin-bottom: 1.25em;
 }
@@ -686,6 +707,31 @@ input.btn:visited {
 .result-number {
     font-weight: bold;
 }
+
+/* Profile Styles */
+.profile_images a {
+        display: inline-block;
+        max-width: 125px;
+        margin: 0 5px 10px 0;
+        color: #000;
+        font-family: "Avenir Next", Arial, sans-serif;
+        font-size: 1em;
+        line-height: 1.25;
+        text-decoration: none;
+        vertical-align: top;
+        border:none;
+}
+.profile_images img {
+        margin: 0 5px 10px 0;
+        display: block;
+        width: 125px;
+        margin-bottom: 5px;
+}
+.profile_images a:hover {
+    color: #0072CE;
+}
+
+
  /* Image replacement */
 .ir {
     background-color: transparent;
