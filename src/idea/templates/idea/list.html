@@ -58,8 +58,8 @@
                                 </header>
                                 <div class="idea-description">
                                     {{ idea.summary|truncatechars:250 }}
-                                    <span class="idea-more">
-                                        <a href="{% url 'idea:idea_detail' idea.id %}">Read more </a>
+                                    <span>
+                                        <a href="{% url 'idea:idea_detail' idea.id %}" class="chevron-right">Read more </a>
                                     </span>
                                 </div>
                                 <footer class="idea-footer">
@@ -109,7 +109,7 @@
                     <div class="challenge-banner">
                         <h5>Current Challenge:</h5>
                         <h3 class="challenge-description">{{banner.title}}</h3>
-                        <div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}">View Challenge Ideas</a></div>
+                        <div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}" class="chevron-right">View Challenge Ideas</a></div>
                     </div><!-- /challenge-banner -->
                     {% endif %}
 		    <aside class="banners">
