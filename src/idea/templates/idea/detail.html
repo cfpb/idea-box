@@ -134,7 +134,7 @@
                                 {% endfor %}
                                 </ul>
                                 {% if voters.count > 10 %}
-                                    <h4 class="idea-more"><a href="{% url 'idea:show_likes' idea.id %}">{{voters|length}} Like{{voters|pluralize:",s"}}</a></h4>                
+                                    <h4 ><a class="chevron-right" href="{% url 'idea:show_likes' idea.id %}">{{voters|length}} Like{{voters|pluralize:",s"}}</a></h4>
                                 {% endif %}
                                 
                             </aside>    
