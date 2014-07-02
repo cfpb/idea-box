@@ -237,7 +237,6 @@ def detail(request, idea_id):
     for v in voters:
         try:
             v.profile = v.get_profile()
-            print dir(v.profile) #DEBUG DO NOT COMMIT
         except (ObjectDoesNotExist, SiteProfileNotAvailable):
             v.profile = None
 
