@@ -153,6 +153,35 @@ textarea.populated {
     text-align: left;
     text-transform: uppercase;
 }
+
+/*
+    Right and Left Chevron classes with appropriate underlines
+*/
+.chevron-right {
+    position: relative;
+}
+.chevron-right:before {
+        font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
+        content: "\f054";
+        position: absolute;
+        left: 100%;
+        top: 0;
+        margin-left: .15em;
+        border-bottom: none;
+}
+.chevron-left {
+    position: relative;
+}
+.chevron-left:before {
+        font-family: FontAwesome, "Avenir Next Medium", Arial, sans-serif;
+        content: "\f053";
+        position: absolute;
+        right: 100%;
+        top: 0;
+        margin-right: .15em;
+        border-bottom: none;
+}
+
 .search-form input[type="text"],
 .search-form textarea {
     height: 2em;
