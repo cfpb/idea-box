@@ -1,7 +1,7 @@
 [
     {
         "pk": 1,
-        "model": "auth.user",
+        "model": "core.CollabUser",
         "fields": {
             "username": "test1@example.com",
             "first_name": "John",
