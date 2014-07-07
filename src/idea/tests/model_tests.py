@@ -1,7 +1,7 @@
 from django.test import TestCase
 from idea import models
 from idea.tests.utils import random_user
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.comments.models import Comment
 
 
@@ -26,7 +26,8 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
         
-        voter = User.objects.get(username='test1@example.com')
+        voter = random_user()
+        self.assertNotEqual(user, voter)
         vote = models.Vote()
         vote.idea = idea
         vote.creator = voter
@@ -42,8 +43,8 @@ class VotingTests(TestCase):
                     text='Aliens need assistance.', state=self.state)
         idea.save()
         
-        commenter = User.objects.get(username='test1@example.com')
-
+        commenter = random_user()
+        self.assertNotEqual(user, commenter)
         comment = Comment()
         comment.user = commenter
         comment.content_object = idea

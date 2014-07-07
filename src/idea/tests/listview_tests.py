@@ -1,5 +1,5 @@
 import datetime
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils.timezone import get_default_timezone
 from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
@@ -31,7 +31,7 @@ class ListViewTest(TestCase):
         """
         Helper function to handle the idea (and related models) creation.
         """
-        user = User.objects.create_user('example')
+        user = get_user_model().objects.create_user('example')
         state = models.State.objects.get(name='Active')
         state.save()
 

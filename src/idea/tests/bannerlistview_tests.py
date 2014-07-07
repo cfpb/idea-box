@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 from idea import models, views
 from idea.tests.utils import mock_req
