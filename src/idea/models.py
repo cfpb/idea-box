@@ -31,7 +31,7 @@ class Banner(models.Model):
     topics. """
 
     title = models.CharField(max_length=50)
-    text = models.CharField(max_length=2000, verbose_name="description")
+    text = models.TextField(max_length=2000, verbose_name="description")
     start_date = models.DateField(
         help_text="The date from which this banner will be displayed.")
     end_date = models.DateField(null=True, blank=True,
