@@ -19,7 +19,7 @@
                         <h2>{{banner.title}}</h2>
                     </div>
                     <p class="challenge-entry-content">
-                        {{banner.text}}
+                        {{banner.text|urlize|linebreaksbr}}
                     </p>
                     {% if is_current_banner %}
                     <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this Challenge</a></div>
