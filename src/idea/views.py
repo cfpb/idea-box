@@ -335,7 +335,7 @@ def add_idea(request, banner_id=None):
             form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/add.html', {
             'form': form,
-            'similar': [r.object for r in more_like_text(idea_title, Idea)]
+            # 'similar': [r.object for r in more_like_text(idea_title, Idea)]
         })
 
 

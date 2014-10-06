@@ -67,6 +67,7 @@ class AddIdeaTest(TestCase):
         self.assertIn('login', resp['Location'])
         self.assertEqual(models.Idea.objects.all().count(), 0)
 
+    @unittest.skip("the 'similar' functionality has been disabled")
     @patch('idea.views.render')
     def test_similar(self, render):
         """
