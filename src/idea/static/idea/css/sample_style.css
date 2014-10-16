@@ -1,0 +1,318 @@
+ /* ==========================================================================
+   Main
+   ========================================================================== */
+/* Sample style */
+
+/* heading */
+h1,
+h2,
+h3 {
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-weight: normal;
+}
+h1 {
+  font-size: 2.125em;
+  line-height: 1.23529411764706;
+}
+h2 {
+  font-size: 1.625em;
+  line-height: 1.23076923076923;
+}
+h3 {
+  font-size: 1.375em;
+  line-height: 1.27272727272727;
+}
+h4 {
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  font-size: 1.125em;
+  line-height: 1.22222222222222;
+  font-weight: 500;
+}
+h5,
+h6 {
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+h5 {
+  font-size: 0.875em;
+  line-height: 1.57142857142857;
+}
+
+h2.section {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  clear: both;
+  color: #2cb34a;
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-size: 3.125em;
+  line-height: 1;
+  font-weight: normal;
+  text-indent: -0.04em;
+}
+h2.section a,
+.section-heading a {
+  color: #2cb34a;
+  text-decoration: none;
+}
+
+/* Buttons */
+.btn, .btn-huge {
+  background: #0072ce;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.875em;
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  padding: 0.71428571428571em 1em;
+  line-height: 1em;
+  border-bottom: none;
+  outline: 0;
+  text-decoration: none;
+  /* Destructive Action Button Styles */
+  /* Button display as link */
+}
+.btn:visited,
+.btn-huge:visited {
+  color: #FFF;
+}
+.btn:hover,
+.btn-huge:hover {
+  background: #328ed8;
+  border-bottom-style: none;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  -ms-transition: all 0.1s linear;
+  -o-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+.btn:active,
+.btn-huge:active {
+  background: #33578E;
+}
+.btn.secondary-action,
+.btn-huge.secondary-action {
+  padding: 0;
+  border-bottom: 1px dotted #0072ce;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  margin: 0.71428571428571em;
+  /* 10/14 */
+  background-color: transparent;
+  color: #0072ce;
+}
+.btn.secondary-action:hover,
+.btn-huge.secondary-action:hover,
+.btn.secondary-action.hover,
+.btn-huge.secondary-action.hover {
+  color: #7fb8e6;
+  border-bottom: 1px solid #7fb8e6;
+  background-color: transparent;
+}
+.btn.secondary-action:focus,
+.btn-huge.secondary-action:focus,
+.btn.secondary-action.focus,
+.btn-huge.secondary-action.focus {
+  border-bottom-style: solid;
+  outline: thin dotted;
+  background-color: transparent;
+}
+.btn.secondary-action:active,
+.btn-huge.secondary-action:active,
+.btn.secondary-action.active,
+.btn-huge.secondary-action.active {
+  border-bottom: 1px solid #002d72;
+  background-color: transparent;
+  color: #002d72;
+}
+.btn-huge {
+  font-size: 1.125em;
+  padding: .833333em 1.666667em;
+}
+
+/* Tags */
+/* Tags */
+.tags-form,
+.tags {
+  margin-bottom: 2em;
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+}
+.tags-form > ul,
+.tags > ul {
+  padding-left: 0;
+}
+.tags-form > a,
+.tags > a {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0.625em;
+  text-decoration: none;
+}
+.tags-form > .tag,
+.tags > .tag {
+  float: left;
+}
+.tags-form > form > div,
+.tags > form > div {
+  display: inline-block;
+  padding: 0.5em;
+  background: #e4e2e0;
+  position: relative;
+  margin-top: 0.5em;
+}
+.tags-form > form > div:before,
+.tags > form > div:before {
+  position: absolute;
+  top: -20px;
+  left: 7px;
+  content: "";
+  border-color: transparent transparent #e4e2e0 transparent;
+  border-style: solid;
+  border-width: 10px;
+  width: 0;
+  height: 0;
+}
+.tags-form .no_tagging,
+.tags .no_tagging {
+  display: inline-block;
+  padding: 0.5em;
+  background: #e4e2e0;
+  position: relative;
+  margin-top: 0.5em;
+}
+.tags-form h4,
+.tags h4 {
+  font-size: 80%;
+  margin-bottom: 0.5em;
+}
+.tags-form form,
+.tags form {
+  margin-bottom: 0.5em;
+}
+.tags-form form input[type="text"],
+.tags form input[type="text"] {
+  padding: 0.28em;
+}
+.tags-form form input[type="button"],
+.tags form input[type="button"] {
+  margin-left: 0.25em;
+}
+.tag {
+  display: list-item;
+  list-style: none;
+  position: relative;
+  margin: 0 0.5em 0.75em 1em;
+  font-size: 14px;
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  line-height: 1em;
+}
+.tag:before {
+  content: "• ";
+  color: #ffb149;
+  z-index: 2;
+}
+.tag_name {
+  position: relative;
+  display: inline;
+  z-index: 1;
+  line-height: 1.5em;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #75787b;
+  border-bottom-width: 1px;
+  border-bottom-color: #ffb149;
+  vertical-align: middle;
+}
+.tag_name:visited {
+  color: #75787b;
+  border-bottom-color: #ffb149;
+}
+.tag_name:hover {
+  color: #101820;
+  border-bottom-color: #ff9e1b;
+}
+.tag_name.pushed {
+  color: #101820;
+}
+.tag a.tag_remove {
+  font-family: "Avenir Next", Arial, sans-serif;
+  color: #babbbd;
+  border-bottom-width: 0;
+}
+.tag a.tag_remove:hover {
+  color: #d12124;
+}
+.tag span.tag_remove {
+  font-family: "Avenir Next", Arial, sans-serif;
+  color: #75787b;
+}
+.tag span.tag_remove:before {
+  content: "(";
+}
+.tag span.tag_remove:after {
+  content: ")";
+}
+.add_tag {
+  vertical-align: top;
+  line-height: 2.75em;
+}
+
+/* pagination */
+.pagination {
+  border: solid #75787b;
+  border-width: 1px 0;
+  margin: 20px 0;
+}
+.pagination ul {
+  display: block;
+  padding-left: 0;
+  margin: 0;
+  overflow: auto;
+}
+.pagination [class^="icon-"] {
+  font-size: 0.625em;
+}
+.pagination ul > li {
+  display: inline;
+}
+.pagination ul > li > a,
+.pagination ul > li > span {
+  padding: 4px 8px;
+  float: left;
+  color: #75787b;
+  line-height: 20px;
+  text-decoration: none;
+  border-bottom-width: 0;
+}
+.pagination ul > li > a:hover,
+.pagination ul > li > a:focus,
+.pagination ul > li > a:hover > i,
+.pagination ul > li > a:focus > i,
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+  color: #101820;
+}
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-weight: bold;
+  cursor: default;
+}
+.pagination ul > .disabled > span,
+.pagination ul > .disabled > a,
+.pagination ul > .disabled > a:hover,
+.pagination ul > .disabled > a:focus {
+  cursor: default;
+}
+.pagination-centered {
+  text-align: center;
+}
+.pagination-right {
+  text-align: right;
+}
