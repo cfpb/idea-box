@@ -119,6 +119,26 @@ this to link users to a profile page.  This is specified through the
 AUTH_PROFILE_MODULE setting. Your profile module will also have to specify a
 get_absolute_url() method.
 
+### CSS
+
+The default CSS style for Idea-Box is not ready for production.  This was done
+intentionally so that Idea-Box's style can match the style of the platform in
+which it resides (i.e. not everyone wants a green header).  The simplest way to
+improve the styling is to source `src/idea/static/idea/css/sample_style.css`
+in the `css_files` block in the `/src/idea/templates/idea/idea-base.html` template:
+
+```
+{% block "css_files" %}
+    # ... existing code ...
+    <link rel="stylesheet" href="{{ STATIC_URL }}idea/css/sample_style.css">
+{% endblock %}
+```
+
+Ideally, your Django platform will provide styles that can be sourced in the
+`base.html` template described in the section above so Idea-Box can match the
+look and feel of your system.
+
+
 ### Buildout
 To use buildout, run the following:
 ```bash
