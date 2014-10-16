@@ -18,11 +18,11 @@ from idea.models import Idea, State, Vote, Banner, Config
 from idea.utility import state_helper
 from idea.models import UP_VOTE
 
-try:
+if 'core.taggit' in settings.INSTALLED_APPS:
     from core.taggit.models import Tag, TaggedItem
     from core.taggit.utils import add_tags
     COLLAB_TAGS = True
-except ImportError:
+else:
     from taggit.models import Tag
     COLLAB_TAGS = False
 

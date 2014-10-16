@@ -1,28 +1,30 @@
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.test import TestCase
 from django.utils import unittest
 from haystack import connections
 from idea import models, views
-from idea.tests.utils import mock_req, random_user, login
+from idea.tests.utils import mock_req, random_user, login, create_superuser
 from mock import patch
 from datetime import date, timedelta
 from idea.forms import IdeaForm
 
-try:
+if 'core.taggit' in settings.INSTALLED_APPS:
     from core.taggit.utils import add_tags
     from core.taggit.models import TaggedItem
     COLLAB_TAGS = True;
-except ImportError:
+else:
     COLLAB_TAGS = False;
 
 class AddIdeaTest(TestCase):
-    # core-test-fixtures required for integration with Collab
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state']
+
+    def setUp(self):
+        create_superuser()
 
     def test_good_idea(self):
         """ Test an normal POST submission to add an idea. """
-
         login(self)
         self.assertEquals(models.Idea.objects.all().count(), 0)
         num_voters = get_user_model().objects.filter(vote__idea__pk=1, vote__vote=1).count()
