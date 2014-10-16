@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.comments',
     'django.contrib.staticfiles',
     'mptt',
-    'core', # collab core
-    'core.taggit',
+    'core.custom_comments', # from Collab
+    'taggit',
 ]
 
 ROOT_URLCONF = 'idea.buildout.urls'
@@ -56,4 +56,8 @@ SECRET_KEY = '-9khc0wuc!ie88^tsqx9fiq!utst+d!!o@n+jqxz97s)ek74_@'
 
 TEST_RUNNER = 'django_nose.runner.NoseTestSuiteRunner'
 
-AUTH_USER_MODEL = 'core.CollabUser'
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
+}
+
+COMMENTS_APP = 'core.custom_comments'

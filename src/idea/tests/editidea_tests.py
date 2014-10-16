@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from idea import models
-from idea.tests.utils import random_user, login
+from idea.tests.utils import random_user, login, create_superuser
 from datetime import date
 
 def create_idea(user=None):
@@ -20,7 +20,10 @@ def create_idea(user=None):
     return idea
 
 class AddIdeaTest(TestCase):
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state']
+
+    def setUp(self):
+        create_superuser()
 
     def test_edit_good_idea(self):
         """ Test an normal POST submission to edit an idea. """

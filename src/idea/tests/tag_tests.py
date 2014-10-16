@@ -1,18 +1,22 @@
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.test import TestCase
 from django.utils import unittest
 from django.test.client import RequestFactory
 from idea import models, views
-from idea.tests.utils import random_user, login
-try:
+from idea.tests.utils import random_user, login, create_superuser
+if 'core.taggit' in settings.INSTALLED_APPS:
     from core.taggit.utils import add_tags
     COLLAB_TAGS = True;
-except ImportError:
+else:
     COLLAB_TAGS = False;
 
 class TagTest(TestCase):
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state']
+
+    def setUp(self):
+        create_superuser()
 
     @unittest.skipIf(COLLAB_TAGS == False, "Remove only works with collab's core.taggit")
     def test_tag_remove_exists_for_creator(self):
