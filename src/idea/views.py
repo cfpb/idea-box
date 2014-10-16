@@ -335,7 +335,17 @@ def add_idea(request, banner_id=None):
             form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/add.html', {
             'form': form,
-            'similar': [r.object for r in more_like_text(idea_title, Idea)]
+            # Similar keywords was used to provide suggestions for idea titles
+            # (or notify you that an idea already exists) when creating a new
+            # idea.  This functionality was removed from the front end a while
+            # ago when we redesigned the Add Idea page.  As such, the similar
+            # object is not currently being utilized.
+            #
+            # The specific reason why this is being removed right now is we've
+            # seen instances where elasticsearch complains about too many
+            # requests which results in a 500 error when clicking the
+            # "Add Idea" button.
+            # 'similar': [r.object for r in more_like_text(idea_title, Idea)]
         })
 
 
