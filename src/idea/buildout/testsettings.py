@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'haystack',
     'django_nose',
     'django.contrib.comments',
     'django.contrib.staticfiles',
@@ -41,12 +40,6 @@ INSTALLED_APPS = [
 ]
 
 ROOT_URLCONF = 'idea.buildout.urls'
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    },
-}
 
 DEBUG = True
 STATIC_URL = '/static/'

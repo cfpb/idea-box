@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import TestCase
 from django.utils import unittest
-from haystack import connections
 from idea import models, views
 from idea.tests.utils import mock_req, random_user, login, create_superuser
 from mock import patch
@@ -68,41 +67,6 @@ class AddIdeaTest(TestCase):
         self.assertEqual(resp.status_code, 302)
         self.assertIn('login', resp['Location'])
         self.assertEqual(models.Idea.objects.all().count(), 0)
-
-    @unittest.skip("the 'similar' functionality has been disabled")
-    @patch('idea.views.render')
-    def test_similar(self, render):
-        """
-        List of similar ideas should make sense.
-        """
-        class Mock():
-            pass
-        with patch('idea.views.more_like_text') as mlt:
-            backend = connections['default'].get_backend()
-            backend.clear()
-            user = random_user()
-            state = models.State.objects.get(name='Active')
-            similar1 = models.Idea(creator=user, title='airplanes', state=state,
-                    text="Title is enough said.")
-            similar1.save()
-            similar2 = models.Idea(creator=user, title='exexex', state=state,
-                    text="I, too, love submarines.")
-            similar2.save()
-
-            models.Idea(creator=user, title='AAAAAA', state=state, 
-                    text='BBBBBB').save()
-
-            m1, m2 = Mock(), Mock()
-            m1.object = similar1
-            m2.object = similar2
-            mlt.return_value = [m1, m2]
-
-            views.add_idea(mock_req('/?idea_title=' +
-                'Airplanes%20and%20submarines'))
-            context = render.call_args[0][2]
-            self.assertTrue('similar' in context)
-            self.assertEqual(2, len(context['similar']))
-            self.assertEqual(set(context['similar']), set([similar1, similar2]))
 
     @unittest.skipIf(COLLAB_TAGS == False, "TaggedItem creator field requires collab's core.taggit")
     def test_tagged_item_creator(self):
