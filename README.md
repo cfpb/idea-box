@@ -25,11 +25,10 @@ such that ideas, votes, etc. are tied to specific users.
 * django-taggit - A library for Tags within django
 * mock - A library for creating mock objects for testing. 
 * south - A library for schema and data migrations.
-* [collab](http://github.com/cfpb/collab) - Intranet platform, specifically needed for idea comments
-* mptt - A library enabling nested/reply-to comments
+* django-mptt - A library enabling nested/reply-to comments
 
 ### Optional
-* collab platform - Installing idea-box as an app inside a collab platform provides several convenience features:
+* [collab platform](http://github.com/cfpb/collab) - Installing idea-box as an app inside a collab platform provides several convenience features:
   * Autocomplete when adding new tags (requires elasticsearch server)
   * User can delete tags he/she created
   * Email notifications
@@ -45,13 +44,22 @@ pip install git+https://github.com/cfpb/collab.git#egg=collab
 ```
 
 ### Settings File
-Modify your settings file to add the following apps:
-* django.contrib.comments
-* django-taggit
-* south
-* mptt
-* core.custom_comments
-* idea
+Modify your settings file to add the following to your `INSTALLED_APPS`:
+```
+'django.contrib.comments',
+'taggit',
+'south',
+'mptt',
+'core.custom_comments',
+'idea'
+```
+
+If using a newer version of django-taggit, add the following to your settings file:
+```
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
+}
+```
 
 ### Folder Structure
 
@@ -73,17 +81,19 @@ Add the idea.urls and comments.urls to you url.py. For
 example:
 
 ```python
+from mydjango_project import settings
+
 if 'idea' in settings.INSTALLED_APPS and \
         'django.contrib.comments' in settings.INSTALLED_APPS:
     urlpatterns.append(url(r'^comments/',
         include('django.contrib.comments.urls')))
-    urlpatterns.append(url(r'^idea/', include('idea.urls')))
+    urlpatterns.append(url(r'^idea/', include('idea.urls', namespace='idea')))
 ```
 
 
 ### Migrations
 
-From your project root, synchronize and migrate the new apps.
+From your project root, synchronize and migrate the new apps.  Make sure to set your database settings.
 
 ```bash
 $ python ./manage.py syncdb --noinput --migrate
