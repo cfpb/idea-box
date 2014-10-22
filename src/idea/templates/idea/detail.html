@@ -165,6 +165,10 @@
 
 {% endblock %}
 
+{% comment %}
+Section js_ready calls search:model_tags_json, which is a collab
+callback for autocomplete.  This will not currently work without collab
+{% endcomment %}
 {% block "js_ready" %}
     $(".tags_autocomplete").autocomplete({
         source: "{% url "search:model_tags_json" "idea" %}",

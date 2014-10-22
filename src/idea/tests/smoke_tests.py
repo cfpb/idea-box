@@ -5,12 +5,15 @@ from exam.decorators import fixture
 from exam.cases import Exam
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
-from idea.tests.utils import get_login_user
+from idea.tests.utils import get_login_user, create_superuser
 
 
 class SmokeTest(Exam, WebTest):
     csrf_checks = False
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state']
+
+    def setUp(self):
+        create_superuser()
 
     @fixture
     def user(self):

@@ -1,13 +1,14 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from idea import models
-from idea.tests.utils import random_user, login
+from idea.tests.utils import random_user, login, create_superuser
 
 
 class VotingTests(TestCase):
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state']
 
     def setUp(self):
+        create_superuser()
         self.state = models.State.objects.get(name='Active') 
 
     def test_good_vote(self):

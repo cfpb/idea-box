@@ -1,14 +1,15 @@
 from django.test import TestCase
 from idea import models
-from idea.tests.utils import random_user
+from idea.tests.utils import random_user, create_superuser
 from django.contrib.auth import get_user_model
 from django.contrib.comments.models import Comment
 
 
 class VotingTests(TestCase):
-    fixtures = ['state', 'core-test-fixtures']
+    fixtures = ['state']
 
     def setUp(self):
+        create_superuser()
         self.state = models.State.objects.get(name='Active') 
 
     def test_members(self):
