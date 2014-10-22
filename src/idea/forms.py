@@ -1,9 +1,10 @@
 from django import forms
+from django.conf import settings
 from idea.models import Idea
 
-try:
+if 'core.taggit' in settings.INSTALLED_APPS:
     from core.taggit.utils import add_tags
-except ImportError:
+else:
     pass
 
 

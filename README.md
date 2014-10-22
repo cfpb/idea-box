@@ -8,14 +8,13 @@ easily integrate-able interface. Idea-Box also takes a strong stance on transpar
 such that ideas, votes, etc. are tied to specific users.
 
 ## Features
-* Searching 
 * Idea Submission
 * Tagging (via taggit)
 * Voting
 * Comments
-* Listing by recent, comment count, vote count
-* Separate state for archived ideas
-* Customizable banner for specific campaigns
+* Listing by trending, likes, and recently added
+* Archive/hide ideas
+* Customizable challenges for specific campaigns
 
 ## Screen shot
 
@@ -23,47 +22,43 @@ such that ideas, votes, etc. are tied to specific users.
 
 ## Requirements
 * django (1.5.4) - This is a django app, so you need django.
-* django-haystack (2.0.0) - A mapper between django models and search
-backends.
-* pyelasticsearch - Library for communicating with elasticsearch.
 * django-taggit - A library for Tags within django
 * mock - A library for creating mock objects for testing. 
-* south - A library for schema and data migrations. 
+* south - A library for schema and data migrations.
+* django-mptt - A library enabling nested/reply-to comments
 
-* elasticsearch - A Search backend. Unfortunately, we currently require
-elasticsearch (rather than another backend) because we need specific functionality
-that haystack doesn't give us direct access to. Eventually, we'll get a
-pull request to haystack which will reduce our elasticsearch requirement.
+### Optional
+* [collab platform](http://github.com/cfpb/collab) - Installing idea-box as an app inside a collab platform provides several convenience features:
+  * Autocomplete when adding new tags (requires elasticsearch server)
+  * User can delete tags he/she created
+  * Email notifications
+
 
 ## Installation
 
-### Settings File
-Modify your settings file to add the following apps:
-* django.contrib.comments
-* haystack
-* idea
+* Use pip to install the dependencies listed above
+* If not using collab as the Django platform, you still need to install collab for `custom_comments`
 
-You will also need to configure haystack. See the haystack
-[documentation](http://django-haystack.readthedocs.org/en/v1.2.7/tutorial.html#configuration)
-
-If you'd prefer to take the quick route, add the following to your
-settings.py:
-```python
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'haystack',
-    },
-}
+```
+pip install git+https://github.com/cfpb/collab.git#egg=collab
 ```
 
-If you are going that route, make sure that you have a search_sites.py
-module in the root of your project with something like the following:
+### Settings File
+Modify your settings file to add the following to your `INSTALLED_APPS`:
+```
+'django.contrib.comments',
+'taggit',
+'south',
+'mptt',
+'core.custom_comments',
+'idea'
+```
 
-```python
-import haystack
-haystack.autodiscover()
+If using a newer version of django-taggit, add the following to your settings file:
+```
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
+}
 ```
 
 ### Folder Structure
@@ -82,28 +77,23 @@ mydjango_project/
 
 ### URLs
 
-Add the idea.urls, haystack.urls, and comments.urls to you url.py. For 
+Add the idea.urls and comments.urls to you url.py. For 
 example:
 
 ```python
+from mydjango_project import settings
+
 if 'idea' in settings.INSTALLED_APPS and \
-        'django.contrib.comments' in settings.INSTALLED_APPS and\
-        'haystack' in settings.INSTALLED_APPS:
-    urlpatterns.append(url(r'^haystack/', include('haystack.urls')))
+        'django.contrib.comments' in settings.INSTALLED_APPS:
     urlpatterns.append(url(r'^comments/',
         include('django.contrib.comments.urls')))
-    urlpatterns.append(url(r'^idea/', include('idea.urls')))
+    urlpatterns.append(url(r'^idea/', include('idea.urls', namespace='idea')))
 ```
-
-### Elasticsearch
-
-You will need to have elasticsearch installed and running. You can use
-[this guide](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup.html#setup-installation) to install it.
 
 
 ### Migrations
 
-From your project root, synchronize and migrate the new apps.
+From your project root, synchronize and migrate the new apps.  Make sure to set your database settings.
 
 ```bash
 $ python ./manage.py syncdb --noinput --migrate
@@ -140,7 +130,8 @@ look and feel of your system.
 
 
 ### Buildout
-To use buildout, run the following:
+An alternative way to install the software is to use the buildout configuration.
+To use buildout to create a working project, run the following:
 ```bash
 $ pip install zc.buildout distribute
 $ buildout
@@ -149,7 +140,7 @@ Then, run the django binary in the ```bin``` directory.
 
 ### Campaign Banner
 
-To create a campaign banner, use django's administrative page to add a Banner model. The
-text field will be displayed at the top of the Idea-Box idea listing page. The banner
+To create a challenge, use django's administrative page to add a Banner model object. The
+text field will be displayed at the right of the Idea-Box idea listing page. The banner
 will only be displayed between Start Date and End Date (or indefinitely after the Start
 Date if the End Date is empty.)

@@ -7,6 +7,9 @@ def random_user():
     return get_user_model().objects.create_user(
             ''.join(random.choice(string.lowercase) for _ in range(12)))
 
+def create_superuser():
+    get_user_model().objects.create_superuser('test1@example.com', 'test1@example.com', '1')
+
 def get_login_user():
     # required for Collab integration
     if get_user_model().objects.filter(username='test1@example.com').exists():

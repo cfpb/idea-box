@@ -18,15 +18,13 @@ from idea.models import Idea, State, Vote, Banner, Config
 from idea.utility import state_helper
 from idea.models import UP_VOTE
 
-try:
+if 'core.taggit' in settings.INSTALLED_APPS:
     from core.taggit.models import Tag, TaggedItem
     from core.taggit.utils import add_tags
     COLLAB_TAGS = True
-except ImportError:
+else:
     from taggit.models import Tag
     COLLAB_TAGS = False
-
-from haystack import connections
 
 
 def _render(req, template_name, context={}):
@@ -177,38 +175,6 @@ def up_vote(request):
         return HttpResponseRedirect(next_url)
 
 
-def more_like_text(text, klass):
-    """
-    Return more entries like the provided chunk of text. We have to jump
-    through some hoops to get this working as the haystack API does not
-    account for this case. In particular, this is a solr-specific hack.
-    """
-    back = connections['default'].get_backend()
-
-    if hasattr(back, 'conn'):
-        query = {'query': {
-            'filtered': {
-                'query': {
-                    'fuzzy_like_this': {
-                        'like_text': text
-                    }
-                },
-                'filter': {
-                    'bool': {
-                        'must': {
-                            'term': {'django_ct': 'idea.idea'}
-                        }
-                    }
-                }
-            }
-        }
-
-        }
-        results = back.conn.search(query)
-        return back._process_results(results)['results']
-    else:
-        return []
-
 
 @login_required
 def detail(request, idea_id):
@@ -335,17 +301,6 @@ def add_idea(request, banner_id=None):
             form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/add.html', {
             'form': form,
-            # Similar keywords was used to provide suggestions for idea titles
-            # (or notify you that an idea already exists) when creating a new
-            # idea.  This functionality was removed from the front end a while
-            # ago when we redesigned the Add Idea page.  As such, the similar
-            # object is not currently being utilized.
-            #
-            # The specific reason why this is being removed right now is we've
-            # seen instances where elasticsearch complains about too many
-            # requests which results in a 500 error when clicking the
-            # "Add Idea" button.
-            # 'similar': [r.object for r in more_like_text(idea_title, Idea)]
         })
 
 
