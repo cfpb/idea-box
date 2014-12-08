@@ -105,7 +105,7 @@
                     <div class="challenge-banner">
                         <h5>Current Challenge:</h5>
                         <h3 class="challenge-description">{{banner.title}}</h3>
-                        <div id="challenge-link"><a href="{% url 'idea:banner_detail' banner.id %}" class="chevron-right">View Challenge Ideas</a></div>
+                        <div id="challenge-link"><a href="{% url 'idea:challenge_detail' banner.id %}" class="chevron-right">View Challenge Ideas</a></div>
                     </div><!-- /challenge-banner -->
                     {% endif %}
 		    <aside class="banners">
@@ -113,7 +113,7 @@
 			<ul>
 			    {% for challenge in browse_banners %}
 			    <li class="challenge">
-				<a class="challenge_name" href="{% url 'idea:banner_detail' challenge.id %}">{{challenge.title}}</a>
+				<a class="challenge_name" href="{% url 'idea:challenge_detail' challenge.id %}">{{challenge.title}}</a>
 			    </li>
 			    {% endfor %}
 			    <li>

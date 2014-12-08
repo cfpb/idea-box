@@ -2,17 +2,28 @@
 
 {% block "content" %}
 
-        <div id="content" class="idea-banner-single ic" role="main">
-            <div class="row">
-                <div class="logo span7 section project-title">
-                    <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
-                </div><!-- /logo -->
-            </div>
+            {% if banner.private %}
+                <div id="content" class="idea-home ic" role="main">
+                    <div class="logo span5">
+                        <h2 class="section">
+                            <a href="/idea/list/">IdeaBox</a>
+                        </h2>
+                    </div>
+            {% else %}
+                <div id="content" class="idea-banner-single ic" role="main">
+                    <div class="row">
+                        <div class="logo span7 section project-title">
+                            <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                        </div><!-- /logo -->
+                    </div>
+            {% endif %}
             <div class="row">
                 <div class="row challenge-info span9">
                     <div class="challenge-banner">
                         {% if is_current_banner %}
                             <h3>Current Challenge:</h3>
+                        {% elif banner.private == True %}
+                            <h3>Private Room</h3>
                         {% else %}
                             <h3>Expired Challenge:</h3>
                         {% endif %}
@@ -22,12 +33,16 @@
                         {{banner.text|urlize|linebreaksbr}}
                     </p>
                     {% if is_current_banner %}
-                    <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this Challenge</a></div>
+                        <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this Challenge</a></div>
+                    {% elif banner.private %}
+                        <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this private room</a></div>
                     {% endif %}
-                    <div>
-                        <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
-                        <span id="end">Challenge end date: {{banner.end_date|date:"SHORT_DATE_FORMAT"}}</span>
-                    </div>
+                    {% if not banner.private %}
+                        <div id="date-range">
+                            <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
+                            <span id="end">Challenge end date: {{banner.end_date|date:"SHORT_DATE_FORMAT"}}</span>
+                        </div>
+                    {% endif %}
                 </div><!-- /row -->
             </div>
             <div class="row">
@@ -42,14 +57,16 @@
                                 <div class="action">
                                 {% if idea.state.name == 'Archive' %}
                                     <span class="btn-archive">Archived</span>
-                                {% elif request.user in idea.voters.all %}
-                                    <span class="btn btn-voted">Liked</span>
                                 {% else %}
-                                    <form action="{% url 'idea:upvote_idea' %}" method=POST>
+                                        <form action="{% url 'idea:upvote_idea' %}" method=POST>
                                         {% csrf_token %}
                                         <input type="hidden" name="idea_id" value="{{idea.id}}"/>
-                                        <input type="hidden" name="next" value="{% url 'idea:idea_list' %}"/>
-                                        <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                        <input type="hidden" name="next" value="{{ request.path }}"/>
+                                        {% if request.user in idea.voters.all%}
+                                            <input type="submit" class="btn btn-voted" value="Liked" id="vote_up"/>
+                                        {% else %}
+                                            <input type="submit" class="btn btn-vote" value="Like" id="vote_up"/>
+                                        {% endif %}
                                     </form>
                                 {% endif %}
                                 </div>
@@ -81,7 +98,7 @@
                     </article><!-- /no-results -->
                 {% endif %}
                 {% if ideas.object_list.count > 5 %}
-                    <a href="#" class="back-to-top"><i class="icon-chevron-up"></i> Back to top</i></a>
+                    <a href="#" class="back-to-top"><i class="icon-chevron-up"></i> Back to top</a>
                 {% endif %}
 
                 <div class="pagination">
@@ -102,9 +119,15 @@
 
                 </section><!-- /main /main-content -->
                 <div class="sidebar span3">
+                    {% if banner.private %}
+                    <div class="project-add-idea">
+                        <a href="{% url 'idea:add_idea' banner.id %}" class="btn-huge">Submit an Idea</a>
+                    </div><!-- /project-add-idea -->
+                    {% else %}
                     <div class="project-add-idea">
                         <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                     </div><!-- /project-add-idea -->
+                    {% endif %}
                     <aside class="tags">
                         <h3>Browse by Tag:</h3>
                         <ul>
@@ -117,7 +140,6 @@
                         </ul>   
                     </aside>
                 </div><!-- /span_side -->
-            </div><!-- /row -->
             </div><!-- /row -->
         </div><!-- /main -->
 
