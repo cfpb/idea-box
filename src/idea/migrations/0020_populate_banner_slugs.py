@@ -1,29 +1,25 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from south.v2 import SchemaMigration
+from south.v2 import DataMigration
 from django.db import models
+from idea.models import unique_slug
 
-
-class Migration(SchemaMigration):
+class Migration(DataMigration):
 
     def forwards(self, orm):
-        # Adding field 'Banner.slug', unique=False for now to prevent duplicate key errors
-        db.add_column(u'idea_banner', 'slug',
-                      self.gf('django.db.models.fields.SlugField')(default='', unique=False, max_length=50, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Banner.private'
-        db.add_column(u'idea_banner', 'private',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
+        # Populate default values for existing banners before setting the unique flag
+        banners = orm['idea.Banner'].objects.all()
+        for banner in banners:
+            unique_slug(banner, 'title', 'slug')
+            banner.save()
 
     def backwards(self, orm):
-        # Deleting field 'Banner.slug'
-        db.delete_column(u'idea_banner', 'slug')
-
-        # Deleting field 'Banner.private'
-        db.delete_column(u'idea_banner', 'private')
+        # Delete slug from each banner object
+        banners = orm['idea.Banner'].objects.all()
+        for banner in banners:
+            banner.slug = ''
+            banner.save()
 
     models = {
         u'auth.group': {
@@ -129,3 +125,4 @@ class Migration(SchemaMigration):
     }
 
     complete_apps = ['idea']
+    symmetrical = True
