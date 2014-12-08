@@ -383,8 +383,8 @@ ul.section-nav li.active a {
     border-bottom-width: 1px;
 }
 
-#challenge-link {
-    margin-bottom: 20px;
+#date-range {
+    margin-top: 20px;
 }
 .sidebar .challenge-banner #challenge-link {
     margin-top: 1.5em;
@@ -498,11 +498,11 @@ ul.section-nav li.active a {
 }
 .project-add .challenge-checkbox {
     margin-bottom: 0;
+    margin-right: .5em;
 }
 .project-add .challenge-checkbox label {
     display: inline-block;
     vertical-align: middle;
-    margin-left: .5em;
 }
 .project-add .challenge-checkbox input {
     display: inline-block;
@@ -510,7 +510,6 @@ ul.section-nav li.active a {
 }
 .project-add select#id_banner {
     visibility: hidden;
-    margin-left: 1.5em;
 }
 .project-add select#id_banner.active {
     visibility: visible;

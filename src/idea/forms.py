@@ -79,6 +79,18 @@ class IdeaForm(forms.ModelForm):
             return [t.lower() for t in tags]
 
 
+class PrivateIdeaForm(IdeaForm):
+    def __init__(self, *args, **kwargs):
+        super(PrivateIdeaForm, self).__init__(*args, **kwargs)
+
+        self.fields['challenge-checkbox'] = forms.BooleanField(
+            label="My idea will only be visible in this private room:",
+            widget=forms.HiddenInput(), required=False, initial=True)
+        self.fields["challenge-checkbox"].widget.attrs["class"] = "form-control active"
+        self.fields["banner"].widget.attrs["class"] = "form-control active"
+        self.fields['banner'].empty_label = None
+
+
 class UpVoteForm(forms.Form):
     idea_id = forms.IntegerField(widget=forms.HiddenInput())
     next = forms.CharField(max_length=512, widget=forms.HiddenInput())

@@ -61,7 +61,11 @@
                 </div>
 
                 <div id="submit-buttons">
-                    <a class="btn" href="{% url "idea:idea_list" %}">Take me to IdeaBox</a>
+                    {% if idea.banner and idea.banner.private %}
+                        <a class="btn" href="{% url "idea:room_detail" idea.banner.slug %}">Take me to the private Idea room</a>
+                    {% else %}
+                        <a class="btn" href="{% url "idea:idea_list" %}">Take me to IdeaBox</a>
+                    {% endif %}
                     <a class="btn" href="{% url "idea:idea_detail" idea.id %}">Take me to my Idea</a>
                 </span>
             </div><!-- /add-summary -->
