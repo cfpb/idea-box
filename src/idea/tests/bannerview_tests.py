@@ -12,7 +12,7 @@ def get_relative_date(delta_days=0):
 
 class BannerViewTest(TestCase):
     """
-    Tests for idea.views.banner_detail
+    Tests for idea.views.challenge_detail
     """
     fixtures = ['state']
     def _generate_data(self, paramfn=lambda x,y:None, postfn=lambda x,y:None,
@@ -66,7 +66,7 @@ class BannerViewTest(TestCase):
         def add_time(kwargs, nonce):
             kwargs['time'] = datetime.datetime(2013, 1, nonce, tzinfo=get_default_timezone())
         self._generate_data(paramfn=add_time)
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         self._verify_order(render)
 
     @patch('idea.views.render')
@@ -81,35 +81,35 @@ class BannerViewTest(TestCase):
             entry_data.append((i+1, letters[i]*4))
         self._generate_data(entry_data=entry_data)
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(10, len(context['ideas']))
         self.assertEqual('AAAA', context['ideas'][0].title)
         self.assertEqual('EEEE', context['ideas'][4].title)
 
-        views.banner_detail(mock_req('/?page_num=1'), banner_id=1)
+        views.challenge_detail(mock_req('/?page_num=1'), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(10, len(context['ideas']))
         self.assertEqual('AAAA', context['ideas'][0].title)
         self.assertEqual('EEEE', context['ideas'][4].title)
 
-        views.banner_detail(mock_req('/?page_num=sadasds'), banner_id=1)
+        views.challenge_detail(mock_req('/?page_num=sadasds'), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(10, len(context['ideas']))
         self.assertEqual('AAAA', context['ideas'][0].title)
         self.assertEqual('EEEE', context['ideas'][4].title)
 
-        views.banner_detail(mock_req('/?page_num=2'), banner_id=1)
+        views.challenge_detail(mock_req('/?page_num=2'), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(3, len(context['ideas']))
         self.assertEqual('KKKK', context['ideas'][0].title)
         self.assertEqual('MMMM', context['ideas'][2].title)
 
-        views.banner_detail(mock_req('/?page_num=232432'), banner_id=1)
+        views.challenge_detail(mock_req('/?page_num=232432'), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(3, len(context['ideas']))
@@ -123,7 +123,7 @@ class BannerViewTest(TestCase):
         """
         self._generate_data()
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(6, len(context['ideas']))
@@ -153,7 +153,7 @@ class BannerViewTest(TestCase):
         idea.save()
 
         idea.tags.add('bbb', 'ccc', 'ddd')
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
         self.assertEqual(3, len(context['tags']))
@@ -180,7 +180,7 @@ class BannerViewTest(TestCase):
                 idea.save()
                 idea.tags.add(tag)
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
         self.assertEqual(25, len(context['tags']))
@@ -208,7 +208,7 @@ class BannerViewTest(TestCase):
                 idea.save()
                 idea.tags.add(tag)
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
 
@@ -227,23 +227,23 @@ class BannerViewTest(TestCase):
             idea.tags.add(tag)
         self._generate_data(postfn=add_tag)
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
         for tag in context['tags']:
             self.assertFalse(tag.active)
 
-        views.banner_detail(mock_req('/?tags=0'), banner_id=1)
+        views.challenge_detail(mock_req('/?tags=0'), banner_id=1)
         context = render.call_args[0][2]
         for tag in context['tags']:
             self.assertEqual(tag.name == '0', tag.active)
 
-        views.banner_detail(mock_req('/?tags=1'), banner_id=1)
+        views.challenge_detail(mock_req('/?tags=1'), banner_id=1)
         context = render.call_args[0][2]
         for tag in context['tags']:
             self.assertEqual(tag.name == '1', tag.active)
 
-        views.banner_detail(mock_req('/?tags=1,2'), banner_id=1)
+        views.challenge_detail(mock_req('/?tags=1,2'), banner_id=1)
         context = render.call_args[0][2]
         for tag in context['tags']:
             self.assertEqual(tag.name in ['1','2'], tag.active)
@@ -263,7 +263,7 @@ class BannerViewTest(TestCase):
             idea.tags.add(tag)
         self._generate_data(postfn=add_tag)
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(6, len(context['ideas']))
@@ -271,7 +271,7 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','1','2','3','4','5']),
                 set([t.name for t in context['tags']]))
 
-        views.banner_detail(mock_req('/?tags=0'), banner_id=1)
+        views.challenge_detail(mock_req('/?tags=0'), banner_id=1)
         context = render.call_args[0][2]
         self.assertEqual(3, len(context['ideas']))
         self.assertEqual(set(['BBBB', 'CCCC', 'DDDD']), 
@@ -280,7 +280,7 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','1','2','3']),
                 set([t.name for t in context['tags']]))
 
-        views.banner_detail(mock_req('/?tags=2'), banner_id=1)
+        views.challenge_detail(mock_req('/?tags=2'), banner_id=1)
         context = render.call_args[0][2]
         self.assertEqual(3, len(context['ideas']))
         self.assertEqual(set(['AAAA', 'BBBB', 'FFFF']), 
@@ -289,7 +289,7 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','2','4','5']),
                 set([t.name for t in context['tags']]))
 
-        views.banner_detail(mock_req('/?tags=0,2'), banner_id=1)
+        views.challenge_detail(mock_req('/?tags=0,2'), banner_id=1)
         context = render.call_args[0][2]
         self.assertEqual(1, len(context['ideas']))
         self.assertEqual(set(['BBBB']), 
@@ -319,17 +319,17 @@ class BannerViewTest(TestCase):
                                start_date=yesterday, end_date=today)
         banner3.save()
 
-        views.banner_detail(mock_req(), banner_id=1)
+        views.challenge_detail(mock_req(), banner_id=1)
         context = render.call_args[0][2]
         self.assertTrue('is_current_banner' in context)
         self.assertTrue(context['is_current_banner'])
 
-        views.banner_detail(mock_req(), banner_id=2)
+        views.challenge_detail(mock_req(), banner_id=2)
         context = render.call_args[0][2]
         self.assertTrue('is_current_banner' in context)
         self.assertFalse(context['is_current_banner'])
 
-        views.banner_detail(mock_req(), banner_id=3)
+        views.challenge_detail(mock_req(), banner_id=3)
         context = render.call_args[0][2]
         self.assertTrue('is_current_banner' in context)
         self.assertTrue(context['is_current_banner'])

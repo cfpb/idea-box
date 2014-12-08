@@ -299,7 +299,7 @@ def add_idea(request, banner_id=None):
     else:
         idea_title = request.GET.get('idea_title', '')
         current_banners = get_current_banners()
-        form_initial = {'title': idea_title,}
+        form_initial = {'title': idea_title, 'banner': None}
         banner = None
         if banner_id:
             banner = get_object_or_404(Banner, pk=int(banner_id))
