@@ -8,22 +8,12 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Banner.slug', unique=False for now to prevent duplicate key errors
-        db.add_column(u'idea_banner', 'slug',
-                      self.gf('django.db.models.fields.SlugField')(default='', unique=False, max_length=50, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Banner.private'
-        db.add_column(u'idea_banner', 'private',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
+        # Adding unique constraint on 'Banner', fields ['slug']
+        db.create_unique(u'idea_banner', ['slug'])
 
     def backwards(self, orm):
-        # Deleting field 'Banner.slug'
-        db.delete_column(u'idea_banner', 'slug')
-
-        # Deleting field 'Banner.private'
-        db.delete_column(u'idea_banner', 'private')
+        # Removing unique constraint on 'Banner', fields ['slug']
+        db.delete_unique(u'idea_banner', ['slug'])
 
     models = {
         u'auth.group': {
@@ -67,7 +57,7 @@ class Migration(SchemaMigration):
             'end_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'private': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'False', 'max_length': '50', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'blank': 'True'}),
             'start_date': ('django.db.models.fields.DateField', [], {}),
             'text': ('django.db.models.fields.TextField', [], {'max_length': '2000'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
