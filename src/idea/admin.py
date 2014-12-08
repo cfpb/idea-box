@@ -19,6 +19,8 @@ try:
     banner_actions.append(export_as_csv_action("CSV Export",
                                                fields=['title',
                                                        'text',
+                                                       'private',
+                                                       'slug',
                                                        'start_date',
                                                        'end_date']))
 except ImportError:
@@ -40,7 +42,9 @@ class VoteAdmin(admin.ModelAdmin):
     actions = vote_actions
 
 class BannerAdmin(admin.ModelAdmin):
-    list_display = ('title', 'start_date', 'end_date')
+    list_display = ('title', 'private', 'start_date', 'end_date')
+    fields = ('title', ('private', 'slug'), 'text', 'start_date', 'end_date')
+    readonly_fields = ('slug',)
     search_fields = ['title', 'text']
     actions = banner_actions
 
