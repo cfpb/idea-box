@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test.client import RequestFactory
+from django.conf import settings
 import random
 import string
 
@@ -8,7 +9,13 @@ def random_user():
             ''.join(random.choice(string.lowercase) for _ in range(12)))
 
 def create_superuser():
-    get_user_model().objects.create_superuser('test1@example.com', 'test1@example.com', '1')
+    user = get_user_model().objects.create_superuser('test1@example.com', 'test1@example.com', '1')
+    # If using collab, person objects needs to be created too
+    if 'core' in settings.INSTALLED_APPS:
+        from core.models import Person
+        person = Person()
+        person.user = user
+        person.save()
 
 def get_login_user():
     # required for Collab integration
