@@ -59,7 +59,7 @@ class BannerIndex(indexes.SearchIndex, indexes.Indexable):
         return 0 - int(mktime(obj.start_date.timetuple()))
 
     def prepare_url(self, obj):
-        return reverse('idea:banner_detail', args=(obj.id,))
+        return reverse('idea:challenge_detail', args=(obj.id,))
 
     def prepare_display(self, obj):
         return "Challenge: " + obj.title
