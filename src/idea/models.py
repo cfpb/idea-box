@@ -83,7 +83,10 @@ class Banner(models.Model):
         super(Banner, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return u'%s (ends %s)' % (self.title, self.end_date)
+        if self.end_date:
+            return u'%s (ends %s)' % (self.title, self.end_date)
+        else:
+            return u'%s' % self.title
 
 
 class State(models.Model):
