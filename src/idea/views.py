@@ -304,7 +304,7 @@ def add_idea(request, banner_id=None):
         if banner_id:
             banner = get_object_or_404(Banner, pk=int(banner_id))
         if banner and banner.private:
-            form_initial['banner'] = banner
+            form_initial['banner'] = banner.id
             form = PrivateIdeaForm(initial=form_initial)
             form.fields["banner"].queryset = Banner.objects.filter(id=banner_id)
         elif current_banners.count() == 0:
@@ -316,7 +316,7 @@ def add_idea(request, banner_id=None):
                 if banner not in current_banners:
                     banner = None
                 else:
-                    form_initial['banner'] = banner
+                    form_initial['banner'] = banner.id
                     form_initial['challenge-checkbox'] = "on"
 
             form = IdeaForm(initial=form_initial)
