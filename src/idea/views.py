@@ -318,7 +318,7 @@ def add_idea(request, banner_id=None):
                 else:
                     form_initial['banner'] = banner
                     form_initial['challenge-checkbox'] = "on"
-                    
+
             form = IdeaForm(initial=form_initial)
             form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/add.html', {
@@ -333,9 +333,12 @@ def edit_idea(request, idea_id):
     if idea.creator != request.user:
         return HttpResponseRedirect(reverse('idea:idea_detail',
                                             args=(idea_id,)))
-    
+
     if request.method == 'POST':
-        form = IdeaForm(request.POST, instance=idea)
+        if original_banner and original_banner.private:
+            form = PrivateIdeaForm(request.POST, instance=idea)
+        else:
+            form = IdeaForm(request.POST, instance=idea)
         form.fields.pop('tags')
         if form.is_valid():
             form.save()
@@ -344,7 +347,10 @@ def edit_idea(request, idea_id):
         else:
             if 'banner' in request.POST:
                 if original_banner:
-                    current_banners = get_current_banners([original_banner.id])
+                    if original_banner.private:
+                        current_banners = Banner.objects.filter(id=original_banner.id)
+                    else:
+                        current_banners = get_current_banners([original_banner.id])
                 else:
                     current_banners = get_current_banners()
                 form.fields["banner"].queryset = current_banners
@@ -355,18 +361,25 @@ def edit_idea(request, idea_id):
             return _render(request, 'idea/edit.html', {'form': form, 'idea': idea })
     else:
         form_initial = {}
-        if original_banner:
-            current_banners = get_current_banners([original_banner.id])
-            form_initial["challenge-checkbox"] = "on"
+
+        # private room
+        if original_banner and original_banner.private:
+            form = PrivateIdeaForm(instance=idea)
+            form.fields["banner"].queryset = Banner.objects.filter(id=original_banner.id)
+        # challenge
         else:
-            current_banners = get_current_banners()
-        form = IdeaForm(instance=idea, initial=form_initial)
+            if original_banner:
+                current_banners = get_current_banners([original_banner.id])
+                form_initial["challenge-checkbox"] = "on"
+            else:
+                current_banners = get_current_banners()
+            form = IdeaForm(instance=idea, initial=form_initial)
+            if len(current_banners) == 0:
+                form.fields.pop('banner')
+                form.fields.pop('challenge-checkbox')
+            else:
+                form.fields["banner"].queryset = current_banners
         form.fields.pop('tags')
-        if len(current_banners) == 0:
-            form.fields.pop('banner')
-            form.fields.pop('challenge-checkbox')
-        else:
-            form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/edit.html',
                        {'form': form, 'idea': idea })
 
