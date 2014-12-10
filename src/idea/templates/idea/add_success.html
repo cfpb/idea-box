@@ -5,7 +5,11 @@
         <div id="content" class="idea-add ic" role="main">
             <div class="row">
                 <div class="logo span7 section project-title">
-                    <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                    {% if idea.banner and idea.banner.private %}
+                        <a href="{% url 'idea:room_detail' idea.banner.slug %}">{{ idea.banner.title }}</a>
+                    {% else %}
+                        <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                    {% endif %}
                 </div><!-- /logo -->
             </div>
             <div class="add-summary">
