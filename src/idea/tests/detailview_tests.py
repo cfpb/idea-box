@@ -4,7 +4,8 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from idea import models, views
 from idea.forms import IdeaTagForm
-from idea.tests.utils import mock_req, random_user
+from django.core.urlresolvers import reverse
+from idea.tests.utils import mock_req, random_user, create_superuser, login
 from mock import patch
 import random
 
@@ -64,7 +65,7 @@ class DetailViewTest(TestCase):
         context = render.call_args[0][2]
         self.assertTrue('voters' in context)
         self.assertEqual(5, len(context['voters']))
-        self.assertEqual(set([u.id for u in users]), 
+        self.assertEqual(set([u.id for u in users]),
                 set([v.id for v in context['voters']]))
 
     @patch('idea.views.render')
@@ -132,7 +133,7 @@ class DetailViewTest(TestCase):
         """
         Detail page should have a form for adding tags.
         """
-        idea = models.Idea(creator=random_user(), title='AAAA', 
+        idea = models.Idea(creator=random_user(), title='AAAA',
                 state = models.State.objects.get(name='Active'))
         idea.save()
 
@@ -145,7 +146,7 @@ class DetailViewTest(TestCase):
         """
         Detail page tag form submission should add tags.
         """
-        idea = models.Idea(creator=random_user(), title='AAAA', 
+        idea = models.Idea(creator=random_user(), title='AAAA',
                 state = models.State.objects.get(name='Active'))
         idea.save()
         idea.tags.add('aaa', 'bbb', 'ccc')
@@ -156,6 +157,25 @@ class DetailViewTest(TestCase):
 
         idea = models.Idea.objects.get(id = idea.id)
         tags = set([tag.name for tag in idea.tags.all()])
-        self.assertEqual(set(['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'zzz']), 
+        self.assertEqual(set(['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'zzz']),
                 tags)
 
+    def test_anonymous_idea_hidden_name(self):
+        user = random_user()
+        state = models.State.objects.get(name='Active')
+        state.save()
+        idea = models.Idea(creator=user, title='AAAA', text='AA Text',
+                           state=state)
+        idea.save()
+
+        create_superuser()
+        login(self)
+        resp = self.client.get(reverse('idea:idea_detail', args=(idea.id,)))
+        self.assertTrue(user.first_name in resp.content)
+
+        idea2 = models.Idea(creator=user, title='BBBB', text='BB Text',
+                            state=state, is_anonymous=True)
+        idea2.save()
+
+        resp = self.client.get(reverse('idea:idea_detail', args=(idea2.id,)))
+        self.assertFalse(user.first_name in resp.content)
