@@ -51,7 +51,7 @@ class IdeaForm(forms.ModelForm):
 
         # Do not allow anonymous comments for normal ideas
         if not include_anonymous:
-            del self.fields['is_anonymous']
+            self.fields.pop('is_anonymous')
 
 
     def save(self):
