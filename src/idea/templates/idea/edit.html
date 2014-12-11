@@ -6,3 +6,7 @@
     <input type="submit" class="btn" id="add-idea-btn" value="Update this Idea">
     <input type="button" onclick="window.location = '{% url "idea:idea_detail" idea.id %}';" class="btn secondary-action" value="I changed my mind">
 {% endblock %}
+
+{% block "breadcrumbs" %}
+    <a href="{% url 'idea:idea_detail' idea.id %}">my Idea</a>
+{% endblock %}

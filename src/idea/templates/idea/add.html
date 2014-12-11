@@ -12,11 +12,13 @@
         <div id="content" class="idea-add ic" role="main">
             <div class="row">
                 <div class="logo span7 section project-title">
-                    {% if banner and banner.private %}
+                    {% block "breadcrumbs" %}
+                    {% if banner and banner.is_private %}
                         <a href="{% url 'idea:room_detail' banner.slug %}">{{ banner.title }}</a>
                     {% else %}
                         <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
                     {% endif %}
+                    {% endblock %}
                 </div><!-- /logo -->
             </div>
             <div class="project-add">
@@ -26,7 +28,7 @@
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="{{ field.html_name }}">
-                            {% if 'challenge-checkbox' == field.html_name %}
+                            {% if 'challenge-checkbox' == field.html_name or 'is_anonymous' == field.html_name %}
                                 {{ field }}
                                 <label for="{{ field.auto_id }}">
                                     {{ field.label }}
@@ -55,7 +57,7 @@
                     <span id="submit-buttons">
                         {% block "submit-buttons" %}
                         <input type="submit" class="btn" id="add-idea-btn" value="Submit this Idea">
-                        {% if banner and banner.private %}
+                        {% if banner and banner.is_private %}
                             <input type="button" onclick="window.location = '{% url "idea:room_detail" banner.slug %}';" class="btn secondary-action" value="I changed my mind">
                         {% else %}
                             <input type="button" onclick="window.location = '{% url "idea:idea_list" %}';" class="btn secondary-action" value="I changed my mind">

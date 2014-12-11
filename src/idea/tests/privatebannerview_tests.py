@@ -25,7 +25,7 @@ class PrivateBannerViewTest(TestCase):
         state = models.State.objects.get(name='Active')
         state.save()
 
-        banner = models.Banner(id=1, title="XXXX", text="text", private=True,
+        banner = models.Banner(id=1, title="XXXX", text="text", is_private=True,
                                start_date=datetime.date.today())
         banner.save()
 
@@ -149,7 +149,7 @@ class PrivateBannerViewTest(TestCase):
         self._generate_data(entry_data=None)
 
         # create some dummy tags that are not part of this banner's ideas
-        banner = models.Banner(id=2, title="XXXX", text="text", private=False,
+        banner = models.Banner(id=2, title="XXXX", text="text", is_private=False,
                                start_date=datetime.date.today())
         banner.save()
         for count in range(2):
@@ -159,7 +159,7 @@ class PrivateBannerViewTest(TestCase):
                         text=str(i)*4 +'3 Text', state=state, banner_id=2)
                 idea.save()
                 idea.tags.add(tag)
-        banner = models.Banner(id=3, title="XXXX", text="text", private=True,
+        banner = models.Banner(id=3, title="XXXX", text="text", is_private=True,
                                start_date=datetime.date.today())
         banner.save()
         for count in range(2):
@@ -239,7 +239,7 @@ class PrivateBannerViewTest(TestCase):
                         text=str(i)*42 +' Text', state=state)
                 idea.save()
                 idea.tags.add(tag)
-        banner = models.Banner(id=2, title="XXXX", text="text", private=True,
+        banner = models.Banner(id=2, title="XXXX", text="text", is_private=True,
                                start_date=datetime.date.today())
         banner.save()
         for count in range(2):
@@ -249,7 +249,7 @@ class PrivateBannerViewTest(TestCase):
                         text=str(i)*4 +'3 Text', state=state, banner_id=2)
                 idea.save()
                 idea.tags.add(tag)
-        banner = models.Banner(id=3, title="XXXX", text="text", private=True,
+        banner = models.Banner(id=3, title="XXXX", text="text", is_private=True,
                                start_date=datetime.date.today())
         banner.save()
         for count in range(2):
@@ -355,7 +355,7 @@ class PrivateBannerViewTest(TestCase):
         """
         Test boolean flag for banner status (active or not)
         """
-        banner = models.Banner(id=1, title="xxxx", text="text", private=True,
+        banner = models.Banner(id=1, title="xxxx", text="text", is_private=True,
                                start_date=datetime.date.today())
         banner.save()
 

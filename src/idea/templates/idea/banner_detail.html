@@ -2,7 +2,7 @@
 
 {% block "content" %}
 
-            {% if banner.private %}
+            {% if banner.is_private %}
                 <div id="content" class="idea-home ic" role="main">
                     <div class="logo span5">
                         <h2 class="section">
@@ -22,7 +22,7 @@
                     <div class="challenge-banner">
                         {% if is_current_banner %}
                             <h3>Current Challenge:</h3>
-                        {% elif banner.private == True %}
+                        {% elif banner.is_private == True %}
                             <h3>Private Room</h3>
                         {% else %}
                             <h3>Expired Challenge:</h3>
@@ -34,10 +34,10 @@
                     </p>
                     {% if is_current_banner %}
                         <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this Challenge</a></div>
-                    {% elif banner.private %}
+                    {% elif banner.is_private %}
                         <div id="challenge-link"><a href="{% url 'idea:add_idea' banner.id %}" class="chevron-right">Submit an Idea for this private room</a></div>
                     {% endif %}
-                    {% if not banner.private %}
+                    {% if not banner.is_private %}
                         <div id="date-range">
                             <span id="start">Challenge start date: {{banner.start_date|date:"SHORT_DATE_FORMAT"}}</span>
                             <span id="end">Challenge end date: {{banner.end_date|date:"SHORT_DATE_FORMAT"}}</span>
@@ -51,6 +51,7 @@
                 {% for idea in ideas %}
                         <article class="idea-entry">
                         <div class="row">
+                            {% if not idea.banner or idea.banner.is_votes %}
                             <div class="idea-votes left">
                                 <div class="count">{{idea.vote_count}}</div>
                                 <div class="phrase">Like{{idea.vote_count|pluralize:",s"}}</div>
@@ -71,6 +72,7 @@
                                 {% endif %}
                                 </div>
                             </div><!-- /idea-votes -->
+                            {% endif %}
                             <div class="idea-wrap span10">
                                 <header class="idea-title">
                                     <a href="{% url 'idea:idea_detail' idea.id %}"><h2>{{idea.title}}</h2></a>
@@ -119,7 +121,7 @@
 
                 </section><!-- /main /main-content -->
                 <div class="sidebar span3">
-                    {% if banner.private %}
+                    {% if banner.is_private %}
                     <div class="project-add-idea">
                         <a href="{% url 'idea:add_idea' banner.id %}" class="btn-huge">Submit an Idea</a>
                     </div><!-- /project-add-idea -->
