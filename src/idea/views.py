@@ -40,7 +40,7 @@ def get_current_banners(additional_ids_list=None):
     banner_filter = (start_date&end_date)
     if additional_ids_list:
         banner_filter = banner_filter|Q(id__in=additional_ids_list)
-    banners = Banner.objects.exclude(private=True).filter(banner_filter)
+    banners = Banner.objects.exclude(is_private=True).filter(banner_filter)
     # Banners with null end_date should be at the end
     banners = banners.extra(select={'null_end_date': 'CASE WHEN idea_banner.end_date IS NULL THEN 0 ELSE 1 END'})
     banners = banners.order_by('-null_end_date', 'end_date')
@@ -62,7 +62,7 @@ def list(request, sort_or_state=None):
     tag_ids = [tag.id for tag in Tag.objects.filter(slug__in=tag_strs)]
     page_num = request.GET.get('page_num')
 
-    ideas = Idea.objects.related_with_counts().exclude(banner__private=True)
+    ideas = Idea.objects.related_with_counts().exclude(banner__is_private=True)
 
     #   Tag Filter
     for tag_id in tag_ids:
@@ -139,7 +139,7 @@ def list(request, sort_or_state=None):
 @login_required
 def banner_list(request):
     current_banners = get_current_banners()
-    past_banners = Banner.objects.exclude(private=True).filter(end_date__lt=date.today()).order_by('end_date')
+    past_banners = Banner.objects.exclude(is_private=True).filter(end_date__lt=date.today()).order_by('end_date')
     return _render(request, 'idea/banner_list.html', {
         'current_banners': current_banners,
 	'past_banners': past_banners,
@@ -274,10 +274,11 @@ def add_idea(request, banner_id=None):
             banner = get_object_or_404(Banner, pk=int(banner_id))
 
         if idea.state.name == 'Active':
-            if banner and banner.private:
-                form = PrivateIdeaForm(request.POST, instance=idea)
+            if banner and banner.is_private:
+                form = PrivateIdeaForm(request.POST, instance=idea, initial={'banner':banner_id})
             else:
-                form = IdeaForm(request.POST, instance=idea)
+                form = IdeaForm(request.POST, instance=idea, initial={'banner':banner_id})
+
             if form.is_valid():
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
@@ -285,7 +286,7 @@ def add_idea(request, banner_id=None):
                                {'idea': new_idea, 'banner': banner})
             else:
                 if 'banner' in request.POST:
-                    if banner and banner.private:
+                    if banner and banner.is_private:
                         form.fields["banner"].queryset = Banner.objects.filter(id=banner.id)
                     else:
                         form.fields["banner"].queryset = get_current_banners()
@@ -303,7 +304,7 @@ def add_idea(request, banner_id=None):
         banner = None
         if banner_id:
             banner = get_object_or_404(Banner, pk=int(banner_id))
-        if banner and banner.private:
+        if banner and banner.is_private:
             form_initial['banner'] = banner.id
             form = PrivateIdeaForm(initial=form_initial)
             form.fields["banner"].queryset = Banner.objects.filter(id=banner_id)
@@ -335,8 +336,12 @@ def edit_idea(request, idea_id):
                                             args=(idea_id,)))
 
     if request.method == 'POST':
-        if original_banner and original_banner.private:
-            form = PrivateIdeaForm(request.POST, instance=idea)
+        form_initial = {'banner': None,}
+        if original_banner:
+            form_initial['banner'] = original_banner.id
+
+        if original_banner and original_banner.is_private:
+            form = PrivateIdeaForm(request.POST, instance=idea, initial=form_initial)
         else:
             form = IdeaForm(request.POST, instance=idea)
         form.fields.pop('tags')
@@ -347,7 +352,7 @@ def edit_idea(request, idea_id):
         else:
             if 'banner' in request.POST:
                 if original_banner:
-                    if original_banner.private:
+                    if original_banner.is_private:
                         current_banners = Banner.objects.filter(id=original_banner.id)
                     else:
                         current_banners = get_current_banners([original_banner.id])
@@ -360,11 +365,13 @@ def edit_idea(request, idea_id):
             form.set_error_css()
             return _render(request, 'idea/edit.html', {'form': form, 'idea': idea })
     else:
-        form_initial = {}
+        form_initial = {'banner': None,}
+        if original_banner:
+            form_initial['banner'] = original_banner.id
 
         # private room
-        if original_banner and original_banner.private:
-            form = PrivateIdeaForm(instance=idea)
+        if original_banner and original_banner.is_private:
+            form = PrivateIdeaForm(instance=idea, initial=form_initial)
             form.fields["banner"].queryset = Banner.objects.filter(id=original_banner.id)
         # challenge
         else:
@@ -389,7 +396,7 @@ def room_detail(request, slug):
     """
     Private banner detail view; slug must be the unique slug of the banner.
     """
-    banner = Banner.objects.filter(private=True).get(slug=slug)
+    banner = Banner.objects.filter(is_private=True).get(slug=slug)
     return banner_detail(request, banner=banner)
 
 @login_required
@@ -397,7 +404,7 @@ def challenge_detail(request, banner_id):
     """
     Challenge detail view; banner_id must be a string containing an int.
     """
-    banner = Banner.objects.filter(private=False).get(id=banner_id)
+    banner = Banner.objects.filter(is_private=False).get(id=banner_id)
     return banner_detail(request, banner=banner)
 
 def banner_detail(request, banner):
@@ -445,14 +452,14 @@ def banner_detail(request, banner):
             tag_slugs = ",".join(tag_strs + [tag.slug])
             tag.active = False
         if tag_strs == [tag.slug]:
-            if banner.private:
+            if banner.is_private:
                 tag.tag_url = "%s" % (reverse('idea:room_detail',
                                               args=(banner.slug,)))
             else:
                 tag.tag_url = "%s" % (reverse('idea:challenge_detail',
                                               args=(banner.id,)))
         else:
-            if banner.private:
+            if banner.is_private:
                 tag.tag_url = "%s?tags=%s" % (reverse('idea:room_detail',
                                                       args=(banner.slug,)),
                                               tag_slugs)

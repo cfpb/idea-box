@@ -148,7 +148,7 @@ class AddIdeaTest(TestCase):
         """
 
         banner1 = models.Banner(id=1, title="AAAA", text="text1",
-                               start_date=date.today(), private=True)
+                               start_date=date.today(), is_private=True)
         banner1.save()
         banner2 = models.Banner(id=2, title="BBBB", text="text2",
                                start_date=date.today())

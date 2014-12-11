@@ -111,7 +111,7 @@ class EditIdeaTest(TestCase):
         idea1 = models.Idea(creator=user, title='Transit subsidy to Venus', 
                             text='Aliens need assistance.', state=state)
         banner1 = models.Banner(id=1, title="AAAA", text="text1",
-                                start_date=date.today(), private=True)
+                                start_date=date.today(), is_private=True)
         banner1.save()
         idea1.banner = banner1
         idea1.save()

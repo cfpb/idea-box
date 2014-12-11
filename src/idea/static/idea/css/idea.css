@@ -317,10 +317,13 @@ ul.section-nav li.active a {
 .comment-form form {
     position: relative;
 }
-.comment-form label {
+.comment-form .comment-label {
     color: #666;
     position: absolute;
     left: .25em;
+}
+.comment-form #id_is_anonymous {
+    vertical-align: middle;
 }
 .comment-list {
     list-style-type: none;
@@ -500,10 +503,15 @@ ul.section-nav li.active a {
     margin-bottom: 0;
     margin-right: .5em;
 }
+.project-add .is_anonymous {
+    padding-bottom: 1em;
+}
+.project-add .is_anonymous label,
 .project-add .challenge-checkbox label {
     display: inline-block;
     vertical-align: middle;
 }
+.project-add .is_anonymous input,
 .project-add .challenge-checkbox input {
     display: inline-block;
     vertical-align: middle;
