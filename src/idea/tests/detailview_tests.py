@@ -1,7 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.contrib.comments.models import Comment
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.models import Site
 from django.http import Http404
 from django.test import TestCase
 from django.test.client import RequestFactory

@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib.auth.models import SiteProfileNotAvailable
 from django.conf import settings
-from django.contrib.comments import Comment
+from core.custom_comments.models import MPTTComment
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -172,9 +172,8 @@ class Idea(UserTrackable):
 
     @property
     def comments(self):
-        return Comment.objects.for_model(self.__class__).filter(is_public=True,
-                                                                is_removed=False,
-                                                                object_pk=self.pk)
+        return MPTTComment.objects.for_model(self.__class__).filter(
+            is_public=True, is_removed=False, object_pk=self.pk)
 
     @property
     def members(self):
