@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 from django.db.models import Q
 
-from idea.forms import IdeaForm, IdeaTagForm, UpVoteForm
+from idea.forms import IdeaForm, PrivateIdeaForm, IdeaTagForm, UpVoteForm
 from idea.models import Idea, State, Vote, Banner, Config
 from idea.utility import state_helper
 from idea.models import UP_VOTE
@@ -40,7 +40,7 @@ def get_current_banners(additional_ids_list=None):
     banner_filter = (start_date&end_date)
     if additional_ids_list:
         banner_filter = banner_filter|Q(id__in=additional_ids_list)
-    banners = Banner.objects.filter(banner_filter)
+    banners = Banner.objects.exclude(private=True).filter(banner_filter)
     # Banners with null end_date should be at the end
     banners = banners.extra(select={'null_end_date': 'CASE WHEN idea_banner.end_date IS NULL THEN 0 ELSE 1 END'})
     banners = banners.order_by('-null_end_date', 'end_date')
@@ -62,7 +62,7 @@ def list(request, sort_or_state=None):
     tag_ids = [tag.id for tag in Tag.objects.filter(slug__in=tag_strs)]
     page_num = request.GET.get('page_num')
 
-    ideas = Idea.objects.related_with_counts()
+    ideas = Idea.objects.related_with_counts().exclude(banner__private=True)
 
     #   Tag Filter
     for tag_id in tag_ids:
@@ -139,7 +139,7 @@ def list(request, sort_or_state=None):
 @login_required
 def banner_list(request):
     current_banners = get_current_banners()
-    past_banners = Banner.objects.filter(end_date__lt=date.today()).order_by('end_date')
+    past_banners = Banner.objects.exclude(private=True).filter(end_date__lt=date.today()).order_by('end_date')
     return _render(request, 'idea/banner_list.html', {
         'current_banners': current_banners,
 	'past_banners': past_banners,
@@ -257,6 +257,7 @@ def show_likes(request, idea_id):
         'voters': voters
     })
 
+
 @login_required
 def add_idea(request, banner_id=None):
     if request.method == 'POST':
@@ -268,39 +269,60 @@ def add_idea(request, banner_id=None):
             return HttpResponseRedirect(reverse('idea:idea_detail',
                                                 args=(matching_ideas[0].id,)))
         idea = Idea(creator=request.user, state=state_helper.get_first_state())
+        banner = None
+        if banner_id:
+            banner = get_object_or_404(Banner, pk=int(banner_id))
+
         if idea.state.name == 'Active':
-            form = IdeaForm(request.POST, instance=idea)
+            if banner and banner.private:
+                form = PrivateIdeaForm(request.POST, instance=idea)
+            else:
+                form = IdeaForm(request.POST, instance=idea)
             if form.is_valid():
                 new_idea = form.save()
                 vote_up(new_idea, request.user)
                 return _render(request, 'idea/add_success.html',
-                               {'idea': new_idea, })
+                               {'idea': new_idea, 'banner': banner})
             else:
                 if 'banner' in request.POST:
-                    form.fields["banner"].queryset = get_current_banners()
+                    if banner and banner.private:
+                        form.fields["banner"].queryset = Banner.objects.filter(id=banner.id)
+                    else:
+                        form.fields["banner"].queryset = get_current_banners()
                 else:
                     form.fields.pop('banner')
                     form.fields.pop('challenge-checkbox')
                 form.set_error_css()
-                return _render(request, 'idea/add.html', {'form': form, })
+                return _render(request, 'idea/add.html', {'form': form, 'banner': banner})
         else:
             return HttpResponse('Idea is archived', status=403)
     else:
         idea_title = request.GET.get('idea_title', '')
         current_banners = get_current_banners()
-        if current_banners.count() == 0:
-            form = IdeaForm(initial={'title': idea_title})
+        form_initial = {'title': idea_title, 'banner': None}
+        banner = None
+        if banner_id:
+            banner = get_object_or_404(Banner, pk=int(banner_id))
+        if banner and banner.private:
+            form_initial['banner'] = banner.id
+            form = PrivateIdeaForm(initial=form_initial)
+            form.fields["banner"].queryset = Banner.objects.filter(id=banner_id)
+        elif current_banners.count() == 0:
+            form = IdeaForm(initial=form_initial)
             form.fields.pop('banner')
             form.fields.pop('challenge-checkbox')
         else:
-            if banner_id and Banner.objects.get(id=banner_id) in get_current_banners():
-                banner = Banner.objects.get(id=banner_id)
-            else:
-                banner = None
-            form = IdeaForm(initial={'title': idea_title, 'banner': banner})
+            if banner:
+                if banner not in current_banners:
+                    banner = None
+                else:
+                    form_initial['banner'] = banner.id
+                    form_initial['challenge-checkbox'] = "on"
+
+            form = IdeaForm(initial=form_initial)
             form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/add.html', {
-            'form': form,
+            'form': form, 'banner': banner,
         })
 
 
@@ -311,9 +333,12 @@ def edit_idea(request, idea_id):
     if idea.creator != request.user:
         return HttpResponseRedirect(reverse('idea:idea_detail',
                                             args=(idea_id,)))
-    
+
     if request.method == 'POST':
-        form = IdeaForm(request.POST, instance=idea)
+        if original_banner and original_banner.private:
+            form = PrivateIdeaForm(request.POST, instance=idea)
+        else:
+            form = IdeaForm(request.POST, instance=idea)
         form.fields.pop('tags')
         if form.is_valid():
             form.save()
@@ -322,7 +347,10 @@ def edit_idea(request, idea_id):
         else:
             if 'banner' in request.POST:
                 if original_banner:
-                    current_banners = get_current_banners([original_banner.id])
+                    if original_banner.private:
+                        current_banners = Banner.objects.filter(id=original_banner.id)
+                    else:
+                        current_banners = get_current_banners([original_banner.id])
                 else:
                     current_banners = get_current_banners()
                 form.fields["banner"].queryset = current_banners
@@ -333,28 +361,49 @@ def edit_idea(request, idea_id):
             return _render(request, 'idea/edit.html', {'form': form, 'idea': idea })
     else:
         form_initial = {}
-        if original_banner:
-            current_banners = get_current_banners([original_banner.id])
-            form_initial["challenge-checkbox"] = "on"
+
+        # private room
+        if original_banner and original_banner.private:
+            form = PrivateIdeaForm(instance=idea)
+            form.fields["banner"].queryset = Banner.objects.filter(id=original_banner.id)
+        # challenge
         else:
-            current_banners = get_current_banners()
-        form = IdeaForm(instance=idea, initial=form_initial)
+            if original_banner:
+                current_banners = get_current_banners([original_banner.id])
+                form_initial["challenge-checkbox"] = "on"
+            else:
+                current_banners = get_current_banners()
+            form = IdeaForm(instance=idea, initial=form_initial)
+            if len(current_banners) == 0:
+                form.fields.pop('banner')
+                form.fields.pop('challenge-checkbox')
+            else:
+                form.fields["banner"].queryset = current_banners
         form.fields.pop('tags')
-        if len(current_banners) == 0:
-            form.fields.pop('banner')
-            form.fields.pop('challenge-checkbox')
-        else:
-            form.fields["banner"].queryset = current_banners
         return _render(request, 'idea/edit.html',
                        {'form': form, 'idea': idea })
 
 
 @login_required
-def banner_detail(request, banner_id):
+def room_detail(request, slug):
     """
-    Banner detail view; banner_id must be a string containing an int.
+    Private banner detail view; slug must be the unique slug of the banner.
     """
-    banner = Banner.objects.get(id=banner_id)
+    banner = Banner.objects.filter(private=True).get(slug=slug)
+    return banner_detail(request, banner=banner)
+
+@login_required
+def challenge_detail(request, banner_id):
+    """
+    Challenge detail view; banner_id must be a string containing an int.
+    """
+    banner = Banner.objects.filter(private=False).get(id=banner_id)
+    return banner_detail(request, banner=banner)
+
+def banner_detail(request, banner):
+    """
+    Banner detail view; banner must be a Banner object.
+    """
     is_current_banner = True if banner in get_current_banners() else False
 
     tag_strs = request.GET.get('tags', '').split(',')
@@ -396,12 +445,21 @@ def banner_detail(request, banner_id):
             tag_slugs = ",".join(tag_strs + [tag.slug])
             tag.active = False
         if tag_strs == [tag.slug]:
-            tag.tag_url = "%s" % (reverse('idea:banner_detail',
-                                          args=(banner_id,)))
+            if banner.private:
+                tag.tag_url = "%s" % (reverse('idea:room_detail',
+                                              args=(banner.slug,)))
+            else:
+                tag.tag_url = "%s" % (reverse('idea:challenge_detail',
+                                              args=(banner.id,)))
         else:
-            tag.tag_url = "%s?tags=%s" % (reverse('idea:banner_detail',
-                                                  args=(banner_id,)),
-                                          tag_slugs)
+            if banner.private:
+                tag.tag_url = "%s?tags=%s" % (reverse('idea:room_detail',
+                                                      args=(banner.slug,)),
+                                              tag_slugs)
+            else:
+                tag.tag_url = "%s?tags=%s" % (reverse('idea:challenge_detail',
+                                                      args=(banner.id,)),
+                                              tag_slugs)
 
     return _render(request, 'idea/banner_detail.html', {
         'ideas': page,

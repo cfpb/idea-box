@@ -35,7 +35,7 @@ class IdeaIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
         # State 2 = Archived
-        return self.get_model().objects.related_with_counts().exclude(state=2)
+        return self.get_model().objects.related_with_counts().exclude(state=2).exclude(banner__private=True)
 
 
 class BannerIndex(indexes.SearchIndex, indexes.Indexable):
@@ -59,7 +59,7 @@ class BannerIndex(indexes.SearchIndex, indexes.Indexable):
         return 0 - int(mktime(obj.start_date.timetuple()))
 
     def prepare_url(self, obj):
-        return reverse('idea:banner_detail', args=(obj.id,))
+        return reverse('idea:challenge_detail', args=(obj.id,))
 
     def prepare_display(self, obj):
         return "Challenge: " + obj.title
@@ -69,4 +69,4 @@ class BannerIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
-        return self.get_model().objects.all()
+        return self.get_model().objects.exclude(private=True)

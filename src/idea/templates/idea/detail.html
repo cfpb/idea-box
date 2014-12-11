@@ -8,7 +8,11 @@
         <div id="content" class="idea-single ic" role="main">
             <div class="row">
                 <div class="logo span7 section project-title">
-                    <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                    {% if idea.banner.private %}
+                        <a href="{% url 'idea:room_detail' idea.banner.slug %}">{{ idea.banner.title }}</a>
+                    {% else %}
+                        <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                    {% endif %}
                 </div><!-- /logo -->
             </div>
             <section id="main" class="main-content">
@@ -44,8 +48,13 @@
                             </header>
 		            {% if idea.banner %}
                                 <span class="idea-banner">
-                                    Challenge:
-                                    <a href="{% url "idea:banner_detail" idea.banner.id %}">{{idea.banner.title}}</a>
+                                    {% if idea.banner.private %}
+                                        Room:
+                                        <a href="{% url "idea:room_detail" idea.banner.slug %}">{{idea.banner.title}}</a>
+                                    {% else %}
+                                        Challenge:
+                                        <a href="{% url "idea:challenge_detail" idea.banner.id %}">{{idea.banner.title}}</a>
+                                    {% endif %}
 			        </span>
 			    {% endif %}
                         </div><!-- /idea-title-wrap -->
@@ -120,7 +129,11 @@
                         </div><!-- /idea-entry-content -->
                         <div id="sidebar" class="sidebar span3" role="complementary">
                             <aside class="project-add-idea">
-                                <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
+                                {% if idea.banner.private %}
+                                    <a href="{% url 'idea:add_idea' idea.banner.id %}" class="btn-huge">Submit an Idea</a>
+                                {% else %}
+                                    <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
+                                {% endif %}
                             </aside><!-- /project-add-idea -->
                             <aside class="voters">
                                 <h3>Liked by</h3>

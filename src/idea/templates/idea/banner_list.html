@@ -16,7 +16,7 @@
 		    <ul>
       		        {% for banner in current_banners %}
 		        <li class="current_banner_list_item">
-		    	    <a href="{% url 'idea:banner_detail' banner.id %}">{{banner.title}}</a>
+		    	    <a href="{% url 'idea:challenge_detail' banner.id %}">{{banner.title}}</a>
 		        </li>
                         {% empty %}
 			<li class="current_banner_list_item">
@@ -34,7 +34,7 @@
 		    <ul>
 			{% for banner in past_banners %}
 			<li class="past_banner_list_item">
-			    <a href="{% url 'idea:banner_detail' banner.id %}">{{banner.title}}</a>
+			    <a href="{% url 'idea:challenge_detail' banner.id %}">{{banner.title}}</a>
 			</li>
                         {% empty %}
 			<li class="past_banner_list_item">

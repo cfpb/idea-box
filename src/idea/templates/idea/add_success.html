@@ -5,7 +5,11 @@
         <div id="content" class="idea-add ic" role="main">
             <div class="row">
                 <div class="logo span7 section project-title">
-                    <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                    {% if idea.banner and idea.banner.private %}
+                        <a href="{% url 'idea:room_detail' idea.banner.slug %}">{{ idea.banner.title }}</a>
+                    {% else %}
+                        <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
+                    {% endif %}
                 </div><!-- /logo -->
             </div>
             <div class="add-summary">
@@ -61,7 +65,11 @@
                 </div>
 
                 <div id="submit-buttons">
-                    <a class="btn" href="{% url "idea:idea_list" %}">Take me to IdeaBox</a>
+                    {% if idea.banner and idea.banner.private %}
+                        <a class="btn" href="{% url "idea:room_detail" idea.banner.slug %}">Take me to the private Idea room</a>
+                    {% else %}
+                        <a class="btn" href="{% url "idea:idea_list" %}">Take me to IdeaBox</a>
+                    {% endif %}
                     <a class="btn" href="{% url "idea:idea_detail" idea.id %}">Take me to my Idea</a>
                 </span>
             </div><!-- /add-summary -->

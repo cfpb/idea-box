@@ -10,9 +10,9 @@ import string
 def get_relative_date(delta_days=0):
     return datetime.date.today() + datetime.timedelta(days=delta_days)
 
-class BannerViewTest(TestCase):
+class PrivateBannerViewTest(TestCase):
     """
-    Tests for idea.views.challenge_detail
+    Tests for idea.views.room_detail
     """
     fixtures = ['state']
     def _generate_data(self, paramfn=lambda x,y:None, postfn=lambda x,y:None,
@@ -25,7 +25,7 @@ class BannerViewTest(TestCase):
         state = models.State.objects.get(name='Active')
         state.save()
 
-        banner = models.Banner(id=1, title="XXXX", text="text",
+        banner = models.Banner(id=1, title="XXXX", text="text", private=True,
                                start_date=datetime.date.today())
         banner.save()
 
@@ -59,18 +59,18 @@ class BannerViewTest(TestCase):
         self.assertEqual('EEEE', context['ideas'][5].title)
 
     @patch('idea.views.render')
-    def test_sort(self, render):
+    def test_private_sort(self, render):
         """
         Verify sort order.
         """
         def add_time(kwargs, nonce):
             kwargs['time'] = datetime.datetime(2013, 1, nonce, tzinfo=get_default_timezone())
         self._generate_data(paramfn=add_time)
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         self._verify_order(render)
 
     @patch('idea.views.render')
-    def test_paging(self, render):
+    def test_private_paging(self, render):
         """
         Verify that paging works as we would expect.
         """
@@ -81,35 +81,35 @@ class BannerViewTest(TestCase):
             entry_data.append((i+1, letters[i]*4))
         self._generate_data(entry_data=entry_data)
 
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(10, len(context['ideas']))
         self.assertEqual('AAAA', context['ideas'][0].title)
         self.assertEqual('EEEE', context['ideas'][4].title)
 
-        views.challenge_detail(mock_req('/?page_num=1'), banner_id=1)
+        views.room_detail(mock_req('/?page_num=1'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(10, len(context['ideas']))
         self.assertEqual('AAAA', context['ideas'][0].title)
         self.assertEqual('EEEE', context['ideas'][4].title)
 
-        views.challenge_detail(mock_req('/?page_num=sadasds'), banner_id=1)
+        views.room_detail(mock_req('/?page_num=sadasds'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(10, len(context['ideas']))
         self.assertEqual('AAAA', context['ideas'][0].title)
         self.assertEqual('EEEE', context['ideas'][4].title)
 
-        views.challenge_detail(mock_req('/?page_num=2'), banner_id=1)
+        views.room_detail(mock_req('/?page_num=2'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(3, len(context['ideas']))
         self.assertEqual('KKKK', context['ideas'][0].title)
         self.assertEqual('MMMM', context['ideas'][2].title)
 
-        views.challenge_detail(mock_req('/?page_num=232432'), banner_id=1)
+        views.room_detail(mock_req('/?page_num=232432'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(3, len(context['ideas']))
@@ -117,13 +117,13 @@ class BannerViewTest(TestCase):
         self.assertEqual('MMMM', context['ideas'][2].title)
     
     @patch('idea.views.render')
-    def test_idea_fields(self, render):
+    def test_private_idea_fields(self, render):
         """
         Verify that the fields needed by the ui are available on all ideas.
         """
         self._generate_data()
 
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(6, len(context['ideas']))
@@ -138,9 +138,9 @@ class BannerViewTest(TestCase):
             self.assertTrue(hasattr(idea, 'time'))
 
     @patch('idea.views.render')
-    def test_tags_exist(self, render):
+    def test_private_tags_exist(self, render):
         """
-        Check that the tag list is populated.
+        Check that the tag list is populated with ONLY tags from private belonging ideas.
         """
         user = random_user()
         state = models.State.objects.get(name='Active')
@@ -148,12 +148,34 @@ class BannerViewTest(TestCase):
 
         self._generate_data(entry_data=None)
 
+        # create some dummy tags that are not part of this banner's ideas
+        banner = models.Banner(id=2, title="XXXX", text="text", private=False,
+                               start_date=datetime.date.today())
+        banner.save()
+        for count in range(2):
+            tag = str(count)*4
+            for i in range(count+1):
+                idea = models.Idea(creator=user, title=str(i)*4+'3', 
+                        text=str(i)*4 +'3 Text', state=state, banner_id=2)
+                idea.save()
+                idea.tags.add(tag)
+        banner = models.Banner(id=3, title="XXXX", text="text", private=True,
+                               start_date=datetime.date.today())
+        banner.save()
+        for count in range(2):
+            tag = str(count)*4
+            for i in range(count+1):
+                idea = models.Idea(creator=user, title=str(i)*4+'4', 
+                        text=str(i)*4 +'4 Text', state=state, banner_id=3)
+                idea.save()
+                idea.tags.add(tag)
+
         idea = models.Idea(creator=user, title='AAAA', text='AAAA Text',
                 state=state, banner_id=1)
         idea.save()
 
         idea.tags.add('bbb', 'ccc', 'ddd')
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
         self.assertEqual(3, len(context['tags']))
@@ -161,7 +183,7 @@ class BannerViewTest(TestCase):
                 set([t.name for t in context['tags']]))
 
     @patch('idea.views.render')
-    def test_tags_top_list(self, render):
+    def test_private_tags_top_list(self, render):
         """
         Tag list should be in proper order.
         """
@@ -169,6 +191,7 @@ class BannerViewTest(TestCase):
         state = models.State.objects.get(name='Active')
         state.save()
 
+        # create a private and public banner
         self._generate_data(entry_data=None)
 
         #   Make 13 tags, and assign each to a set of ideas
@@ -180,7 +203,7 @@ class BannerViewTest(TestCase):
                 idea.save()
                 idea.tags.add(tag)
 
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
         self.assertEqual(25, len(context['tags']))
@@ -189,7 +212,7 @@ class BannerViewTest(TestCase):
                 [t.name for t in context['tags']])
 
     @patch('idea.views.render')
-    def test_tags_count(self, render):
+    def test_private_tags_count(self, render):
         """
         Tag list should include tag count.
         """
@@ -208,7 +231,36 @@ class BannerViewTest(TestCase):
                 idea.save()
                 idea.tags.add(tag)
 
-        views.challenge_detail(mock_req(), banner_id=1)
+        # create some dummy tags that are not part of this banner's ideas
+        for count in range(2):
+            tag = str(count)*4
+            for i in range(count+1):
+                idea = models.Idea(creator=user, title=str(i)*4+'2', 
+                        text=str(i)*42 +' Text', state=state)
+                idea.save()
+                idea.tags.add(tag)
+        banner = models.Banner(id=2, title="XXXX", text="text", private=True,
+                               start_date=datetime.date.today())
+        banner.save()
+        for count in range(2):
+            tag = str(count)*4
+            for i in range(count+1):
+                idea = models.Idea(creator=user, title=str(i)*4+'3', 
+                        text=str(i)*4 +'3 Text', state=state, banner_id=2)
+                idea.save()
+                idea.tags.add(tag)
+        banner = models.Banner(id=3, title="XXXX", text="text", private=True,
+                               start_date=datetime.date.today())
+        banner.save()
+        for count in range(2):
+            tag = str(count)*4
+            for i in range(count+1):
+                idea = models.Idea(creator=user, title=str(i)*4+'4', 
+                        text=str(i)*4 +'4 Text', state=state, banner_id=3)
+                idea.save()
+                idea.tags.add(tag)
+
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
 
@@ -218,7 +270,7 @@ class BannerViewTest(TestCase):
             self.assertEqual(i+1, tag.count)
 
     @patch('idea.views.render')
-    def test_tags_active(self, render):
+    def test_private_tags_active(self, render):
         """
         Tag list should include if tag was active in this search.
         """
@@ -227,30 +279,30 @@ class BannerViewTest(TestCase):
             idea.tags.add(tag)
         self._generate_data(postfn=add_tag)
 
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('tags' in context)
         for tag in context['tags']:
             self.assertFalse(tag.active)
 
-        views.challenge_detail(mock_req('/?tags=0'), banner_id=1)
+        views.room_detail(mock_req('/?tags=0'), slug='xxxx')
         context = render.call_args[0][2]
         for tag in context['tags']:
             self.assertEqual(tag.name == '0', tag.active)
 
-        views.challenge_detail(mock_req('/?tags=1'), banner_id=1)
+        views.room_detail(mock_req('/?tags=1'), slug='xxxx')
         context = render.call_args[0][2]
         for tag in context['tags']:
             self.assertEqual(tag.name == '1', tag.active)
 
-        views.challenge_detail(mock_req('/?tags=1,2'), banner_id=1)
+        views.room_detail(mock_req('/?tags=1,2'), slug='xxxx')
         context = render.call_args[0][2]
         for tag in context['tags']:
             self.assertEqual(tag.name in ['1','2'], tag.active)
 
 
     @patch('idea.views.render')
-    def test_tag_filter(self, render):
+    def test_private_tag_filter(self, render):
         """
         List of ideas should be filterable by tag.
         """
@@ -263,7 +315,7 @@ class BannerViewTest(TestCase):
             idea.tags.add(tag)
         self._generate_data(postfn=add_tag)
 
-        views.challenge_detail(mock_req(), banner_id=1)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('ideas' in context)
         self.assertEqual(6, len(context['ideas']))
@@ -271,7 +323,7 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','1','2','3','4','5']),
                 set([t.name for t in context['tags']]))
 
-        views.challenge_detail(mock_req('/?tags=0'), banner_id=1)
+        views.room_detail(mock_req('/?tags=0'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertEqual(3, len(context['ideas']))
         self.assertEqual(set(['BBBB', 'CCCC', 'DDDD']), 
@@ -280,7 +332,7 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','1','2','3']),
                 set([t.name for t in context['tags']]))
 
-        views.challenge_detail(mock_req('/?tags=2'), banner_id=1)
+        views.room_detail(mock_req('/?tags=2'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertEqual(3, len(context['ideas']))
         self.assertEqual(set(['AAAA', 'BBBB', 'FFFF']), 
@@ -289,7 +341,7 @@ class BannerViewTest(TestCase):
         self.assertEqual(set(['0','2','4','5']),
                 set([t.name for t in context['tags']]))
 
-        views.challenge_detail(mock_req('/?tags=0,2'), banner_id=1)
+        views.room_detail(mock_req('/?tags=0,2'), slug='xxxx')
         context = render.call_args[0][2]
         self.assertEqual(1, len(context['ideas']))
         self.assertEqual(set(['BBBB']), 
@@ -299,37 +351,15 @@ class BannerViewTest(TestCase):
                 set([t.name for t in context['tags']]))
 
     @patch('idea.views.render')
-    def test_banner_is_current(self, render):
+    def test_private_banner_is_not_current(self, render):
         """
         Test boolean flag for banner status (active or not)
         """
-        yesterday = get_relative_date(-1)
-        today = datetime.date.today()
-        tomorrow = get_relative_date(+1)
-
-        banner = models.Banner(id=1, title="XXXX", text="text",
-                               start_date=today)
+        banner = models.Banner(id=1, title="xxxx", text="text", private=True,
+                               start_date=datetime.date.today())
         banner.save()
 
-        banner2 = models.Banner(id=2, title="XXXX", text="text",
-                               start_date=tomorrow)
-        banner2.save()
-
-        banner3 = models.Banner(id=3, title="XXXX", text="text",
-                               start_date=yesterday, end_date=today)
-        banner3.save()
-
-        views.challenge_detail(mock_req(), banner_id=1)
-        context = render.call_args[0][2]
-        self.assertTrue('is_current_banner' in context)
-        self.assertTrue(context['is_current_banner'])
-
-        views.challenge_detail(mock_req(), banner_id=2)
+        views.room_detail(mock_req(), slug='xxxx')
         context = render.call_args[0][2]
         self.assertTrue('is_current_banner' in context)
         self.assertFalse(context['is_current_banner'])
-
-        views.challenge_detail(mock_req(), banner_id=3)
-        context = render.call_args[0][2]
-        self.assertTrue('is_current_banner' in context)
-        self.assertTrue(context['is_current_banner'])

@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from idea import models
-from idea.tests.utils import random_user, login, create_superuser
+from idea import models, views
+from idea.forms import IdeaForm, PrivateIdeaForm
+from idea.tests.utils import mock_req, random_user, login, create_superuser
 from datetime import date
+from mock import patch
 
 def create_idea(user=None):
     if not user:
@@ -19,7 +21,7 @@ def create_idea(user=None):
     idea.tags.add("test tag")
     return idea
 
-class AddIdeaTest(TestCase):
+class EditIdeaTest(TestCase):
     fixtures = ['state']
 
     def setUp(self):
@@ -97,3 +99,50 @@ class AddIdeaTest(TestCase):
         refresh_idea = models.Idea.objects.get(id=idea.id)
         self.assertEqual(refresh_idea.tags.count(), 1)
         self.assertEqual(refresh_idea.tags.all()[0].name, "test tag")
+
+    @patch('idea.views.render')
+    def test_edit_idea_with_private_banner(self, render):
+        """
+        Verify that the private banner field auto-populates properly
+        """
+        user = login(self)
+        state = models.State.objects.get(name='Active')
+
+        idea1 = models.Idea(creator=user, title='Transit subsidy to Venus', 
+                            text='Aliens need assistance.', state=state)
+        banner1 = models.Banner(id=1, title="AAAA", text="text1",
+                                start_date=date.today(), private=True)
+        banner1.save()
+        idea1.banner = banner1
+        idea1.save()
+
+        idea2 = models.Idea(creator=user, title='Transit subsidy to Venus', 
+                            text='Aliens need assistance.', state=state)
+        banner2 = models.Banner(id=2, title="BBBB", text="text2",
+                                start_date=date.today())
+        banner2.save()
+        idea2.banner = banner2
+        idea2.save()
+
+        views.edit_idea(mock_req(user=user), idea1.id)
+        context = render.call_args[0][2]
+        self.assertTrue('form' in context)
+        self.assertTrue(isinstance(context['form'], PrivateIdeaForm))
+        banner_field = context['form'].fields['banner']
+        selected = context['form'].initial['banner']
+        self.assertEqual(banner1.id, selected)
+        self.assertEqual(context['form'].fields['banner'].widget.choices.field.empty_label, None)
+        self.assertIn(banner1, banner_field._queryset)
+        self.assertNotIn(banner2, banner_field._queryset)
+
+        views.edit_idea(mock_req(user=user), idea2.id)
+        context = render.call_args[0][2]
+        self.assertTrue('form' in context)
+        self.assertTrue(isinstance(context['form'], IdeaForm))
+        self.assertFalse(isinstance(context['form'], PrivateIdeaForm))
+        banner_field = context['form'].fields['banner']
+        selected = context['form'].initial['banner']
+        self.assertEqual(banner2.id, selected)
+        self.assertEqual(context['form'].fields['banner'].widget.choices.field.empty_label, 'Select')
+        self.assertNotIn(banner1, banner_field._queryset)
+        self.assertIn(banner2, banner_field._queryset)
