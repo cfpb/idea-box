@@ -13,8 +13,8 @@ import string
 def get_relative_date(delta_days=0):
     return datetime.date.today() + datetime.timedelta(days=delta_days)
 
-def create_banner(title, delta_days=0):
-    banner = models.Banner(title=title, text=title+' Text',
+def create_banner(title, delta_days=0, private=False):
+    banner = models.Banner(title=title, text=title+' Text', private=private,
                            start_date=get_relative_date(-delta_days),
                            end_date=get_relative_date(delta_days))
     banner.save()
@@ -269,6 +269,35 @@ class ListViewTest(TestCase):
                 set([t.name for t in context['tags']]))
 
     @patch('idea.views.render')
+    def test_exclude_private_tags(self, render):
+        """
+        Check that the tag list does not include tags only used for
+        private banners
+        """
+        user = random_user()
+        state = models.State.objects.get(name='Active')
+        state.save()
+
+        pub_banner = create_banner('Public')
+        priv_banner = create_banner('Private', private=True)
+
+        pub_idea = models.Idea(creator=user, title='AAAA', text='AAAA Text',
+                   state=state, banner_id=pub_banner.id)
+        pub_idea.save()
+        priv_idea = models.Idea(creator=user, title='BBBB', text='BBBB Text',
+                    state=state, banner_id=priv_banner.id)
+        priv_idea.save()
+
+        pub_idea.tags.add('bbb', 'ccc', 'ddd')
+        priv_idea.tags.add('ddd', 'eee', 'fff')
+        views.list(mock_req())
+        context = render.call_args[0][2]
+        self.assertTrue('tags' in context)
+        self.assertEqual(3, len(context['tags']))
+        self.assertEqual(set(['bbb', 'ccc', 'ddd']), 
+                set([t.name for t in context['tags']]))
+
+    @patch('idea.views.render')
     def test_tags_top_list(self, render):
         """
         Tag list should be in proper order.
@@ -309,6 +338,19 @@ class ListViewTest(TestCase):
             for i in range(count+1):
                 idea = models.Idea(creator=user, title=str(i)*4, 
                         text=str(i)*4 +' Text', state=state)
+                idea.save()
+                idea.tags.add(tag)
+
+        # create some dummy tags for private banner ideas
+        # these tags should not be reflected in the tag count
+        banner = models.Banner(id=1, title="XXXX", text="text", private=True,
+                               start_date=datetime.date.today())
+        banner.save()
+        for count in range(5):
+            tag = str(count)*4
+            for i in range(count+1):
+                idea = models.Idea(creator=user, title=str(i)*4+'2',
+                        text=str(i)*42 +' Text', state=state, banner_id=1)
                 idea.save()
                 idea.tags.add(tag)
 

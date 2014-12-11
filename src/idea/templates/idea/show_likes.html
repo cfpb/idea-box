@@ -42,12 +42,17 @@
                             <header class="idea-title">
                                 <h1>Likes '{{idea.title}}'</h1>
                             </header>
-		            {% if idea.banner %}
+                            {% if idea.banner %}
                                 <span class="idea-banner">
+                                {% if idea.banner.private %}
+                                    Private Room:
+                                    <a href="{% url "idea:room_detail" idea.banner.slug %}">{{idea.banner.title}}</a>
+                                {% else %}
                                     Challenge:
-                                    <a href="{% url "idea:banner_detail" idea.banner.id %}">{{idea.banner.title}}</a>
-			        </span>
-			    {% endif %}
+                                    <a href="{% url "idea:challenge_detail" idea.banner.id %}">{{idea.banner.title}}</a>
+			                          </span>
+                                {% endif %}
+                            {% endif %}
                         </div><!-- /idea-title-wrap -->
                     </div><!-- /row -->
                     <div class="row body">
@@ -66,11 +71,13 @@
                                 {% endfor %}
                             </div>
                         </div><!-- /idea-entry-content -->
+                        {% if idea.banner and not idea.banner.private %}
                         <div id="sidebar" class="sidebar span3" role="complementary">
                             <aside class="project-add-idea">
                                 <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                             </aside><!-- /project-add-idea -->
                         </div><!-- /sidebar /sidebar -->
+                        {% endif %}
                     </div>
                 </article><!-- /single-idea-entry -->
             </section><!-- /main /main-content -->
