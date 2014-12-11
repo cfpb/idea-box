@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth import get_user_model
 from django.utils.timezone import get_default_timezone
-from django.contrib.comments.models import Comment
+from core.custom_comments.models import MPTTComment
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.test import TestCase
@@ -91,11 +91,11 @@ class ListViewTest(TestCase):
                            ).save()
             # add future timestamp for comment for items 1, 5
             elif nonce != 3:
-                Comment(content_type=idea_type, site=site,
-                        object_pk=idea.pk, user=idea.creator,
-                        comment='Blah',
-                        submit_date=datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
-                       ).save()
+                MPTTComment(content_type=idea_type, site=site,
+                            object_pk=idea.pk, user=idea.creator,
+                            comment='Blah',
+                            submit_date=datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                            ).save()
         self._generate_data(postfn=create_timestamp_event, paramfn=add_time)
         views.list(mock_req(), sort_or_state='trending')
         self._verify_order(render)
