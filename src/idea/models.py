@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib.auth.models import SiteProfileNotAvailable
 from django.conf import settings
-from django.contrib.comments import Comment
+from core.custom_comments.models import MPTTComment
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -76,7 +76,8 @@ class Banner(models.Model):
     end_date = models.DateField(null=True, blank=True,
                                 help_text="Empty indicates that the banner " +
                                 "should be continued indefinitely. ")
-    private = models.BooleanField(default=False)
+    is_private = models.BooleanField('private room', default=False)
+    is_votes = models.BooleanField('voting enabled', default=True)
 
     def save(self, *args, **kwargs):
         unique_slug(self, 'title', 'slug')
@@ -87,6 +88,12 @@ class Banner(models.Model):
             return u'%s (ends %s)' % (self.title, self.end_date)
         else:
             return u'%s' % self.title
+
+    def room_url(self):
+        return reverse('idea:room_detail', args=(self.slug,))
+
+    def room_link(self):
+        return "<a href='%s'>%s</a>" % (self.room_url(), self.title)
 
 
 class State(models.Model):
@@ -151,6 +158,8 @@ class Idea(UserTrackable):
     voters = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                     through="Vote", null=True,
                                     related_name="idea_vote_creator")
+    is_anonymous = models.BooleanField("anonymous Idea", default=False, help_text="""
+        Only enable anonymous if the Idea's challenge is private""")
 
     def __unicode__(self):
         return u'%s' % self.title
@@ -163,9 +172,8 @@ class Idea(UserTrackable):
 
     @property
     def comments(self):
-        return Comment.objects.for_model(self.__class__).filter(is_public=True,
-                                                                is_removed=False,
-                                                                object_pk=self.pk)
+        return MPTTComment.objects.for_model(self.__class__).filter(
+            is_public=True, is_removed=False, object_pk=self.pk)
 
     @property
     def members(self):
@@ -176,16 +184,19 @@ class Idea(UserTrackable):
         members.append(self.creator)
 
         for c in self.comments:
-            if c.user not in members:
+            if c.user not in members and not c.is_anonymous:
                 members.append(c.user)
 
         return members
 
     def get_creator_profile(self):
-        try:
-            return self.creator.get_profile()
-        except (ObjectDoesNotExist, SiteProfileNotAvailable):
+        if self.is_anonymous:
             return None
+        else:
+            try:
+                return self.creator.get_profile()
+            except (ObjectDoesNotExist, SiteProfileNotAvailable):
+                return None
 
     objects = IdeaManager()
 

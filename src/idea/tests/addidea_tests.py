@@ -80,7 +80,7 @@ class AddIdeaTest(TestCase):
         idea = models.Idea.objects.all()[0]
         for ti in tagged_items:
             self.assertEqual(user, ti.tag_creator)
-        
+
     @patch('idea.views.render')
     def test_add_idea_with_banner(self, render):
         """
@@ -148,7 +148,7 @@ class AddIdeaTest(TestCase):
         """
 
         banner1 = models.Banner(id=1, title="AAAA", text="text1",
-                               start_date=date.today(), private=True)
+                               start_date=date.today(), is_private=True)
         banner1.save()
         banner2 = models.Banner(id=2, title="BBBB", text="text2",
                                start_date=date.today())
@@ -206,3 +206,29 @@ class AddIdeaTest(TestCase):
         self.assertTrue('form' in context)
         self.assertTrue(isinstance(context['form'], IdeaForm))
         self.assertNotIn('banner', context['form'].fields.keys())
+
+    @patch('idea.views.render')
+    def test_add_idea_with_anonymous_option(self, render):
+        """
+        Verify that the anonymous field auto-populates only for
+        ideas where banner is preset and the banner is private
+        """
+
+        banner1 = models.Banner(id=1, title="AAAA", text="text1",
+                                start_date=date.today(), is_private=True)
+        banner1.save()
+        banner2 = models.Banner(id=2, title="BBBB", text="text2",
+                                start_date=date.today())
+        banner2.save()
+
+        views.add_idea(mock_req(), banner1.id)
+        context = render.call_args[0][2]
+        self.assertTrue(isinstance(context['form'], PrivateIdeaForm))
+        self.assertIn("is_anonymous", context['form'].fields)
+        self.assertNotIn("is_anonymous", context['form'].initial)
+
+        views.add_idea(mock_req(), banner2.id)
+        context = render.call_args[0][2]
+        self.assertTrue(isinstance(context['form'], IdeaForm))
+        self.assertNotIn("is_anonymous", context['form'].fields)
+        self.assertNotIn("is_anonymous", context['form'].initial)

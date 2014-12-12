@@ -1,0 +1,6 @@
+{% extends "notifications/email/base_notification.txt" %}
+
+{% block "body" %}
+Hello {{ n.target.first_name }}!
+We're writing to let you know that someone commented on {{ n.obj }} in IdeaBox. 
+{% endblock %}

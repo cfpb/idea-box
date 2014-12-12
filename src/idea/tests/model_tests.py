@@ -1,8 +1,8 @@
 from django.test import TestCase
 from idea import models
+from datetime import datetime
 from idea.tests.utils import random_user, create_superuser
-from django.contrib.auth import get_user_model
-from django.contrib.comments.models import Comment
+from core.custom_comments.models import MPTTComment
 
 
 class VotingTests(TestCase):
@@ -10,23 +10,23 @@ class VotingTests(TestCase):
 
     def setUp(self):
         create_superuser()
-        self.state = models.State.objects.get(name='Active') 
+        self.state = models.State.objects.get(name='Active')
 
     def test_members(self):
         user = random_user()
-        idea = models.Idea(creator=user, title='Transit subsidy to Mars', 
+        idea = models.Idea(creator=user, title='Transit subsidy to Mars',
                     text='Aliens need assistance.', state=self.state)
         idea.save()
-        
+
         self.assertEqual(len(idea.members), 1)
         self.assertIn(user, idea.members)
 
     def test_members_with_voters(self):
         user = random_user()
-        idea = models.Idea(creator=user, title='Transit subsidy to Mars', 
+        idea = models.Idea(creator=user, title='Transit subsidy to Mars',
                     text='Aliens need assistance.', state=self.state)
         idea.save()
-        
+
         voter = random_user()
         self.assertNotEqual(user, voter)
         vote = models.Vote()
@@ -43,16 +43,17 @@ class VotingTests(TestCase):
         idea = models.Idea(creator=user, title='Transit subsidy to Mars',
                     text='Aliens need assistance.', state=self.state)
         idea.save()
-        
+
         commenter = random_user()
         self.assertNotEqual(user, commenter)
-        comment = Comment()
+        comment = MPTTComment()
         comment.user = commenter
         comment.content_object = idea
         comment.comment = 'Test'
         comment.is_public = True
         comment.is_removed = False
         comment.site_id = 1
+        comment.submit_date = datetime.now()
         comment.save()
 
         self.assertEqual(len(idea.members), 2)
@@ -67,13 +68,14 @@ class VotingTests(TestCase):
 
         commenter = user
 
-        comment = Comment()
+        comment = MPTTComment()
         comment.user = commenter
         comment.content_object = idea
         comment.comment = 'Test'
         comment.is_public = True
         comment.is_removed = False
         comment.site_id = 1
+        comment.submit_date = datetime.now()
         comment.save()
 
         self.assertEqual(len(idea.members), 1)

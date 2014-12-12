@@ -5,8 +5,10 @@ import random
 import string
 
 def random_user():
+    username = ''.join(random.choice(string.lowercase) for _ in range(12))
     return get_user_model().objects.create_user(
-            ''.join(random.choice(string.lowercase) for _ in range(12)))
+        username=username, email="%s@example.com" % username,
+        first_name=username)
 
 def create_superuser():
     user = get_user_model().objects.create_superuser('test1@example.com', 'test1@example.com', '1')
