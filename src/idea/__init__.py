@@ -1,6 +1,5 @@
 from django.contrib.comments.signals import comment_was_posted
 from django.dispatch import receiver
-from idea.models import Idea
 
 
 @receiver(comment_was_posted)
@@ -13,16 +12,23 @@ def send_idea_notifications(sender, comment, request, **kwargs):
 
         idea = comment.content_object
 
-        title = u"%s %s commented on %s" % (normalize(comment.user.first_name),
-                                            normalize(comment.user.last_name),
-                                            idea.title)
+        if comment.is_anonymous:
+            title = u'Someone commented on "%s"' % idea.title
+            text_template = 'new_comment_anonymous.txt'
+            html_template = 'new_comment_anonymous.html'
+        else:
+            title = u'%s %s comented on "%s"' % (normalize(comment.user.first_name),
+                                                 normalize(comment.user.last_name),
+                                                 idea.title)
+            text_template = 'new_comment.txt'
+            html_template = 'new_comment.html'
 
         for user in idea.members:
             if user != comment.user:
                 email_info = EmailInfo(
                                 subject = title,
-                                text_template = 'idea/email/new_comment.txt',
-                                html_template = 'idea/email/new_comment.html',
+                                text_template = 'idea/email/%s' % text_template,
+                                html_template = 'idea/email/%s' % html_template,
                                 to_address = user.email,
                             )
                 Notification.set_notification(comment.user, comment.user, "commented", idea,
