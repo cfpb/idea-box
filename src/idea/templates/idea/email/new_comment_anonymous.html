@@ -1,0 +1,10 @@
+{% extends "notifications/email/base_notification.txt" %}
+
+{% block "body" %}
+<p>
+Hello {{ n.target.first_name }}! <br/>
+
+We're writing to let you know someone commented on <a href="{{ project_url }}{{ n.obj.url }}">{{ n.obj }}</a> in <a href="{{ project_url }}/idea">IdeaBox</a>. <br/>
+</p>
+
+{% endblock %}

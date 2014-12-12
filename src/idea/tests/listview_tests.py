@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth import get_user_model
 from django.utils.timezone import get_default_timezone
-from django.contrib.comments.models import Comment
+from core.custom_comments.models import MPTTComment
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.test import TestCase
@@ -13,8 +13,8 @@ import string
 def get_relative_date(delta_days=0):
     return datetime.date.today() + datetime.timedelta(days=delta_days)
 
-def create_banner(title, delta_days=0, private=False):
-    banner = models.Banner(title=title, text=title+' Text', private=private,
+def create_banner(title, delta_days=0, is_private=False):
+    banner = models.Banner(title=title, text=title+' Text', is_private=is_private,
                            start_date=get_relative_date(-delta_days),
                            end_date=get_relative_date(delta_days))
     banner.save()
@@ -91,11 +91,11 @@ class ListViewTest(TestCase):
                            ).save()
             # add future timestamp for comment for items 1, 5
             elif nonce != 3:
-                Comment(content_type=idea_type, site=site,
-                        object_pk=idea.pk, user=idea.creator,
-                        comment='Blah',
-                        submit_date=datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
-                       ).save()
+                MPTTComment(content_type=idea_type, site=site,
+                            object_pk=idea.pk, user=idea.creator,
+                            comment='Blah',
+                            submit_date=datetime.datetime(2050, 1, nonce, tzinfo=get_default_timezone())
+                            ).save()
         self._generate_data(postfn=create_timestamp_event, paramfn=add_time)
         views.list(mock_req(), sort_or_state='trending')
         self._verify_order(render)
@@ -279,7 +279,7 @@ class ListViewTest(TestCase):
         state.save()
 
         pub_banner = create_banner('Public')
-        priv_banner = create_banner('Private', private=True)
+        priv_banner = create_banner('Private', is_private=True)
 
         pub_idea = models.Idea(creator=user, title='AAAA', text='AAAA Text',
                    state=state, banner_id=pub_banner.id)
@@ -343,7 +343,7 @@ class ListViewTest(TestCase):
 
         # create some dummy tags for private banner ideas
         # these tags should not be reflected in the tag count
-        banner = models.Banner(id=1, title="XXXX", text="text", private=True,
+        banner = models.Banner(id=1, title="XXXX", text="text", is_private=True,
                                start_date=datetime.date.today())
         banner.save()
         for count in range(5):

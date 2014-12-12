@@ -35,7 +35,7 @@ class IdeaIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
         # State 2 = Archived
-        return self.get_model().objects.related_with_counts().exclude(state=2).exclude(banner__private=True)
+        return self.get_model().objects.related_with_counts().exclude(state=2).exclude(banner__is_private=True)
 
 
 class BannerIndex(indexes.SearchIndex, indexes.Indexable):
@@ -69,4 +69,4 @@ class BannerIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
-        return self.get_model().objects.exclude(private=True)
+        return self.get_model().objects.exclude(is_private=True)

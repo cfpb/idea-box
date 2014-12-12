@@ -44,7 +44,7 @@
                             </header>
                             {% if idea.banner %}
                                 <span class="idea-banner">
-                                {% if idea.banner.private %}
+                                {% if idea.banner.is_private %}
                                     Private Room:
                                     <a href="{% url "idea:room_detail" idea.banner.slug %}">{{idea.banner.title}}</a>
                                 {% else %}
@@ -71,7 +71,7 @@
                                 {% endfor %}
                             </div>
                         </div><!-- /idea-entry-content -->
-                        {% if idea.banner and not idea.banner.private %}
+                        {% if idea.banner and not idea.banner.is_private %}
                         <div id="sidebar" class="sidebar span3" role="complementary">
                             <aside class="project-add-idea">
                                 <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>

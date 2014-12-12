@@ -8,7 +8,7 @@
         <div id="content" class="idea-single ic" role="main">
             <div class="row">
                 <div class="logo span7 section project-title">
-                    {% if idea.banner.private %}
+                    {% if idea.banner.is_private %}
                         <a href="{% url 'idea:room_detail' idea.banner.slug %}">{{ idea.banner.title }}</a>
                     {% else %}
                         <a href="{% url 'idea:idea_list' %}">IdeaBox</a>
@@ -16,6 +16,7 @@
                 </div><!-- /logo -->
             </div>
             <section id="main" class="main-content">
+                {% if not idea.banner or idea.banner.is_votes %}
                 <div class="idea-votes span">
                     <div class="count">{{voters|length}}</div>
                     <div class="phrase">Like{{voters|pluralize:",s"}}</div>
@@ -40,6 +41,7 @@
                         {% endif %}
                     </div><!-- /bitton -->
                 </div><!-- /idea-votes -->
+                {% endif %}
                 <article class="single-idea-entry span">
                     <div class="row span9">
                         <div class="idea-title-wrap">
@@ -48,7 +50,7 @@
                             </header>
 		            {% if idea.banner %}
                                 <span class="idea-banner">
-                                    {% if idea.banner.private %}
+                                    {% if idea.banner.is_private %}
                                         Room:
                                         <a href="{% url "idea:room_detail" idea.banner.slug %}">{{idea.banner.title}}</a>
                                     {% else %}
@@ -63,11 +65,14 @@
                         <div class="idea-entry-content span9">
                             <h4 class="summary">Summary</h4><p>{{idea.summary|urlize|linebreaksbr}}</p>
                             <h4 class="detail">Detail</h4><p>{{idea.text|urlize|linebreaksbr}}</p>
-                            Posted by
-                            {% if idea.get_creator_profile %}
-                            <span class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></span>
-                            {% else %}
-                            <span class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </span>
+                            Posted
+                            {% if not idea.is_anonymous %}
+                              by
+                              {% if idea.get_creator_profile %}
+                                <span class="author"><a href="{{idea.get_creator_profile.get_absolute_url}}">{{idea.creator.first_name}} {{idea.creator.last_name}}</a></span>
+                              {% else %}
+                                <span class="author">{{idea.creator.first_name}} {{idea.creator.last_name}} </span>
+                              {% endif %}
                             {% endif %}
                             on {{idea.time|date:"M d, Y "}}
                             {% if idea.creator == request.user %}
@@ -94,6 +99,10 @@
                                     {{comment_form.security_hash}}
                                         <input type="hidden" name="parent" id="parent_id" value="" />
                                         <input type="hidden" name = "next" value="{% url 'idea:idea_detail' idea.id %}" />
+                                        {% if idea.banner and idea.banner.is_private %}
+                                          {{comment_form.is_anonymous}}
+                                          <label class="anonymous-label" for="id_is_anonymous">Hide my name from this comment</label>
+                                        {% endif %}
                                         <input type="submit" class="btn right" value="Submit" id="id_submit" />
                                     </form>
                                 </div><!-- /comment-form -->
@@ -102,7 +111,11 @@
                                     <li class="comment">
                                         <article>
                                             <footer class="comment-meta">
-                                            {% if idea.get_creator_profile %}
+                                            {% if node.is_anonymous %}
+                                                <p class="comment-author"><span class="comment-date">An IdeaBox User on {{node.submit_date|date:"M d, Y g:i A"}}</span>
+                                                {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
+                                                | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
+                                            {% elif node.user.get_profile %}
                                                 <p class="comment-author"><a href="{{node.user.get_profile.get_absolute_url}}">{{node.user_name}}</a><span class="comment-date"> on {{node.submit_date|date:"M d, Y g:i A"}}</span>
                                                 {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
                                                 | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
@@ -129,12 +142,13 @@
                         </div><!-- /idea-entry-content -->
                         <div id="sidebar" class="sidebar span3" role="complementary">
                             <aside class="project-add-idea">
-                                {% if idea.banner.private %}
+                                {% if idea.banner.is_private %}
                                     <a href="{% url 'idea:add_idea' idea.banner.id %}" class="btn-huge">Submit an Idea</a>
                                 {% else %}
                                     <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                                 {% endif %}
                             </aside><!-- /project-add-idea -->
+                            {% if not idea.banner or idea.banner.is_votes %}
                             <aside class="voters">
                                 <h3>Liked by</h3>
                                 <ul>
@@ -151,6 +165,7 @@
                                 {% endif %}
                                 
                             </aside>    
+                            {% endif %}
                             <aside class="tags">
                                 <h3>Idea Tags</h3>
                                 <ul>

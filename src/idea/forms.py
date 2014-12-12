@@ -15,10 +15,13 @@ class IdeaForm(forms.ModelForm):
         exclude = ('creator', 'time', 'state', 'voters')
 
     def __init__(self, *args, **kwargs):
+        # override to hide the is_anonymous field
+        include_anonymous = kwargs.pop("include_anonymous", False)
         super(IdeaForm, self).__init__(*args, **kwargs)
-        self.fields['banner'].empty_label = "Select"
 
+        self.fields['banner'].empty_label = "Select"
         self.fields['title'].label = "What is your idea?"
+        self.fields['is_anonymous'].label = "Do not display my name as the creator of this Idea"
         self.fields['banner'].label = None
         self.fields['summary'].label = "Pitch your idea"
         self.fields['tags'].label = "Tag it with keywords"
@@ -39,13 +42,19 @@ class IdeaForm(forms.ModelForm):
 
         self.fields.keyOrder = [
             'title',
+            'is_anonymous',
             'challenge-checkbox',
             'banner',
             'summary',
             'tags',
             'text']
 
-    def save(self, commit=True):
+        # Do not allow anonymous comments for normal ideas
+        if not include_anonymous:
+            self.fields.pop('is_anonymous')
+
+
+    def save(self):
         instance = super(IdeaForm, self).save(commit=False)
         # add tags separately
         tags = self.cleaned_data.get('tags', [])
@@ -81,6 +90,7 @@ class IdeaForm(forms.ModelForm):
 
 class PrivateIdeaForm(IdeaForm):
     def __init__(self, *args, **kwargs):
+        kwargs['include_anonymous'] = True
         super(PrivateIdeaForm, self).__init__(*args, **kwargs)
 
         self.fields['challenge-checkbox'] = forms.BooleanField(

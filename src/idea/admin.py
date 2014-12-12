@@ -10,17 +10,21 @@ try:
 
     idea_actions.append(export_as_csv_action("CSV Export",
                                              fields=['title',
-                                                     'text',
                                                      'creator',
-                                                     'banner']))
+                                                     'is_anonymous',
+                                                     'banner',
+                                                     'summary',
+                                                     'text',
+                                                     'state']))
     vote_actions.append(export_as_csv_action("CSV Export",
                                              fields=['creator',
                                                      'idea']))
     banner_actions.append(export_as_csv_action("CSV Export",
                                                fields=['title',
                                                        'text',
-                                                       'private',
                                                        'slug',
+                                                       'is_private',
+                                                       'is_votes',
                                                        'start_date',
                                                        'end_date']))
 except ImportError:
@@ -33,7 +37,7 @@ class ConfigAdmin(admin.ModelAdmin):
 class IdeaAdmin(admin.ModelAdmin):
     list_display = ('title', 'creator', 'banner')
     search_fields = ['title', 'text']
-    exclude = ('tags',)
+    fields = ('creator', ('banner', 'is_anonymous'), 'title', 'summary', 'text', 'state')
     actions = idea_actions
 
 class VoteAdmin(admin.ModelAdmin):
@@ -42,11 +46,20 @@ class VoteAdmin(admin.ModelAdmin):
     actions = vote_actions
 
 class BannerAdmin(admin.ModelAdmin):
-    list_display = ('title', 'private', 'start_date', 'end_date')
-    fields = ('title', ('private', 'slug'), 'text', 'start_date', 'end_date')
-    readonly_fields = ('slug',)
-    search_fields = ['title', 'text']
+    def room_link_clickable(self, obj):
+        return obj.room_link()
+    room_link_clickable.allow_tags = True
+    room_link_clickable.short_description = "room link"
+    readonly_fields = ('room_link_clickable',)
+
+    list_display = ('title', 'is_private', 'is_votes', 'start_date', 'end_date')
+    fields = ('title', ('is_private', 'room_link_clickable', 'is_votes'), 'text', 'start_date', 'end_date')
+    
+    search_fields = ['title', 'summary']
     actions = banner_actions
+
+    class Media:
+        js = ("idea/js/admin.js",)
 
 admin.site.register(State)
 admin.site.register(Config, ConfigAdmin)
