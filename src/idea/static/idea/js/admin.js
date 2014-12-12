@@ -6,10 +6,10 @@
 function set_votes_visibility() {
     if ($('.field-box.field-is_private > input').is(':checked')) {
         $('.field-box.field-is_votes').show(); 
-        $('.field-box.field-slug').show(); 
+        $('.field-box.field-room_link_clickable').show(); 
     } else {
         $('.field-box.field-is_votes').hide();
-        $('.field-box.field-slug').hide();
+        $('.field-box.field-room_link_clickable').hide();
         $('.field-box.field-is_votes > input').attr('checked', 'checked');
     }
 };
