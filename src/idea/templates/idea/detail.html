@@ -112,7 +112,7 @@
                                         <article>
                                             <footer class="comment-meta">
                                             {% if node.is_anonymous %}
-                                                <p class="comment-author"><span class="comment-date">Anonymous on {{node.submit_date|date:"M d, Y g:i A"}}</span>
+                                                <p class="comment-author"><span class="comment-date">An IdeaBox User on {{node.submit_date|date:"M d, Y g:i A"}}</span>
                                                 {% comment %} use parent_id if present, forces max comment depth of 2 {% endcomment %}
                                                 | <a href="#c{{ node.id }}" data-comment-id="{% if node.parent_id %}{{ node.parent_id }}{% else %}{{ node.id }}{% endif %}" class="comment_reply_link">Reply</a></p>
                                             {% elif node.user.get_profile %}
