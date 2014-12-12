@@ -21,7 +21,7 @@ class IdeaForm(forms.ModelForm):
 
         self.fields['banner'].empty_label = "Select"
         self.fields['title'].label = "What is your idea?"
-        self.fields['is_anonymous'].label = "I want my Idea to be anonymous"
+        self.fields['is_anonymous'].label = "Do not display my name as the creator of this Idea"
         self.fields['banner'].label = None
         self.fields['summary'].label = "Pitch your idea"
         self.fields['tags'].label = "Tag it with keywords"

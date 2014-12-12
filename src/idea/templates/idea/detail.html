@@ -101,7 +101,7 @@
                                         <input type="hidden" name = "next" value="{% url 'idea:idea_detail' idea.id %}" />
                                         {% if idea.banner and idea.banner.is_private %}
                                           {{comment_form.is_anonymous}}
-                                          <label class="anonymous-label" for="id_is_anonymous">I want this comment to be anonymous</label>
+                                          <label class="anonymous-label" for="id_is_anonymous">Hide my name from this comment</label>
                                         {% endif %}
                                         <input type="submit" class="btn right" value="Submit" id="id_submit" />
                                     </form>
