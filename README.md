@@ -77,7 +77,7 @@ mydjango_project/
 
 ### URLs
 
-Add the idea.urls and comments.urls to you url.py. For 
+Add the idea.urls and comments.urls to your url.py. For 
 example:
 
 ```python
