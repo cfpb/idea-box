@@ -1,10 +1,10 @@
-# Idea-Box
+# IdeaBox
 
 [![Build Status](https://travis-ci.org/cfpb/idea-box.svg?branch=master)](https://travis-ci.org/cfpb/idea-box)
 
-Idea-Box is a django app for collecting and surfacing ideas from users, in the vein of
-IdeaScale, IdeaX, and Django Voice. Idea-Box differs from these projects in its minimal,
-easily integrate-able interface. Idea-Box also takes a strong stance on transparency,
+IdeaBox is a Django app for collecting and surfacing ideas from users, in the vein of
+IdeaScale, IdeaX, and Django Voice. IdeaBox differs from these projects in its minimal,
+easily integrate-able interface. IdeaBox also takes a strong stance on transparency,
 such that ideas, votes, etc. are tied to specific users.
 
 ## Features
@@ -21,14 +21,14 @@ such that ideas, votes, etc. are tied to specific users.
 ![Idea Profile](https://raw.github.com/cfpb/idea-box/master/doc/images/profile.png)
 
 ## Requirements
-* django (1.5.4) - This is a django app, so you need django.
-* django-taggit - A library for Tags within django
+* django (1.5.4) - This is a Django app, so you need Django.
+* django-taggit - A library for tags within Django
 * mock - A library for creating mock objects for testing. 
 * south - A library for schema and data migrations.
 * django-mptt - A library enabling nested/reply-to comments
 
 ### Optional
-* [collab platform](http://github.com/cfpb/collab) - Installing idea-box as an app inside a collab platform provides several convenience features:
+* [collab platform](http://github.com/cfpb/collab) - Installing IdeaBox as an app inside a collab platform provides several convenience features:
   * Autocomplete when adding new tags (requires elasticsearch server)
   * User can delete tags he/she created
   * Email notifications
@@ -64,7 +64,7 @@ SOUTH_MIGRATION_MODULES = {
 ### Folder Structure
 
 You will need to get the contents of the ```src/idea``` directory into
-your django project. The simplest way to do this might be a symbolic
+your Django project. The simplest way to do this might be a symbolic
 link.
 
 ```
@@ -77,7 +77,7 @@ mydjango_project/
 
 ### URLs
 
-Add the idea.urls and comments.urls to you url.py. For 
+Add the idea.urls and comments.urls to your url.py. For 
 example:
 
 ```python
@@ -111,8 +111,8 @@ get_absolute_url() method.
 
 ### CSS
 
-The default CSS style for Idea-Box is not ready for production.  This was done
-intentionally so that Idea-Box's style can match the style of the platform in
+The default CSS style for IdeaBox is not ready for production.  This was done
+intentionally so that IdeaBox's style can match the style of the platform in
 which it resides (i.e. not everyone wants a green header).  The simplest way to
 improve the styling is to source `src/idea/static/idea/css/sample_style.css`
 in the `css_files` block in the `/src/idea/templates/idea/idea-base.html` template:
@@ -125,7 +125,7 @@ in the `css_files` block in the `/src/idea/templates/idea/idea-base.html` templa
 ```
 
 Ideally, your Django platform will provide styles that can be sourced in the
-`base.html` template described in the section above so Idea-Box can match the
+`base.html` template described in the section above so IdeaBox can match the
 look and feel of your system.
 
 
@@ -136,11 +136,11 @@ To use buildout to create a working project, run the following:
 $ pip install zc.buildout distribute
 $ buildout
 ```
-Then, run the django binary in the ```bin``` directory.
+Then, run the Django binary in the ```bin``` directory.
 
 ### Campaign Banner
 
-To create a challenge, use django's administrative page to add a Banner model object. The
-text field will be displayed at the right of the Idea-Box idea listing page. The banner
+To create a challenge, use Django's administrative panel to add a Banner model object. The
+text field will be displayed at the right of the IdeaBox idea listing page. The banner
 will only be displayed between Start Date and End Date (or indefinitely after the Start
 Date if the End Date is empty.)
