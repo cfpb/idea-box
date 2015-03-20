@@ -37,7 +37,7 @@ such that ideas, votes, etc. are tied to specific users.
 ## Installation
 
 * Use pip to install the dependencies listed above
-* If not using collab as the Django platform, you still need to install collab for `custom_comments`
+* If not using collab as the Django platform, you still need to install collab for `custom_comments` and `taggit`
 
 ```
 pip install git+https://github.com/cfpb/collab.git#egg=collab
@@ -47,19 +47,16 @@ pip install git+https://github.com/cfpb/collab.git#egg=collab
 Modify your settings file to add the following to your `INSTALLED_APPS`:
 ```
 'django.contrib.comments',
-'taggit',
 'south',
 'mptt',
 'core.custom_comments',
+'core.taggit',
 'idea'
 ```
 
-If using a newer version of django-taggit, add the following to your settings file:
-```
-SOUTH_MIGRATION_MODULES = {
-    'taggit': 'taggit.south_migrations',
-}
-```
+#### Optional: Django-taggit
+
+If your project is already using [taggit](https://github.com/alex/django-taggit), you can use that instead of collab's taggit but you will lose some minor functionality.  To use the generic taggit, replace `core.taggit` with `taggit` in the `INSTALLED_APPS` step above.
 
 ### Folder Structure
 
