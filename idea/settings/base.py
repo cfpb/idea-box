@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django_nose',
     'django.contrib.comments',
     'django.contrib.staticfiles',
     'mptt',
@@ -50,8 +49,6 @@ DEBUG = True
 STATIC_URL = '/static/'
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_string(50))
-
-TEST_RUNNER = 'django_nose.runner.NoseTestSuiteRunner'
 
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'taggit.south_migrations',
