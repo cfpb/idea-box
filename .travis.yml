@@ -3,7 +3,7 @@ python:
     - "2.6"
     - "2.7"
 install: 
-    - pip install zc.buildout
-    - buildout
+    - pip install -r requirements.txt
+    - pip install -r requirements_test.txt
 script:
-    - ./bin/test
+    - python manage.py test
