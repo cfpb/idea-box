@@ -129,6 +129,7 @@ def list(request, sort_or_state=None):
     return _render(request, 'idea/list.html', {
         'sort_or_state': sort_or_state,
         'ideas': page,
+        'page_tags': tag_strs,
         'tags': tags,  # list of popular tags
         'banner': banner,
         'browse_banners': browse_banners,
@@ -141,7 +142,7 @@ def banner_list(request):
     past_banners = Banner.objects.exclude(is_private=True).filter(end_date__lt=date.today()).order_by('end_date')
     return _render(request, 'idea/banner_list.html', {
         'current_banners': current_banners,
-	'past_banners': past_banners,
+        'past_banners': past_banners,
     })
 
 def vote_up(idea, user):
@@ -469,6 +470,7 @@ def banner_detail(request, banner):
 
     return _render(request, 'idea/banner_detail.html', {
         'ideas': page,
+        'page_tags': tag_strs,
         'tags': tags,  # list of tags associated with banner ideas
         'banner': banner,
         'is_current_banner': is_current_banner,
