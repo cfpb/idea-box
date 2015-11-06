@@ -126,15 +126,6 @@ Ideally, your Django platform will provide styles that can be sourced in the
 look and feel of your system.
 
 
-### Buildout
-An alternative way to install the software is to use the buildout configuration.
-To use buildout to create a working project, run the following:
-```bash
-$ pip install zc.buildout distribute
-$ buildout
-```
-Then, run the Django binary in the ```bin``` directory.
-
 ### Campaign Banner
 
 To create a challenge, use Django's administrative panel to add a Banner model object. The

@@ -2,13 +2,9 @@
 *.pot
 *.pyc
 local_settings.py
-.installed.cfg
-bin
-develop-eggs
 dist
 build
 downloads
-eggs
 parts
 src/*.egg-info
 .DS_Store
