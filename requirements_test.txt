@@ -1,0 +1,5 @@
+django-nose
+django-webtest
+exam
+mock
+webtest
