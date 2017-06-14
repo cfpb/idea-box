@@ -1,5 +1,5 @@
-django-nose
-django-webtest
+django-nose==1.4.2
+django-webtest==1.7.8
 exam
 mock
 webtest
