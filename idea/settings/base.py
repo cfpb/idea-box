@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mptt',
     'core.custom_comments',  # from Collab
-    'taggit',
+    'core.taggit',
 ]
 
 ROOT_URLCONF = 'idea.example_urls'
