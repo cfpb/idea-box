@@ -91,7 +91,7 @@ textarea.populated {
 
 /* Header */
 .project-header .row {
-    padding: 0 0 1.5em 0;
+    margin-bottom: 1.5em;
 }
 .project-header .row p {
     margin: 0;
@@ -375,7 +375,7 @@ ul.section-nav li.active a {
     margin-bottom: 2.5em;
 }
 .challenge-banner {
-    margin-bottom: 1.25em;
+    margin: 1.25em 0;
     background-color: #DBEDD4;
     padding: 1.25em;
 }
@@ -801,21 +801,6 @@ input.btn:visited {
     visibility: hidden;
 }
 
-.challenge-info h3 {
-    text-transform: uppercase;
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-    font-size: 16px;
-    letter-spacing: 1px;
-}
-
-.challenge-info h2 {
-    font-weight: normal;
-}
-.challenge-info .challenge-banner {
-    margin-top: 0.5em;
-    background-color: #DBEDD4;
-    padding: 1em;
-}
 .challenge-info {
     border-bottom: 1px solid #000;
     padding: 0;
