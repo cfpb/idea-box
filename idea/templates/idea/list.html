@@ -14,6 +14,16 @@
                             </div>
                             <p class="info">{{ about_text|safe }}</p>
                         </div><!-- /row -->
+
+                        {% if banner %}
+                        <div class="challenge-banner">
+                            <h5>Current Challenge:</h5>
+                            <h3 class="challenge-description">{{banner.title}}</h3>
+                            <div id="challenge-link">
+                                <a href="{% url 'idea:challenge_detail' banner.id %}" class="chevron-right">View Challenge Ideas</a>
+                            </div>
+                        </div><!-- /challenge-banner -->
+                        {% endif %}
                     </header><!-- /project-header -->
                     <div class="visuallyhidden">
                         <h2>Main Navigation for IdeaBox</h2>
@@ -101,13 +111,6 @@
                     <div class="project-add-idea">
                         <a href="{% url 'idea:add_idea' %}" class="btn-huge">Submit an Idea</a>
                     </div><!-- /project-add-idea -->
-                    {% if banner %}
-                    <div class="challenge-banner">
-                        <h5>Current Challenge:</h5>
-                        <h3 class="challenge-description">{{banner.title}}</h3>
-                        <div id="challenge-link"><a href="{% url 'idea:challenge_detail' banner.id %}" class="chevron-right">View Challenge Ideas</a></div>
-                    </div><!-- /challenge-banner -->
-                    {% endif %}
 		    <aside class="banners">
 		        <h3>Browse by Challenge:</h3>
 			<ul>
@@ -130,7 +133,7 @@
                                 <span class="tag_remove">{{tag.count}}</span>
                             </li>
                             {% endfor %}
-                        </ul>   
+                        </ul>
                     </aside>
                 </div><!-- /span_side -->
             </div><!-- /row -->
