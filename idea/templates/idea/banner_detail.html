@@ -21,11 +21,11 @@
                 <div class="row challenge-info span9">
                     <div class="challenge-banner">
                         {% if is_current_banner %}
-                            <h3>Current Challenge:</h3>
+                            <h5>Current Challenge:</h5>
                         {% elif banner.is_private == True %}
-                            <h3>Private Room</h3>
+                            <h5>Private Room</h5>
                         {% else %}
-                            <h3>Expired Challenge:</h3>
+                            <h5>Expired Challenge:</h5>
                         {% endif %}
                         <h2>{{banner.title}}</h2>
                     </div>
@@ -139,7 +139,7 @@
                                 <span class="tag_remove">{{tag.count}}</span>
                             </li>
                             {% endfor %}
-                        </ul>   
+                        </ul>
                     </aside>
                 </div><!-- /span_side -->
             </div><!-- /row -->
