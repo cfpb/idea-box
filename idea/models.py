@@ -117,7 +117,7 @@ class IdeaManager(models.Manager):
             'comment_count': """
                 SELECT count(*) FROM django_comments
                 WHERE django_comments.content_type_id = %s
-                AND django_comments.object_pk = idea_idea.id
+                AND CAST (django_comments.object_pk AS INTEGER) = idea_idea.id
             """,
             'recent_activity': """
                 SELECT MAX(CASE WHEN COALESCE(c.time, date('2001-01-01')) >= COALESCE(b.submit_date, date('2001-01-01')) AND COALESCE(c.time, date('2001-01-01')) >= a.time THEN c.time
@@ -125,7 +125,8 @@ class IdeaManager(models.Manager):
                                 ELSE a.time
                            END)
                 FROM idea_idea a
-                LEFT OUTER JOIN django_comments b ON a.id = b.object_pk
+                LEFT OUTER JOIN django_comments b
+                    ON a.id = CAST (b.object_pk AS INTEGER)
                 LEFT OUTER JOIN idea_vote c ON a.id = c.idea_id
                 WHERE a.id = idea_idea.id
             """,
