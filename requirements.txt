@@ -1,4 +1,4 @@
-django==1.5
+django==1.11.29
 django-cache-tools
 django-mptt==0.7.4
 django-taggit
