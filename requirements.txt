@@ -3,5 +3,5 @@ django-cache-tools
 django-mptt==0.7.4
 django-taggit
 -e git+https://github.com/cfpb/collab.git#egg=collab
-pillow==3.0.0
+pillow==8.1.1
 south==0.7.6
